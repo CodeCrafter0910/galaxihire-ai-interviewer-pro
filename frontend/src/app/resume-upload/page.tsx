@@ -24,7 +24,8 @@ f.append("file", file);
   return (
     <div className="p-6">
       <h1 className="text-xl mb-4">Upload Resume</h1>
-      <input type="file" onChange={(e)=>setFile(e.target.files[0])} className="mb-4" />
+      <input type="file" onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+ className="mb-4" />
       <button onClick={upload} className="px-4 py-2 bg-black text-white rounded">Upload</button>
 
       {data && (
