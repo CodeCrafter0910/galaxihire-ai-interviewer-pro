@@ -2,9 +2,12 @@
 
 import { useState } from "react";
 import api from "@/lib/api";
-
+interface ChatMessage {
+  from: string;
+  text: string;
+}
 export default function InterviewPage() {
-  const [messages, setM] = useState([]);
+  const [messages, setM] = useState<ChatMessage[]>([]);
   const [input, setI] = useState("");
   const [stage, setS] = useState("hr");
   const [skills, setSkills] = useState(["python", "react"]);
