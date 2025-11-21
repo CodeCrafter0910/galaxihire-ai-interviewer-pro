@@ -8,7 +8,13 @@ export default function ResumeUpload() {
 
   async function upload() {
     const f = new FormData();
-    f.append("file", file);
+    if (!file) {
+  alert("Please select a file first");
+  return;
+}
+
+f.append("file", file);
+
     const res = await api.post("/resume/parse", f, {
       headers: { "Content-Type": "multipart/form-data" }
     });
