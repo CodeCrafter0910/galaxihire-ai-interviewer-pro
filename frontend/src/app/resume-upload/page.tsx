@@ -3,7 +3,8 @@ import { useState } from "react";
 import api from "@/lib/api";
 
 export default function ResumeUpload() {
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState<File | null>(null);
+
   const [data, setData] = useState(null);
 
   async function upload() {
