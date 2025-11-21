@@ -36,3 +36,14 @@ async def analyze_video_endpoint(video: UploadFile = File(...)):
 
     result = analyze_video(temp_path)
     return result
+from fastapi import FastAPI, Request
+from llm_engine.report_generator import generate_report
+
+app = FastAPI()
+
+@app.post("/generate-report")
+async def generate_report_endpoint(payload: Request):
+    data = await payload.json()
+    interview = data.get("interview", data)
+    report = generate_report(interview)
+    return report
