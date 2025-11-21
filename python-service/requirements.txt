@@ -3,6 +3,6 @@ uvicorn
 python-multipart
 PyPDF2
 docx2txt
-opencv-python
-deepface
-tensorflow
+aiohttp
+
+
