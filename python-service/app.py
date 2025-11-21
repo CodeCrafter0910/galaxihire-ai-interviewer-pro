@@ -17,3 +17,22 @@ async def get_next_question(payload: dict):
     q = next_question(stage, skills)
     next_s = determine_next_stage(stage)
     return {"question": q, "nextStage": next_s}
+from fastapi import UploadFile, File
+from speech_to_text.whisper_service import transcribe_audio
+
+@app.post("/stt")
+async def speech_to_text(audio: UploadFile = File(...)):
+    text = await transcribe_audio(audio)
+    return {"text": text}
+from fastapi import UploadFile, File
+import tempfile
+from video_analysis.analyze_video import analyze_video
+
+@app.post("/analyze-video")
+async def analyze_video_endpoint(video: UploadFile = File(...)):
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".webm") as temp:
+        temp.write(await video.read())
+        temp_path = temp.name
+
+    result = analyze_video(temp_path)
+    return result
