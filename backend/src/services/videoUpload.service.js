@@ -1,13 +1,23 @@
 const axios = require("axios");
+const FormData = require("form-data");
 
-async function sendVideoForAnalysis(buffer) {
-  const res = await axios.post(
-    "http://localhost:8000/analyze-video",
-    buffer,
-    { headers: { "Content-Type": "video/webm" } }
-  );
+const PYTHON_URL = process.env.PYTHON_SERVICE_URL || "https://galaxihire-ai-interviewer-pro.onrender.com";
 
-  return res.data;
+async function sendVideoForAnalysis(buffer, filename = "upload.webm") {
+  try {
+    const form = new FormData();
+    form.append("video", buffer, { filename, contentType: "video/webm" });
+
+    const res = await axios.post(`${PYTHON_URL}/analyze-video`, form, {
+      headers: { ...form.getHeaders() },
+      timeout: 60000
+    });
+
+    return res.data;
+  } catch (err) {
+    console.error("Video Upload Error →", err.message);
+    throw err;
+  }
 }
 
 module.exports = { sendVideoForAnalysis };

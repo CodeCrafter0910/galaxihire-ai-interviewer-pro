@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+
+// FIXED PATH (case-sensitive & Render requires .js)
+const User = require('../models/User.js');
 
 const createToken = (user) => {
   return jwt.sign(

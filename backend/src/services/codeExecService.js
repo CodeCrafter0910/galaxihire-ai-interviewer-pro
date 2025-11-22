@@ -1,12 +1,22 @@
 const axios = require("axios");
 
-async function executeCode(code, language) {
-  const res = await axios.post("http://localhost:7000/execute", {
-    code,
-    language
-  });
+// Use CODE_EXEC_SERVICE_URL, NOT PYTHON
+const CODE_EXEC_URL =
+  process.env.CODE_EXEC_SERVICE_URL ||
+  "https://your-code-sandbox-url.onrender.com";
 
-  return res.data;
+async function executeCode(code, language) {
+  try {
+    const res = await axios.post(
+      `${CODE_EXEC_URL}/execute`,
+      { code, language }
+    );
+
+    return res.data;
+  } catch (err) {
+    console.error("Code Exec Error →", err.message);
+    return { error: "Failed to execute code" };
+  }
 }
 
 module.exports = { executeCode };

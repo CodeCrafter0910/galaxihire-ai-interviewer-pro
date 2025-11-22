@@ -1,11 +1,14 @@
-const Resume = require("../models/Resume");
-const resumeParserService = require("../services/resumeParser.service");
+const Resume = require("../models/Resume.js");   // added .js
+const resumeParserService = require("../services/resumeParser.service.js"); // added .js
 
 exports.uploadResume = async (req, res) => {
   try {
     const file = req.file;
-    if (!file) return res.status(400).json({ error: "No file uploaded" });
+    if (!file) {
+      return res.status(400).json({ error: "No file uploaded" });
+    }
 
+    // Send resume file to Python Resume Parser (Render service)
     const parsed = await resumeParserService.sendToPythonParser(file);
 
     const saved = await Resume.create({

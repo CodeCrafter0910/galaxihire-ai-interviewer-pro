@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const authController = require('../controllers/auth.controller');
-const auth = require('../middleware/auth');
+// Linux requires exact file paths + .js extension
+const authController = require('../controllers/auth.controller.js');
+const auth = require('../middleware/auth.js');
 
 router.post('/register', authController.register);
 router.post('/login', authController.login);

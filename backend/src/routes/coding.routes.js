@@ -1,5 +1,7 @@
 const router = require("express").Router();
-const ctrl = require("../controllers/coding.controller");
+
+// Linux requires exact filename + .js
+const ctrl = require("../controllers/coding.controller.js");
 
 router.post("/run", ctrl.runCode);
 

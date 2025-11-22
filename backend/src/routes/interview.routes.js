@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const ctrl = require("../controllers/interview.controller");
+// Linux requires exact filename + .js
+const ctrl = require("../controllers/interview.controller.js");
 
 // -----------------------------
 // Multer (Used for both audio and video)
