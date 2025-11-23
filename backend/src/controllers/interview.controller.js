@@ -18,13 +18,30 @@ exports.askQuestion = async (req, res) => {
     const { answer, stage, skills } = req.body;
 
     // Send to Python-service
-    const py = await axios.post(`${PY_URL}/interview/next`, {
+    const { getNextQuestion } = require("../services/interview.service");
+
+exports.askQuestion = async (req, res) => {
+  try {
+    const { answer, stage, skills } = req.body;
+
+    const py = await getNextQuestion(stage, skills);
+
+    const question = py.question;
+    const nextStage = py.nextStage;
+
+    await Interview.create({
+      question,
+      answer,
       stage,
-      skills,
     });
 
-    const question = py.data.question;
-    const nextStage = py.data.nextStage;
+    res.json({ question, nextStage });
+  } catch (err) {
+    console.error("Interview Next Error →", err.message);
+    res.status(500).json({ error: "Failed to get next interview question" });
+  }
+};
+
 
     // Save to DB (optional)
     await Interview.create({

@@ -2,10 +2,9 @@ from fastapi import FastAPI, UploadFile, File, Request
 from resume_parser.parser import parse_resume
 from llm_engine.interview_flow import next_question, determine_next_stage
 from llm_engine.report_generator import generate_report
-from speech_to_text.whisper_service import transcribe_audio   # calls OpenAI API
+from speech_to_text.whisper_service import transcribe_audio   # OpenAI Whisper API
 
 app = FastAPI()
-
 
 # ============================
 # 1) RESUME PARSER
@@ -21,12 +20,17 @@ async def parse_resume_api(file: UploadFile = File(...)):
 # 2) INTERVIEW ENGINE
 # ============================
 @app.post("/interview/next")
-async def get_next_question(payload: dict):
+async def interview_next(payload: dict):
     stage = payload.get("stage")
     skills = payload.get("skills", [])
+
     q = next_question(stage, skills)
     next_s = determine_next_stage(stage)
-    return {"question": q, "nextStage": next_s}
+
+    return {
+        "question": q,
+        "nextStage": next_s
+    }
 
 
 # ============================
@@ -55,16 +59,3 @@ async def generate_report_endpoint(payload: Request):
 @app.get("/")
 async def root():
     return {"message": "Python service running successfully!"}
-from fastapi import FastAPI
-
-app = FastAPI()
-
-@app.post("/interview/next")
-def next_question(data: dict):
-    stage = data.get("stage")
-    skills = data.get("skills", [])
-
-    return {
-        "question": "Tell me about yourself.",
-        "nextStage": "technical"
-    }
