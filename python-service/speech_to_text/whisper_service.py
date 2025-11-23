@@ -18,7 +18,8 @@ async def transcribe_audio(file):
 
     form = aiohttp.FormData()
     form.add_field("file", audio_bytes, filename="audio.wav", content_type="audio/wav")
-    form.add_field("model", "whisper-1")
+    form.add_field("model", "gpt-4o-mini-transcribe")
+
 
     async with aiohttp.ClientSession() as session:
         async with session.post(
