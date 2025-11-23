@@ -55,3 +55,16 @@ async def generate_report_endpoint(payload: Request):
 @app.get("/")
 async def root():
     return {"message": "Python service running successfully!"}
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.post("/interview/next")
+def next_question(data: dict):
+    stage = data.get("stage")
+    skills = data.get("skills", [])
+
+    return {
+        "question": "Tell me about yourself.",
+        "nextStage": "technical"
+    }
