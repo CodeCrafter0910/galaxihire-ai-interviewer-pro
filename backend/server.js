@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/resume', resumeRoutes);
-app.use('/interview', require('./src/routes/interview.routes'));
+app.use('/api/interview', require('./src/routes/interview.routes'));
 app.use("/api/code", require("./src/routes/coding.routes"));
 app.use("/api/report", require("./src/routes/report.routes"));
 
