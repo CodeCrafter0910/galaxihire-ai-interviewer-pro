@@ -22,9 +22,10 @@ async def interview_next(payload: dict):
     return {"question": q, "nextStage": next_s}
 
 @app.post("/stt")
-async def speech_to_text(file: UploadFile = File(...)):
-    text = await transcribe_audio(file)
+async def speech_to_text(audio: UploadFile = File(...)):
+    text = await transcribe_audio(audio)
     return {"text": text}
+
 
 @app.post("/generate-report")
 async def generate_report_endpoint(payload: Request):
