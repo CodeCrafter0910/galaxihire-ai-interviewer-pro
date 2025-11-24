@@ -37,10 +37,9 @@ async def interview_next(payload: dict):
 # 3) SPEECH TO TEXT (OpenAI Whisper API)
 # ============================
 @app.post("/stt")
-async def speech_to_text(file: UploadFile = File(...)):
-    text = await transcribe_audio(file)
+async def speech_to_text(audio: UploadFile = File(...)):
+    text = await transcribe_audio(audio)
     return {"text": text}
-
 
 
 # ============================

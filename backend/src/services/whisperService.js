@@ -5,14 +5,15 @@ const PYTHON_URL =
   process.env.PYTHON_SERVICE_URL ||
   "https://galaxihire-ai-interviewer-pro.onrender.com";
 
-async function sendAudioToWhisper(buffer, filename = "audio.wav") {
+async function sendAudioToWhisper(buffer, filename = "audio.mp3") {
   try {
     const form = new FormData();
 
-    // IMPORTANT: Python expects field name = "audio"
+    // ✔ Correct field name ("audio")
+    // ✔ Use correct contentType (audio/*) works for mp3 + wav + m4a + webm
     form.append("audio", buffer, {
       filename,
-      contentType: "audio/wav"
+      contentType: "audio/*"
     });
 
     const res = await axios.post(`${PYTHON_URL}/stt`, form, {
@@ -21,7 +22,7 @@ async function sendAudioToWhisper(buffer, filename = "audio.wav") {
       timeout: 30000,
     });
 
-    return res.data.text || res.data;
+    return res.data.text || "";
   } catch (err) {
     console.error("Whisper Service Error →", err.response?.data || err.message);
     throw new Error("Whisper API failed");
