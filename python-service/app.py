@@ -59,3 +59,12 @@ async def generate_report_endpoint(payload: Request):
 @app.get("/")
 async def root():
     return {"message": "Python service running successfully!"}
+
+@app.post("/debug-audio")
+async def debug_audio(audio: UploadFile = File(...)):
+    data = await audio.read()
+    return {
+        "filename": audio.filename,
+        "size_received_bytes": len(data),
+        "content_type": audio.content_type
+    }
