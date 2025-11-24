@@ -9,20 +9,21 @@ async function sendAudioToWhisper(buffer, filename = "audio.mp3") {
   try {
     const form = new FormData();
 
-    // ✔ Correct field name ("audio")
-    // ✔ Use correct contentType (audio/*) works for mp3 + wav + m4a + webm
-    form.append("audio", buffer, {
+    // Detect the mimetype from file extension
+    const isMp3 = filename.toLowerCase().endsWith(".mp3");
+
+    form.append("file", buffer, {
       filename,
-      contentType: "audio/*"
+      contentType: isMp3 ? "audio/mpeg" : "audio/wav"
     });
 
     const res = await axios.post(`${PYTHON_URL}/stt`, form, {
       headers: form.getHeaders(),
       maxBodyLength: Infinity,
-      timeout: 30000,
+      timeout: 45000,
     });
 
-    return res.data.text || "";
+    return res.data.text || res.data;
   } catch (err) {
     console.error("Whisper Service Error →", err.response?.data || err.message);
     throw new Error("Whisper API failed");
