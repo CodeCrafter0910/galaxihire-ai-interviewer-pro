@@ -26,6 +26,7 @@ async def speech_to_text(audio: UploadFile = File(...)):
     text = await transcribe_audio(audio)
     return {"text": text}
 
+
 @app.post("/generate-report")
 async def generate_report_endpoint(payload: Request):
     data = await payload.json()

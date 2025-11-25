@@ -1,31 +1,20 @@
 const axios = require("axios");
+const FormData = require("form-data");
 
 async function sendAudioToWhisper(buffer, filename) {
-  const ext = filename.split('.').pop();
-
-  const payload = {
-    model: "gpt-4o-audio-preview",
-    input_audio: [
-      {
-        data: buffer.toString("base64"),
-        format: ext,
-      },
-    ],
-  };
-
   try {
-    const res = await axios.post(
+    const form = new FormData();
+    form.append("audio", buffer, { filename });
+
+    const response = await axios.post(
       `${process.env.PYTHON_SERVICE_URL}/stt`,
-      payload,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
+      form, 
+      { headers: form.getHeaders() }
     );
-    return res.data.text;
-  } catch (e) {
-    console.error("Whisper service error:", e.message);
+
+    return response.data.text || "";
+  } catch (err) {
+    console.error("Whisper error:", err.response?.data || err.message);
     return "";
   }
 }
