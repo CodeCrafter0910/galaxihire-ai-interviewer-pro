@@ -1,29 +1,31 @@
 const axios = require("axios");
-const FormData = require("form-data");
 
-const PYTHON_URL = process.env.PYTHON_SERVICE_URL;
+async function sendAudioToWhisper(buffer, filename) {
+  const ext = filename.split('.').pop();
 
-async function sendAudioToWhisper(buffer, filename = "audio.wav") {
+  const payload = {
+    model: "gpt-4o-audio-preview",
+    input_audio: [
+      {
+        data: buffer.toString("base64"),
+        format: ext,
+      },
+    ],
+  };
+
   try {
-    const form = new FormData();
-
-    const isMp3 = filename.toLowerCase().endsWith(".mp3");
-    const contentType = isMp3 ? "audio/mpeg" : "audio/wav";
-
-    form.append("audio", buffer, {
-      filename,
-      contentType,
-    });
-
-    const res = await axios.post(`${PYTHON_URL}/stt`, form, {
-      headers: form.getHeaders(),
-      timeout: 45000,
-      maxBodyLength: Infinity,
-    });
-
-    return res.data.text || "";
-  } catch (err) {
-    console.error("Whisper Service Error →", err.response?.data || err.message);
+    const res = await axios.post(
+      `${process.env.PYTHON_SERVICE_URL}/stt`,
+      payload,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return res.data.text;
+  } catch (e) {
+    console.error("Whisper service error:", e.message);
     return "";
   }
 }
