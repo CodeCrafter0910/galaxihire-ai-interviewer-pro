@@ -8,27 +8,26 @@ const { sendVideoForAnalysis } = require("../services/videoUpload.service");
 // Use deployed Python-service URL
 const PY_URL =
   process.env.PYTHON_SERVICE_URL ||
-  "https://galaxihire-ai-interviewer-pro.onrender.com";  // your live python URL
+  "https://galaxihire-ai-interviewer-pro.onrender.com";
 
-// ---------------------------
-// TEXT QUESTION FLOW
-// ---------------------------
+// Interview-flow service
+const { getNextQuestion } = require("../services/interview.service");
+
+
+// --------------------------------------------------
+// 1) TEXT QUESTION FLOW
+// --------------------------------------------------
 exports.askQuestion = async (req, res) => {
   try {
     const { answer, stage, skills } = req.body;
 
-    // Send to Python-service
-    const { getNextQuestion } = require("../services/interview.service");
-
-exports.askQuestion = async (req, res) => {
-  try {
-    const { answer, stage, skills } = req.body;
-
+    // Call Python service for next question
     const py = await getNextQuestion(stage, skills);
 
     const question = py.question;
     const nextStage = py.nextStage;
 
+    // Save current Q/A
     await Interview.create({
       question,
       answer,
@@ -43,28 +42,20 @@ exports.askQuestion = async (req, res) => {
 };
 
 
-    // Save to DB (optional)
-    await Interview.create({
-      question,
-      answer,
-      stage,
-    });
-
-    res.json({ question, nextStage });
-  } catch (err) {
-    console.error("Interview Next Error →", err.message);
-    res.status(500).json({ error: "Failed to get next interview question" });
-  }
-};
-
-// ---------------------------
-// AUDIO ANSWER TO WHISPER
-// ---------------------------
+// --------------------------------------------------
+// 2) AUDIO ANSWER → Whisper STT
+// --------------------------------------------------
 exports.processAudioAnswer = async (req, res) => {
   try {
+    if (!req.file || !req.file.buffer) {
+      return res.status(400).json({ error: "No audio uploaded" });
+    }
+
+    const filename = req.file.originalname || "audio.wav";
     const audioBuffer = req.file.buffer;
 
-    const text = await sendAudioToWhisper(audioBuffer);
+    // Send audio to Python STT → Whisper API
+    const text = await sendAudioToWhisper(audioBuffer, filename);
 
     return res.json({ text });
   } catch (err) {
@@ -73,13 +64,19 @@ exports.processAudioAnswer = async (req, res) => {
   }
 };
 
-// ---------------------------
-// VIDEO ANALYSIS
-// ---------------------------
+
+// --------------------------------------------------
+// 3) VIDEO ANALYSIS (Optional)
+// --------------------------------------------------
 exports.uploadVideo = async (req, res) => {
   try {
+    if (!req.file || !req.file.buffer) {
+      return res.status(400).json({ error: "No video uploaded" });
+    }
+
     const buffer = req.file.buffer;
 
+    // Send video to analysis service
     const analysis = await sendVideoForAnalysis(buffer);
 
     res.json({
