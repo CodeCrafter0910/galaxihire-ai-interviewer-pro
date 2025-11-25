@@ -1,31 +1,32 @@
 import os
+import tempfile
+import soundfile as sf
+from faster_whisper import WhisperModel
 from fastapi import UploadFile
-import aiohttp
 
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+# Load the model once at startup (fast, cached)
+# You can choose: tiny, small, medium — tiny is fastest
+model = WhisperModel("small", device="cpu", compute_type="float32")
 
 async def transcribe_audio(file: UploadFile):
-    if not OPENAI_API_KEY:
-        return "MISSING_OPENAI_API_KEY"
+    try:
+        # Save uploaded file to a temp file
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
+            audio_bytes = await file.read()
+            tmp.write(audio_bytes)
+            tmp_path = tmp.name
 
-    url = "https://api.openai.com/v1/audio/transcriptions"
+        # Load audio file
+        audio, sr = sf.read(tmp_path)
 
-    form = aiohttp.FormData()
-    form.add_field(
-        "file",
-        await file.read(),
-        filename=file.filename,
-        content_type=file.content_type
-    )
+        # Transcribe
+        segments, info = model.transcribe(tmp_path)
 
-    form.add_field("model", "gpt-4o-transcribe")
+        text = " ".join([segment.text for segment in segments])
+        print("DEBUG transcription:", text)
 
-    headers = {
-        "Authorization": f"Bearer {OPENAI_API_KEY}",
-    }
+        return text
 
-    async with aiohttp.ClientSession() as session:
-        async with session.post(url, data=form, headers=headers) as resp:
-            data = await resp.json()
-            print("DEBUG OpenAI:", data)
-            return data.get("text", "")
+    except Exception as e:
+        print("ERROR in local STT:", str(e))
+        return ""

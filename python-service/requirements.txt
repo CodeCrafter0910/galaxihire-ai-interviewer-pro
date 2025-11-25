@@ -4,5 +4,8 @@ python-multipart
 PyPDF2
 docx2txt
 aiohttp
+faster-whisper==1.0.0
+soundfile==0.12.1
+numpy
 
 
