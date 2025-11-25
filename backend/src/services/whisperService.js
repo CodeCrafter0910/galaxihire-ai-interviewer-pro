@@ -9,7 +9,7 @@ async function sendAudioToWhisper(buffer, filename) {
     const response = await axios.post(
       `${process.env.PYTHON_SERVICE_URL}/stt`,
       form, 
-      { headers: form.getHeaders() }
+      { headers: form.getHeaders(), timeout: 120000 }
     );
 
     return response.data.text || "";
