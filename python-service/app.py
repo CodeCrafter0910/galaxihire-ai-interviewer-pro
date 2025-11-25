@@ -23,9 +23,7 @@ async def interview_next(payload: dict):
 
 @app.post("/stt")
 async def speech_to_text(audio: UploadFile = File(...)):
-    print("DEBUG: /stt called, filename:", audio.filename, "content_type:", audio.content_type)
     text = await transcribe_audio(audio)
-    print("DEBUG: transcription result repr:", repr(text))
     return {"text": text}
 
 
