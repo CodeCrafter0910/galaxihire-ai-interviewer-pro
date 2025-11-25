@@ -1,32 +1,26 @@
 import os
-import tempfile
-import soundfile as sf
-from faster_whisper import WhisperModel
+import requests
 from fastapi import UploadFile
 
-# Load the model once at startup (fast, cached)
-# You can choose: tiny, small, medium — tiny is fastest
-model = WhisperModel("small", device="cpu", compute_type="float32")
+HF_API_KEY = os.getenv("HF_API_KEY")
 
 async def transcribe_audio(file: UploadFile):
+    url = "https://api-inference.huggingface.co/models/openai/whisper-small"
+
+    audio_bytes = await file.read()
+
+    headers = {
+        "Authorization": f"Bearer {HF_API_KEY}",
+    }
+
+    response = requests.post(url, headers=headers, data=audio_bytes)
+
     try:
-        # Save uploaded file to a temp file
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
-            audio_bytes = await file.read()
-            tmp.write(audio_bytes)
-            tmp_path = tmp.name
-
-        # Load audio file
-        audio, sr = sf.read(tmp_path)
-
-        # Transcribe
-        segments, info = model.transcribe(tmp_path)
-
-        text = " ".join([segment.text for segment in segments])
-        print("DEBUG transcription:", text)
-
-        return text
-
-    except Exception as e:
-        print("ERROR in local STT:", str(e))
+        data = response.json()
+    except:
         return ""
+
+    print("HF DEBUG:", data)
+
+    # HuggingFace returns {"text": "..."}
+    return data.get("text", "")
