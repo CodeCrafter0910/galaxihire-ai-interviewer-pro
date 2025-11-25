@@ -23,8 +23,11 @@ async def interview_next(payload: dict):
 
 @app.post("/stt")
 async def speech_to_text(audio: UploadFile = File(...)):
+    print("🔥🔥 DEBUG: /stt route HIT — Python received request")
     text = await transcribe_audio(audio)
+    print("🔥🔥 DEBUG: /stt finished, text=", text)
     return {"text": text}
+
 
 
 @app.post("/generate-report")
