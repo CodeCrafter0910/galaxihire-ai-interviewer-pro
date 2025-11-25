@@ -1,4 +1,5 @@
-# python-service/speech_to_text/whisper_service.py
+# paste this entire function over your existing transcribe_audio implementation
+
 import os
 import aiohttp
 import base64
@@ -8,29 +9,19 @@ from fastapi import UploadFile
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 async def transcribe_audio(file: UploadFile):
-    """
-    Transcribe audio using OpenAI Responses API (audio input).
-    Works with project keys (sk-proj-...), admin keys, or classic keys.
-    Returns the transcribed text (string) or an empty string on failure.
-    """
-
     if not OPENAI_API_KEY:
-        # helpful debug string for logs
-        print("MISSING OPENAI API KEY")
-        return ""
+        print("DEBUG: Missing OPENAI_API_KEY env var")
+        return "ERROR_MISSING_OPENAI_API_KEY"
 
     try:
+        # read incoming file
         audio_bytes = await file.read()
-        ext = (file.filename or "audio").split(".")[-1].lower()
+        print(f"DEBUG: received file name={file.filename} content_type={file.content_type} bytes={len(audio_bytes)}")
 
-        # base64 encode the audio bytes
+        ext = (file.filename or "audio").split(".")[-1].lower()
         b64_audio = base64.b64encode(audio_bytes).decode("utf-8")
 
-        # Build payload for /v1/responses with input_audio
-        # NOTE: Models, param names and structure may vary; this implementation
-        # attempts to follow the Responses API pattern for audio inputs.
         url = "https://api.openai.com/v1/responses"
-
         payload = {
             "model": "gpt-4o-audio-preview",
             "input": [
@@ -56,59 +47,54 @@ async def transcribe_audio(file: UploadFile):
 
         async with aiohttp.ClientSession() as session:
             async with session.post(url, json=payload, headers=headers, timeout=120) as resp:
-                text = await resp.text()
-                # Try to parse JSON safely
+                status = resp.status
+                body_text = await resp.text()
+                print("DEBUG: OpenAI status:", status)
+                print("DEBUG: OpenAI raw body (truncated 2000 chars):", body_text[:2000])
+
+                # try to parse JSON
                 try:
-                    data = json.loads(text)
+                    data = json.loads(body_text)
                 except Exception as e:
-                    print("OpenAI response parse error:", e, "raw:", text)
-                    return ""
+                    print("DEBUG: Failed to parse OpenAI JSON:", str(e))
+                    return f"ERROR_OPENAI_PARSE:{body_text[:1000]}"
 
-                # Debug print the response for Render logs (remove in prod)
-                print("OPENAI /responses raw:", json.dumps(data)[:2000])
+                # 1) if they returned output_text
+                if isinstance(data, dict) and data.get("output_text"):
+                    return data.get("output_text", "")
 
-                # Several OpenAI response shapes are possible. Try multiple extraction points:
-                # 1) new style may include 'output_text' for easy text
-                if isinstance(data, dict):
-                    if "output_text" in data and isinstance(data["output_text"], str):
-                        return data["output_text"]
+                # 2) try new-style output arrays
+                output = data.get("output") or data.get("outputs") or data.get("result")
+                if isinstance(output, list):
+                    # try to find any text in nested content
+                    for item in output:
+                        # item might have 'content' list
+                        content = item.get("content") if isinstance(item, dict) else None
+                        if isinstance(content, list):
+                            for c in content:
+                                if isinstance(c, dict):
+                                    # common keys
+                                    for k in ("text", "output_text", "content"):
+                                        if k in c and isinstance(c[k], str) and c[k].strip():
+                                            return c[k].strip()
+                        # some items may have text directly
+                        if isinstance(item, dict) and "text" in item and isinstance(item["text"], str) and item["text"].strip():
+                            return item["text"].strip()
 
-                    # 2) 'output' array with nested content
-                    output = data.get("output") or data.get("outputs")
-                    if isinstance(output, list) and len(output) > 0:
-                        # Attempt to extract text from content items
-                        for out in output:
-                            # some responses embed 'content' as list
-                            content = out.get("content") or out.get("message") or out.get("output")
-                            if isinstance(content, list):
-                                for c in content:
-                                    if isinstance(c, dict) and c.get("type") in ("message", "output_text", "output"):
-                                        # try common keys
-                                        txt = c.get("text") or c.get("output_text") or c.get("content")
-                                        if isinstance(txt, str) and txt.strip():
-                                            return txt.strip()
-                                    # some items may have 'text' directly
-                                    if isinstance(c, dict) and "text" in c and isinstance(c["text"], str) and c["text"].strip():
-                                        return c["text"].strip()
-                            # some out objects have 'text' directly
-                            if isinstance(out, dict):
-                                if "text" in out and isinstance(out["text"], str) and out["text"].strip():
-                                    return out["text"].strip()
+                # 3) classic choices
+                if "choices" in data and isinstance(data["choices"], list):
+                    texts = []
+                    for ch in data["choices"]:
+                        t = ch.get("text") or (ch.get("message") or {}).get("content") or ""
+                        if isinstance(t, str) and t.strip():
+                            texts.append(t.strip())
+                    if texts:
+                        return " ".join(texts)
 
-                    # 3) classic v1 responses (rare here)
-                    if "choices" in data and isinstance(data["choices"], list) and len(data["choices"]) > 0:
-                        # join all text fields
-                        texts = []
-                        for ch in data["choices"]:
-                            t = ch.get("text") or (ch.get("message") or {}).get("content") or ""
-                            if isinstance(t, str) and t.strip():
-                                texts.append(t.strip())
-                        if texts:
-                            return " ".join(texts)
+                # nothing found — return the OpenAI body for debug
+                print("DEBUG: No transcription text extracted. Returning full debug info.")
+                return f"ERROR_NO_TEXT_IN_OPENAI_RESPONSE: {json.dumps(data)[:1500]}"
 
-                # If nothing matched, return empty string (but log for debugging)
-                print("No transcription found in OpenAI response.")
-                return ""
     except Exception as e:
-        print("Transcription error:", str(e))
-        return ""
+        print("DEBUG: transcribe_audio exception:", str(e))
+        return f"ERROR_TRANSCRIBE_EXCEPTION:{str(e)}"
