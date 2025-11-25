@@ -4,5 +4,6 @@ python-multipart
 PyPDF2
 docx2txt
 aiohttp
+requests
 
 
