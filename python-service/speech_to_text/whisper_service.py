@@ -14,9 +14,7 @@ async def transcribe_audio(file: UploadFile):
 
     url = "https://api-inference.huggingface.co/models/guillaumekln/whisper-large-v3"
 
-
     audio_bytes = await file.read()
-
     print("🔥 DEBUG: audio bytes len =", len(audio_bytes))
 
     headers = {
@@ -24,7 +22,12 @@ async def transcribe_audio(file: UploadFile):
     }
 
     async with aiohttp.ClientSession() as session:
-        async with session.post(url, headers=headers, data=audio_bytes) as resp:
+        async with session.post(
+            url,
+            headers=headers,
+            data={"inputs": audio_bytes}   # FIXED HERE
+        ) as resp:
+
             status = resp.status
             body = await resp.text()
 
