@@ -3,42 +3,36 @@ import aiohttp
 import json
 from fastapi import UploadFile
 
-HF_API_KEY = os.getenv("HF_API_KEY")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 async def transcribe_audio(file: UploadFile):
-    print("🔥 DEBUG: transcribe_audio STARTED")
+    print("🔥 STT STARTED")
 
-    if not HF_API_KEY:
-        print("🔥 DEBUG: HF_API_KEY missing")
+    if not GROQ_API_KEY:
+        print("🔥 ERROR: Missing GROQ_API_KEY")
         return ""
-    url = "https://api-inference.huggingface.co/models/openai/whisper-large-v3"
 
-
+    # Read bytes of the uploaded audio
     audio_bytes = await file.read()
-    print("🔥 DEBUG: audio bytes len =", len(audio_bytes))
+    print("🔥 Audio bytes:", len(audio_bytes))
+
+    url = "https://api.groq.com/openai/v1/audio/transcriptions"
+
+    form = aiohttp.FormData()
+    form.add_field("file", audio_bytes, filename="audio.wav", content_type="audio/wav")
+    form.add_field("model", "whisper-large-v3")
 
     headers = {
-        "Authorization": f"Bearer {HF_API_KEY}",
+        "Authorization": f"Bearer {GROQ_API_KEY}",
     }
 
     async with aiohttp.ClientSession() as session:
-        async with session.post(
-            url,
-            headers=headers,
-            data={"inputs": audio_bytes}   # FIXED HERE
-        ) as resp:
-
-            status = resp.status
-            body = await resp.text()
-
-            print("🔥 DEBUG: HF STATUS =", status)
-            print("🔥 DEBUG: HF RAW RESPONSE =", body[:2000])
+        async with session.post(url, headers=headers, data=form) as resp:
+            text = await resp.text()
+            print("🔥 RAW RESPONSE:", text)
 
             try:
-                data = json.loads(body)
-                print("🔥 DEBUG: HF JSON =", data)
+                data = json.loads(text)
+                return data.get("text", "")
             except:
-                print("🔥 DEBUG: HF JSON PARSE FAILED")
                 return ""
-
-            return data.get("text", "")
