@@ -12,7 +12,7 @@ async def transcribe_audio(file: UploadFile):
         print("🔥 DEBUG: HF_API_KEY missing")
         return ""
 
-    url = "https://api-inference.huggingface.co/models/openai/whisper-large-v3-turbo"
+    url = "https://api-inference.huggingface.co/models/guillaumekln/whisper-large-v3"
 
 
     audio_bytes = await file.read()
