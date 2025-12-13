@@ -1,4 +1,5 @@
-FROM node:20-alpine AS build
+# ---- Build Stage ----
+FROM node:20-bullseye AS build
 WORKDIR /app
 
 COPY package*.json ./
@@ -7,7 +8,8 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-FROM nginx:stable-alpine
+# ---- Run Stage ----
+FROM nginx:stable
 COPY --from=build /app/out /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 

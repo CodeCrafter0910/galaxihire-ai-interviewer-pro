@@ -14,19 +14,43 @@ export default function LoginPage() {
       const res = await api.post("/auth/login", { email, password });
       localStorage.setItem("token", res.data.token);
       r.push("/dashboard");
-    } catch {
+    } catch (e) {
       setErr("Invalid credentials");
     }
   }
 
   return (
-    <div className="flex items-center justify-center h-screen bg-white">
-      <div className="w-80 bg-gray-100 p-6 rounded-xl">
-        <h1 className="text-xl mb-4">Login</h1>
-        <input onChange={(e)=>setE(e.target.value)} placeholder="Email" className="w-full p-2 mb-3 border rounded" />
-        <input type="password" onChange={(e)=>setP(e.target.value)} placeholder="Password" className="w-full p-2 mb-3 border rounded" />
-        <button onClick={submit} className="w-full bg-black text-white py-2 rounded">Login</button>
-        {err && <p className="text-red-500 text-sm mt-2">{err}</p>}
+    <div className="min-h-screen flex items-center justify-center px-4">
+      <div className="w-full max-w-md glass p-8">
+        <h1 className="text-2xl font-bold mb-4">Welcome back</h1>
+        <p className="text-sm text-gray-300 mb-6">Sign in to continue to GalaxiHire</p>
+
+        <label className="block mb-3">
+          <input
+            value={email}
+            onChange={(e) => setE(e.target.value)}
+            placeholder="Email"
+            className="input"
+          />
+        </label>
+
+        <label className="block mb-4">
+          <input
+            value={password}
+            type="password"
+            onChange={(e) => setP(e.target.value)}
+            placeholder="Password"
+            className="input"
+          />
+        </label>
+
+        <button onClick={submit} className="btn-primary mb-3">Login</button>
+
+        {err && <p className="text-red-400 text-sm">{err}</p>}
+
+        <div className="mt-4 text-sm text-gray-300">
+          Don&apos;t have an account? <a href="/register" className="app-link">Register</a>
+        </div>
       </div>
     </div>
   );

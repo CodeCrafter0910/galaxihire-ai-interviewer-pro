@@ -20,7 +20,7 @@ services:
   backend:
     build: ./backend
     ports:
-      - "3000:4000"
+      - "5000:4000"
     environment:
       - MONGO_URI=${MONGO_URI}
       - PYTHON_SERVICE_URL=http://python-service:8000

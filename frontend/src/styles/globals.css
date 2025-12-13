@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base page styles */
+:root{
+  --accent-1: rgba(255,255,255,0.7);
+  --accent-2: rgba(255,255,255,0.15);
+  --glass-border: rgba(255,255,255,0.4);
+  --glass-dark-border: rgba(0,0,0,0.15);
+}
+
+html,body,#__next {
+  height: 100%;
+}
+
+body {
+  @apply bg-gradient-to-br from-[#0f172a] via-[#0b1220] to-[#081226] text-gray-100 antialiased;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* glass card */
+.glass {
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+  box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+  border-radius: 16px;
+}
+
+/* frosted panel for light emphasis */
+.glass-soft {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.04);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 6px 24px rgba(2,6,23,0.5);
+  border-radius: 12px;
+}
+
+/* small utility for subtle input */
+.input {
+  @apply w-full p-3 rounded-md bg-transparent border border-white/10 text-gray-100 placeholder-gray-300;
+}
+
+/* primary button */
+.btn-primary {
+  @apply w-full py-2 px-4 rounded-md font-semibold text-white bg-gradient-to-r from-indigo-500 to-purple-500 shadow-lg;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.btn-primary:hover { transform: translateY(-2px); }
+
+/* link look */
+.app-link {
+  color: #e6eefc;
+  text-decoration: underline;
+}
+
+/* small responsive fixes */
+@media (max-width:640px) {
+  .glass { border-radius: 12px; padding: 1rem; }
+}

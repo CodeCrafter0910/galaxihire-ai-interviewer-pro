@@ -6,14 +6,12 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    
-    "start": "next start",
-     "export": "next export"
+    "start": "next start"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
+  
   "dependencies": {
     "axios": "^1.13.2",
     "next": "^16.0.3",
@@ -23,6 +21,9 @@
   "devDependencies": {
     "@types/node": "24.10.1",
     "@types/react": "19.2.6",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.4.14",
     "typescript": "5.9.3"
   }
 }
