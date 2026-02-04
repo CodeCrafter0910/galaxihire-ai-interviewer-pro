@@ -35,6 +35,11 @@ const corsOptions = {
     // Allow requests with no origin (like mobile apps or curl)
     if (!origin) return callback(null, true);
 
+    // Allow any vercel.app domain for now
+    if (origin && origin.includes('.vercel.app')) {
+      return callback(null, true);
+    }
+
     if (allowedOrigins.includes(origin) || process.env.NODE_ENV !== 'production') {
       callback(null, true);
     } else {
