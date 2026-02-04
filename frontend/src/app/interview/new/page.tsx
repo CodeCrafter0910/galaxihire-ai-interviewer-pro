@@ -481,7 +481,7 @@ export default function InterviewPage() {
               const lastAiIndex = messages.findLastIndex(m => m.from === 'ai');
               const lastUserIndex = messages.findLastIndex(m => m.from === 'user');
 
-              const messagesToShow = [];
+              const messagesToShow: Array<ChatMessage & { originalIndex: number }> = [];
 
               // Add last AI question (stripped of options if MCQ)
               if (lastAiIndex !== -1) {
