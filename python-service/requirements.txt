@@ -11,3 +11,5 @@ numpy
 librosa
 soundfile
 scipy
+aiohttp
+sentry-sdk
