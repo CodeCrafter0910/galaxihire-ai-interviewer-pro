@@ -1,10 +1,9 @@
 fastapi
 uvicorn
 python-multipart
+openai
 PyPDF2
-docx2txt
-aiohttp
-requests
-sentry-sdk
-
-
+pdfplumber
+spacy
+python-docx
+numpy

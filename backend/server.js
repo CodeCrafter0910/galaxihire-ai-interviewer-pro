@@ -16,14 +16,38 @@ const resumeRoutes = require('./src/routes/resume.routes');
 const interviewRoutes = require('./src/routes/interview.routes');
 const codeRoutes = require('./src/routes/coding.routes');
 const reportRoutes = require('./src/routes/report.routes');
+const videoRoutes = require('./src/routes/video.routes');
+
 
 initSentry();
 
 const app = express();
 
-app.use(cors());
+// CORS configuration
+const corsOptions = {
+  origin: function (origin, callback) {
+    const allowedOrigins = [
+      'http://localhost:3000',
+      'http://localhost:3001',
+      process.env.FRONTEND_URL,
+    ].filter(Boolean);
+
+    // Allow requests with no origin (like mobile apps or curl)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin) || process.env.NODE_ENV !== 'production') {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
-app.use("/report", express.static(path.join(__dirname, "reports")));
+app.use("/reports", express.static(path.join(__dirname, "reports")));
 
 connectDB();
 
@@ -46,6 +70,8 @@ app.use('/api/resume', resumeRoutes);
 app.use('/api/interview', interviewRoutes);
 app.use('/api/code', codeRoutes);
 app.use('/api/report', reportRoutes);
+app.use('/api/video', videoRoutes);
+
 
 const PORT = process.env.PORT || 4000;
 

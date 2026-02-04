@@ -6,8 +6,8 @@ import { Fragment } from "react";
 
 const items = [
   { id: "dashboard", label: "Dashboard", href: "/dashboard", icon: "🏠" },
-  { id: "my-interviews", label: "My Interviews", href: "/interview", icon: "📋" },
   { id: "start-interview", label: "Start Interview", href: "/interview/new", icon: "▶️" },
+  { id: "my-interviews", label: "My Interviews", href: "/interview", icon: "📋" },
   { id: "reports", label: "Reports", href: "/report", icon: "📊" },
   { id: "settings", label: "Settings", href: "/settings", icon: "⚙️" },
   { id: "logout", label: "Logout", href: "/logout", icon: "⇦" },
@@ -21,7 +21,7 @@ export default function Sidebar() {
     <aside className="w-72 min-h-screen p-6 bg-gradient-to-b from-transparent to-transparent border-r border-white/6">
       <div className="mb-8">
         <div className="rounded-full w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold shadow-lg">N</div>
-        <div className="mt-4 text-sm text-gray-300">paidaræn</div>
+        <div className="mt-4 text-sm text-gray-300">GalaxiHire</div>
       </div>
 
       <nav className="space-y-3">

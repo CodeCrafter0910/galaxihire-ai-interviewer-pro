@@ -1,48 +1,26 @@
-const express = require("express");
+const express = require('express');
+const multer = require('multer');
+const auth = require('../middleware/auth');
+const ctrl = require('../controllers/interview.controller.js');
+
 const router = express.Router();
+const upload = multer({ storage: multer.memoryStorage() });
 
-// Linux requires exact filename + .js
-const ctrl = require("../controllers/interview.controller.js");
+// New session-based interview routes
+router.post('/start', auth, ctrl.startInterview);
+router.post('/continue', auth, ctrl.continueInterview);
+router.post('/complete', auth, ctrl.completeInterview);
+router.get('/history', auth, ctrl.getInterviewHistory);
+router.delete('/:sessionId', auth, ctrl.deleteInterview);
+router.get('/:sessionId', auth, ctrl.getInterviewSession);
 
-// ✅ Correct Auth Middleware Import
-const auth = require("../middleware/auth");  // <---- FIXED
+// Audio answer processing (Whisper STT)
+router.post('/audio', upload.single('audio'), ctrl.processAudioAnswer);
 
-// -----------------------------
-// Multer (Used for both audio and video)
-// -----------------------------
-const multer = require("multer");
-const upload = multer();
+// Video upload (optional)
+router.post('/upload-video', upload.single('video'), ctrl.uploadVideo);
 
-// -----------------------------
-// TEXT & EXISTING ROUTES
-// -----------------------------
-router.post("/ask", ctrl.askQuestion);
-
-// -----------------------------
-// NEW — INTERVIEW LIST ROUTE
-// -----------------------------
-router.get("/list", auth, async (req, res) => {
-  try {
-    const Interview = require("../models/InterviewModel");
-
-    const items = await Interview.find({ userId: req.user.id })
-      .sort({ createdAt: -1 });
-
-    res.json(items);
-  } catch (err) {
-    console.error("Interview list error:", err);
-    res.status(500).json({ message: "Failed to load interviews" });
-  }
-});
-
-// -----------------------------
-// AUDIO ROUTE (Phase 7)
-// -----------------------------
-router.post("/audio", upload.single("audio"), ctrl.processAudioAnswer);
-
-// -----------------------------
-// VIDEO ROUTE (Phase 8)
-// -----------------------------
-router.post("/upload-video", upload.single("video"), ctrl.uploadVideo);
+// Legacy route (deprecated)
+router.post('/ask', ctrl.askQuestion);
 
 module.exports = router;

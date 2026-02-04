@@ -1,15 +1,17 @@
 const router = require("express").Router();
-
-// MUST include .js for Linux servers
+const auth = require("../middleware/auth");
 const ctrl = require("../controllers/report.controller.js");
 
-// Route order matters ✔️
-router.post("/generate", ctrl.generateAndSave);
+// Generate report from interview session
+router.post("/generate", auth, ctrl.generateAndSave);
 
-// Put "download" BEFORE "/:id" so it doesn't get swallowed
-router.get("/download/:id", ctrl.download);
+// Get all user reports
+router.get("/list", auth, ctrl.getUserReports);
 
-// Normal fetch report
-router.get("/:id", ctrl.getReport);
+// Download report (must be before /:id)
+router.get("/download/:id", auth, ctrl.download);
+
+// Get specific report
+router.get("/:id", auth, ctrl.getReport);
 
 module.exports = router;
