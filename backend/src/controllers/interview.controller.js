@@ -1,4 +1,4 @@
-const InterviewSession = require('../models/InterviewSession');
+const InterviewSession = require('../models/InterviewSession.js');
 const { generateQuestion, evaluateAnswer } = require('../services/llmService');
 const logger = require('../logger');
 const axios = require('axios');
