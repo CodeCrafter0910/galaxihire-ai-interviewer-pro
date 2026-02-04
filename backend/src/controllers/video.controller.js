@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const Video = require("../models/Video");
+const Video = require("../models/Video.js");
 const logger = require("../logger");
 
 /**
