@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Sidebar from "@/components/Sidebar";
 import TopNav from "@/components/TopNav";
@@ -30,7 +30,7 @@ interface Report {
   };
 }
 
-export default function ReportPage() {
+function ReportPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("sessionId");
@@ -350,5 +350,25 @@ export default function ReportPage() {
         </div>
       </main>
     </div>
+  );
+}
+
+export default function ReportPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-[#071026] via-[#06071b] to-[#02040a]">
+        <Sidebar />
+        <main className="flex-1 p-8">
+          <div className="max-w-6xl mx-auto">
+            <TopNav />
+            <div className="flex items-center justify-center h-64">
+              <div className="animate-spin h-12 w-12 border-4 border-indigo-500 border-t-transparent rounded-full"></div>
+            </div>
+          </div>
+        </main>
+      </div>
+    }>
+      <ReportPageContent />
+    </Suspense>
   );
 }
