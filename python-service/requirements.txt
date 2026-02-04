@@ -6,4 +6,8 @@ PyPDF2
 pdfplumber
 spacy
 python-docx
+docx2txt
 numpy
+librosa
+soundfile
+scipy
