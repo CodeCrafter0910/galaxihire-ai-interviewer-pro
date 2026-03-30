@@ -2,6 +2,6 @@
 2:I[64381,["/_next/static/chunks/6e9ac5b86215ad1c.js","/_next/static/chunks/13879f7a2c80d4ab.js"],"ViewportBoundary"]
 4:I[64381,["/_next/static/chunks/6e9ac5b86215ad1c.js","/_next/static/chunks/13879f7a2c80d4ab.js"],"MetadataBoundary"]
 5:"$Sreact.suspense"
-0:{"buildId":"7hrOwap4GPzuwzRKg96yB","rsc":["$","$1","h",{"children":[null,["$","$L2",null,{"children":"$@3"}],["$","div",null,{"hidden":true,"children":["$","$L4",null,{"children":["$","$5",null,{"name":"Next.Metadata","children":"$@6"}]}]}],null]}],"loading":null,"isPartial":false}
+0:{"buildId":"VdDWyzU40PrmgB-xe5RCW","rsc":["$","$1","h",{"children":[null,["$","$L2",null,{"children":"$@3"}],["$","div",null,{"hidden":true,"children":["$","$L4",null,{"children":["$","$5",null,{"name":"Next.Metadata","children":"$@6"}]}]}],null]}],"loading":null,"isPartial":false}
 3:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
-6:[]
+6:[["$","title","0",{"children":"GalaxiHire – AI Interview Platform"}],["$","meta","1",{"name":"description","content":"Practice interviews with AI-powered feedback, multi-stage rounds, and detailed performance reports. Secure, private, and beautiful."}]]

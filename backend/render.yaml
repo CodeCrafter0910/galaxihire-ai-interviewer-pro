@@ -19,5 +19,7 @@ services:
         sync: false
       - key: PYTHON_SERVICE_URL
         sync: false
+      - key: FRONTEND_URL
+        value: https://galaxihire-ai-interviewer-pro-0910.vercel.app
       - key: PORT
         value: 4000

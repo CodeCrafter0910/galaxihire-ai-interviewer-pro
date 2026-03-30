@@ -1,65 +1,239 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Base page styles */
-:root{
-  --accent-1: rgba(255,255,255,0.7);
-  --accent-2: rgba(255,255,255,0.15);
-  --glass-border: rgba(255,255,255,0.4);
-  --glass-dark-border: rgba(0,0,0,0.15);
+/* ================================================
+   CSS Custom Properties
+   ================================================ */
+:root {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --color-bg-base:     #060b18;
+  --color-bg-mid:      #080e1e;
+  --color-bg-deep:     #040810;
+
+  --color-accent:      #6366f1; /* indigo-500 */
+  --color-accent-2:    #a855f7; /* purple-500 */
+  --color-success:     #22c55e;
+  --color-warning:     #f59e0b;
+  --color-danger:      #ef4444;
+
+  --glass-bg:          rgba(255,255,255,0.045);
+  --glass-border:      rgba(255,255,255,0.09);
+  --glass-shadow:      0 12px 40px rgba(2,6,23,0.7);
+
+  --glass-soft-bg:     rgba(255,255,255,0.025);
+  --glass-soft-border: rgba(255,255,255,0.05);
 }
 
-html,body,#__next {
+/* ================================================
+   Base Reset
+   ================================================ */
+html, body, #__next {
   height: 100%;
 }
 
 body {
-  @apply bg-gradient-to-br from-[#0f172a] via-[#0b1220] to-[#081226] text-gray-100 antialiased;
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-family: var(--font-sans);
+  background-color: var(--color-bg-base);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 10% -5%, rgba(99,102,241,0.13) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 90% 95%, rgba(168,85,247,0.08) 0%, transparent 60%);
+  color: #e2e8f0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* glass card */
+/* ================================================
+   Glass Components
+   ================================================ */
 .glass {
-  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-  border: 1px solid rgba(255,255,255,0.08);
-  backdrop-filter: blur(8px) saturate(120%);
-  -webkit-backdrop-filter: blur(8px) saturate(120%);
-  box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px) saturate(130%);
+  -webkit-backdrop-filter: blur(12px) saturate(130%);
+  box-shadow: var(--glass-shadow);
   border-radius: 16px;
 }
 
-/* frosted panel for light emphasis */
 .glass-soft {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.04);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: var(--glass-soft-bg);
+  border: 1px solid var(--glass-soft-border);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   box-shadow: 0 6px 24px rgba(2,6,23,0.5);
   border-radius: 12px;
 }
 
-/* small utility for subtle input */
-.input {
-  @apply w-full p-3 rounded-md bg-transparent border border-white/10 text-gray-100 placeholder-gray-300;
+/* Card with a subtle left accent stripe */
+.glass-accent {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px) saturate(130%);
+  -webkit-backdrop-filter: blur(12px) saturate(130%);
+  box-shadow: var(--glass-shadow);
+  border-radius: 16px;
+  border-left: 3px solid var(--color-accent);
 }
 
-/* primary button */
+/* ================================================
+   Buttons
+   ================================================ */
 .btn-primary {
-  @apply w-full py-2 px-4 rounded-md font-semibold text-white bg-gradient-to-r from-indigo-500 to-purple-500 shadow-lg;
-  transition: transform .12s ease, box-shadow .12s ease;
+  @apply inline-flex items-center justify-center px-4 py-2 rounded-xl font-semibold text-white;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  box-shadow: 0 4px 20px rgba(99,102,241,0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+  letter-spacing: 0.01em;
 }
-.btn-primary:hover { transform: translateY(-2px); }
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(99,102,241,0.5);
+}
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 12px rgba(99,102,241,0.3);
+}
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 
-/* link look */
+.btn-ghost {
+  @apply inline-flex items-center justify-center px-4 py-2 rounded-xl font-medium text-gray-300;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.btn-ghost:hover {
+  background: rgba(255,255,255,0.10);
+  border-color: rgba(255,255,255,0.15);
+}
+
+/* ================================================
+   Form Inputs
+   ================================================ */
+.input {
+  @apply w-full p-3 rounded-xl bg-white/5 border border-white/10 text-gray-100 placeholder-gray-500;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  font-family: var(--font-sans);
+}
+.input:focus {
+  outline: none;
+  border-color: rgba(99,102,241,0.5);
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.12);
+}
+
+/* ================================================
+   Badge Pills
+   ================================================ */
+.badge {
+  @apply inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold;
+}
+.badge-indigo  { background: rgba(99,102,241,0.18);  color: #a5b4fc; }
+.badge-purple  { background: rgba(168,85,247,0.18);  color: #d8b4fe; }
+.badge-green   { background: rgba(34,197,94,0.15);   color: #86efac; }
+.badge-yellow  { background: rgba(234,179,8,0.15);   color: #fde68a; }
+.badge-red     { background: rgba(239,68,68,0.15);   color: #fca5a5; }
+.badge-gray    { background: rgba(148,163,184,0.12); color: #94a3b8; }
+.badge-blue    { background: rgba(59,130,246,0.15);  color: #93c5fd; }
+
+/* ================================================
+   Score / Progress Bar
+   ================================================ */
+.score-bar-track {
+  @apply w-full rounded-full;
+  height: 6px;
+  background: rgba(255,255,255,0.07);
+}
+.score-bar-fill {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #6366f1, #a855f7);
+  transition: width 0.6s ease;
+}
+
+/* ================================================
+   Stat Cards
+   ================================================ */
+.stat-card {
+  @apply glass p-5 rounded-xl flex flex-col gap-2;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(2,6,23,0.8);
+}
+
+/* ================================================
+   Sidebar Link (used in Sidebar.tsx)
+   ================================================ */
+.sidebar-link {
+  @apply flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-150 text-gray-400 text-sm font-medium;
+}
+.sidebar-link:hover {
+  background: rgba(255,255,255,0.06);
+  color: #e2e8f0;
+}
+.sidebar-link.active {
+  background: linear-gradient(135deg, rgba(99,102,241,0.25), rgba(168,85,247,0.15));
+  border-left: 2px solid #6366f1;
+  color: #c7d2fe;
+  box-shadow: 0 4px 20px rgba(99,102,241,0.08);
+}
+.sidebar-link .icon-wrap {
+  @apply w-8 h-8 flex items-center justify-center rounded-lg flex-shrink-0;
+  background: rgba(255,255,255,0.04);
+  transition: background 0.15s ease;
+}
+.sidebar-link:hover .icon-wrap,
+.sidebar-link.active .icon-wrap {
+  background: rgba(99,102,241,0.2);
+}
+
+/* ================================================
+   App Link
+   ================================================ */
 .app-link {
-  color: #e6eefc;
-  text-decoration: underline;
+  color: #818cf8;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.15s ease;
 }
+.app-link:hover { color: #a5b4fc; }
 
-/* small responsive fixes */
-@media (max-width:640px) {
-  .glass { border-radius: 12px; padding: 1rem; }
+/* ================================================
+   Animations
+   ================================================ */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in { animation: fade-in 0.35s ease both; }
+
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0 rgba(99,102,241,0.5); }
+  70%  { box-shadow: 0 0 0 8px rgba(99,102,241,0); }
+  100% { box-shadow: 0 0 0 0 rgba(99,102,241,0); }
+}
+.pulse-ring { animation: pulse-ring 2s infinite; }
+
+/* ================================================
+   Scrollbar
+   ================================================ */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); }
+::-webkit-scrollbar-thumb {
+  background: rgba(99,102,241,0.35);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(99,102,241,0.55); }
+
+/* ================================================
+   Responsive
+   ================================================ */
+@media (max-width: 640px) {
+  .glass { border-radius: 12px; }
 }

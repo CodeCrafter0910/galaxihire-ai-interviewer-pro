@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Sidebar from "@/components/Sidebar";
 import TopNav from "@/components/TopNav";
 import api from "@/lib/api";
+import toast from "react-hot-toast";
 
 interface Report {
   _id: string;
@@ -75,8 +76,7 @@ function ReportPageContent() {
       console.error("Failed to generate report:", error);
       setGenerating(false);
       setLoading(false);
-      // Show error message
-      alert("Failed to generate report. Please try again.");
+      toast.error("Failed to generate report. Please try again.");
     }
   }
 
@@ -105,7 +105,7 @@ function ReportPageContent() {
 
   function downloadPDF(pdfUrl: string) {
     if (!pdfUrl || pdfUrl === 'undefined') {
-      alert("PDF is still being generated. Please wait a few seconds and try again.");
+      toast("PDF is still being generated. Please wait a few seconds and try again.", { icon: "⏳" });
       return;
     }
     const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
@@ -247,37 +247,29 @@ function ReportPageContent() {
                 <h2 className="text-2xl font-bold text-white mb-6">{report.summary}</h2>
 
                 {/* Scores Grid */}
-                <div className="grid grid-cols-5 gap-4 mb-8">
-                  <div className="bg-gradient-to-br from-indigo-500/20 to-purple-500/20 p-4 rounded-xl border border-indigo-500/30">
-                    <div className="text-gray-300 text-sm mb-1">Overall</div>
-                    <div className="text-white text-3xl font-bold">
-                      {report.detailedScores.overall.toFixed(1)}
-                    </div>
-                  </div>
-                  <div className="bg-black/30 p-4 rounded-xl">
-                    <div className="text-gray-300 text-sm mb-1">Communication</div>
-                    <div className="text-white text-3xl font-bold">
-                      {report.detailedScores.communication.toFixed(1)}
-                    </div>
-                  </div>
-                  <div className="bg-black/30 p-4 rounded-xl">
-                    <div className="text-gray-300 text-sm mb-1">Technical</div>
-                    <div className="text-white text-3xl font-bold">
-                      {report.detailedScores.technical.toFixed(1)}
-                    </div>
-                  </div>
-                  <div className="bg-black/30 p-4 rounded-xl">
-                    <div className="text-gray-300 text-sm mb-1">Confidence</div>
-                    <div className="text-white text-3xl font-bold">
-                      {report.detailedScores.confidence.toFixed(1)}
-                    </div>
-                  </div>
-                  <div className="bg-black/30 p-4 rounded-xl">
-                    <div className="text-gray-300 text-sm mb-1">Coding</div>
-                    <div className="text-white text-3xl font-bold">
-                      {report.detailedScores.coding.toFixed(1)}
-                    </div>
-                  </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+                  {([
+                    { label: "Overall", key: "overall", accent: true },
+                    { label: "Communication", key: "communication", accent: false },
+                    { label: "Technical", key: "technical", accent: false },
+                    { label: "Confidence", key: "confidence", accent: false },
+                    { label: "Coding", key: "coding", accent: false },
+                  ] as { label: string; key: keyof typeof report.detailedScores; accent: boolean }[]).map(({ label, key, accent }) => {
+                    const val = report.detailedScores[key];
+                    return (
+                      <div key={key} className={`p-4 rounded-xl border ${
+                        accent
+                          ? "bg-gradient-to-br from-indigo-500/20 to-purple-500/15 border-indigo-500/30"
+                          : "bg-black/25 border-white/5"
+                      }`}>
+                        <div className="text-gray-400 text-xs mb-1">{label}</div>
+                        <div className="text-white text-2xl font-bold mb-2">{val.toFixed(1)}<span className="text-gray-500 text-sm">/10</span></div>
+                        <div className="score-bar-track">
+                          <div className="score-bar-fill" style={{ width: `${(val / 10) * 100}%` }} />
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
 
                 {/* Strengths */}

@@ -6,6 +6,7 @@ import Sidebar from "@/components/Sidebar";
 import TopNav from "@/components/TopNav";
 import VideoRecorder from "@/components/VideoRecorder";
 import api from "@/lib/api";
+import toast from "react-hot-toast";
 
 interface ChatMessage {
   from: string;
@@ -49,7 +50,7 @@ export default function InterviewPage() {
   // Handle resume upload
   async function handleResumeUpload() {
     if (!resumeFile) {
-      alert("Please select a resume file");
+      toast.error("Please select a resume file");
       return;
     }
 
@@ -74,7 +75,7 @@ export default function InterviewPage() {
       await startNewInterview(extractedSkills, res.data.resumeId);
     } catch (error: any) {
       console.error("Resume upload error:", error);
-      alert(error.response?.data?.error || "Failed to upload resume. Please try again.");
+      toast.error(error.response?.data?.error || "Failed to upload resume. Please try again.");
       setUploadingResume(false);
     }
   }
@@ -217,7 +218,7 @@ export default function InterviewPage() {
       setIsRecordingAudio(true);
     } catch (error) {
       console.error("Failed to start audio recording:", error);
-      alert("Could not access microphone. Please check permissions.");
+      toast.error("Could not access microphone. Please check permissions.");
     }
   }
 
@@ -243,7 +244,7 @@ export default function InterviewPage() {
     } catch (error) {
       console.error("Audio processing error:", error);
       setLoading(false);
-      alert("Failed to process audio. Please try again.");
+      toast.error("Failed to process audio. Please try again.");
     }
   }
 
