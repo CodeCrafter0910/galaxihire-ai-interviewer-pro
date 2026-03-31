@@ -1,19 +1,7 @@
 const router = require("express").Router();
-const rateLimit = require('express-rate-limit');
 const multer = require("multer");
 const auth = require("../middleware/auth");
 const ctrl = require("../controllers/resume.controller.js");
-
-// Per-route resume upload rate limiter (more generous than global API limiter)
-const uploadLimiter = rateLimit({
-    windowMs: 60 * 1000, // 1 minute
-    max: 30, // allow 30 resume uploads per minute (rare from one user/session)
-    standardHeaders: true,
-    legacyHeaders: false,
-    message: {
-        error: "Too many resume upload requests. Please wait a moment and try again.",
-    },
-});
 
 // Multer config for file upload (memory storage)
 const upload = multer({
@@ -33,7 +21,7 @@ const upload = multer({
 });
 
 // Upload and parse resume
-router.post("/upload", auth, uploadLimiter, upload.single("resume"), ctrl.uploadResume);
+router.post("/upload", auth, upload.single("resume"), ctrl.uploadResume);
 
 // Get all user resumes
 router.get("/list", auth, ctrl.getUserResumes);
