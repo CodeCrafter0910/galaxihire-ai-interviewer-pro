@@ -51,7 +51,7 @@ exports.uploadResume = async (req, res) => {
       education: parsed.education,
       projects: parsed.projects || [],
       certifications: parsed.certifications || [],
-      extractedText: parsed.text,
+      extractedText: parsed.text || parsed.extractedText || "No text extracted",
       fileSize: file.size,
       mimeType: file.mimetype
     });
