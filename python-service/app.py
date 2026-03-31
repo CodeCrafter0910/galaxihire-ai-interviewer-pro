@@ -9,9 +9,27 @@ app = FastAPI()
 
 @app.post("/resume/parse")
 async def parse_resume_api(file: UploadFile = File(...)):
-    contents = await file.read()
-    result = parse_resume(contents, file.filename)
-    return {"parsed": result}
+    try:
+        contents = await file.read()
+        result = parse_resume(contents, file.filename)
+        return {"parsed": result}
+    except Exception as e:
+        # Ensure the backend gets a structured error response
+        return {
+            "parsed": {
+                "success": False,
+                "error": f"Resume parse service error: {str(e)}",
+                "text": "",
+                "skills": [],
+                "name": None,
+                "email": None,
+                "phone": None,
+                "experience_years": 0,
+                "education": "Not specified",
+                "projects": [],
+                "certifications": []
+            }
+        }
 
 @app.post("/interview/next")
 async def interview_next(payload: dict):

@@ -19,6 +19,7 @@ exports.uploadResume = async (req, res) => {
     }
 
     // Send to Python parser
+    logger.info(`Resume parser endpoint: ${PY_URL}/resume/parse for user=${userId}, file=${file.originalname}`);
     const formData = new FormData();
     formData.append("file", file.buffer, {
       filename: file.originalname,
@@ -74,6 +75,17 @@ exports.uploadResume = async (req, res) => {
 
   } catch (error) {
     logger.error("Resume Upload Error:", error);
+
+    // Axios/Python connector issue
+    if (error.isAxiosError) {
+      const upstreamError = error.response?.data?.error || error.message;
+      const statusCode = error.response?.status || 502;
+      return res.status(statusCode).json({
+        error: "Failed to process resume",
+        details: upstreamError
+      });
+    }
+
     res.status(500).json({
       error: "Failed to process resume",
       details: error.response?.data || error.message

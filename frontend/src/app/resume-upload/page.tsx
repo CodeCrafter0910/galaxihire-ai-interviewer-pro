@@ -89,7 +89,8 @@ export default function ResumeUploadPage() {
       fetchResumes();
 
     } catch (err: any) {
-      setError(err.response?.data?.error || "Failed to upload resume");
+      const backendMessage = err.response?.data?.error || err.response?.data?.details;
+      setError(backendMessage || err.message || "Failed to upload resume");
       setUploading(false);
     }
   }
