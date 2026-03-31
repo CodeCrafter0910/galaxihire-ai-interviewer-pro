@@ -18,7 +18,7 @@ services:
       - key: OPENAI_API_KEY
         sync: false
       - key: PYTHON_SERVICE_URL
-        value: https://galaxihire-python.onrender.com
+        value: https://galaxihire-python-0910.onrender.com
       - key: FRONTEND_URL
         value: https://galaxihire-ai-interviewer-pro-0910.vercel.app
       - key: PORT
