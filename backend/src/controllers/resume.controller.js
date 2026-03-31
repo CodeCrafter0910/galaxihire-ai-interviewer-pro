@@ -11,7 +11,7 @@ const PY_URL = process.env.PYTHON_SERVICE_URL || "http://localhost:8000";
  */
 exports.uploadResume = async (req, res) => {
   try {
-    const userId = req.user._id;
+    const userId = req.user.id;
     const file = req.file;
 
     if (!file) {
@@ -99,7 +99,7 @@ exports.uploadResume = async (req, res) => {
  */
 exports.getUserResumes = async (req, res) => {
   try {
-    const userId = req.user._id;
+    const userId = req.user.id;
 
     const resumes = await Resume.find({ userId })
       .sort({ createdAt: -1 })
@@ -120,7 +120,7 @@ exports.getUserResumes = async (req, res) => {
 exports.getResume = async (req, res) => {
   try {
     const { id } = req.params;
-    const userId = req.user._id;
+    const userId = req.user.id;
 
     const resume = await Resume.findOne({ _id: id, userId });
 
@@ -143,7 +143,7 @@ exports.getResume = async (req, res) => {
 exports.deleteResume = async (req, res) => {
   try {
     const { id } = req.params;
-    const userId = req.user._id;
+    const userId = req.user.id;
 
     const resume = await Resume.findOneAndDelete({ _id: id, userId });
 

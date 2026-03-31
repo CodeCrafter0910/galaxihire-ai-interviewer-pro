@@ -56,7 +56,10 @@ app.use("/reports", express.static(path.join(__dirname, "reports")));
 
 connectDB();
 
-// Apply rate limit middleware
+// Direct resume route first, bypassing global limiter to avoid false 429 during valid uploads
+app.use('/api/resume', resumeRoutes);
+
+// Apply rate limit middleware for other API traffic
 app.use('/api', apiLimiter);
 
 // Health check (KEEP BEFORE listen)
@@ -71,14 +74,13 @@ app.get('/', (req, res) => {
 
 // API routes
 app.use('/api/auth', authRoutes);
-app.use('/api/resume', resumeRoutes);
 app.use('/api/interview', interviewRoutes);
 app.use('/api/code', codeRoutes);
 app.use('/api/report', reportRoutes);
 app.use('/api/video', videoRoutes);
 
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 4005;
 
 app.listen(PORT, () => {
   logger.info(`Server running on http://localhost:${PORT}`);
