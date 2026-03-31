@@ -1,10 +1,8 @@
 const rateLimit = require('express-rate-limit');
 
-const apiLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 300, // allow 300 requests per 15 minutes
-  standardHeaders: true,
-  legacyHeaders: false,
-});
+// Disable rate limiting for now - will enable per-route as needed
+const apiLimiter = (req, res, next) => {
+  next(); // Pass through without limiting
+};
 
 module.exports = apiLimiter;
