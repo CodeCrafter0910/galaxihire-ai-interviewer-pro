@@ -347,83 +347,137 @@ export default function InterviewPage() {
   // Resume Upload Screen
   if (showResumeUpload) {
     return (
-      <div className="min-h-screen flex bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-[#071026] via-[#06071b] to-[#02040a]">
+      <div className="min-h-screen flex bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-[#071026] via-[#06071b] to-[#02040a] relative overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="fixed inset-0 -z-10">
+          <div className="absolute top-20 left-10 w-64 h-64 bg-indigo-500/10 rounded-full filter blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-20 right-10 w-80 h-80 bg-purple-500/10 rounded-full filter blur-3xl animate-pulse animation-delay-2000"></div>
+        </div>
+
         <Sidebar />
         <main className="flex-1 p-8">
           <div className="max-w-2xl mx-auto">
             <TopNav />
 
-            <div className="mt-12 text-center">
-              <h1 className="text-4xl font-bold text-white mb-3">Upload Your Resume</h1>
-              <p className="text-gray-300 text-lg">
-                Help the AI personalize your technical interview based on your skills
+            <div className="mt-12 text-center animate-fade-in">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-xs font-semibold mb-6 uppercase tracking-widest backdrop-blur-sm">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+                </span>
+                Step 1 of 2
+              </div>
+              <h1 className="text-5xl font-black text-white mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white via-indigo-200 to-purple-200">
+                Upload Your Resume
+              </h1>
+              <p className="text-gray-300 text-lg max-w-xl mx-auto">
+                Help the AI personalize your technical interview based on your skills and experience
               </p>
             </div>
 
-            <div className="glass p-8 rounded-2xl mt-8">
-              <div className="mb-6">
-                <div className="border-2 border-dashed border-white/20 rounded-xl p-8 text-center hover:border-indigo-500/50 transition cursor-pointer"
-                  onClick={() => document.getElementById('resume-file')?.click()}
-                  onDragOver={(e) => e.preventDefault()}
-                  onDrop={(e) => {
-                    e.preventDefault();
-                    const file = e.dataTransfer.files[0];
-                    if (file && (file.type === 'application/pdf' || file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')) {
-                      setResumeFile(file);
-                    }
-                  }}
-                >
-                  <div className="text-6xl mb-4">📄</div>
-                  {resumeFile ? (
-                    <>
-                      <p className="text-green-400 font-semibold mb-2">✓ {resumeFile.name}</p>
-                      <p className="text-gray-400 text-sm">Click to change file</p>
-                    </>
-                  ) : (
-                    <>
-                      <p className="text-white font-semibold mb-2">Click to upload or drag & drop</p>
-                      <p className="text-gray-400 text-sm">PDF or DOCX (Max 5MB)</p>
-                    </>
-                  )}
-                  <input
-                    id="resume-file"
-                    type="file"
-                    accept=".pdf,.docx"
-                    className="hidden"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) setResumeFile(file);
+            <div className="glass p-8 rounded-2xl mt-8 border border-white/10 hover:border-indigo-500/30 transition-all duration-300 group relative overflow-hidden">
+              {/* Glow effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              <div className="relative z-10">
+                <div className="mb-6">
+                  <div className="border-2 border-dashed border-white/20 rounded-xl p-10 text-center hover:border-indigo-500/50 hover:bg-indigo-500/5 transition-all duration-300 cursor-pointer group/upload relative overflow-hidden"
+                    onClick={() => document.getElementById('resume-file')?.click()}
+                    onDragOver={(e) => e.preventDefault()}
+                    onDrop={(e) => {
+                      e.preventDefault();
+                      const file = e.dataTransfer.files[0];
+                      if (file && (file.type === 'application/pdf' || file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')) {
+                        setResumeFile(file);
+                      }
                     }}
-                  />
-                </div>
-              </div>
+                  >
+                    {/* Animated corner decorations */}
+                    <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-indigo-500/30 group-hover/upload:border-indigo-500/60 transition-colors"></div>
+                    <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-indigo-500/30 group-hover/upload:border-indigo-500/60 transition-colors"></div>
+                    <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-indigo-500/30 group-hover/upload:border-indigo-500/60 transition-colors"></div>
+                    <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-indigo-500/30 group-hover/upload:border-indigo-500/60 transition-colors"></div>
 
-              <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 mb-6">
-                <p className="text-blue-300 text-sm">
-                  <span className="font-bold">📌 Note:</span> Your resume will be used to extract skills for <span className="font-bold">Technical Round</span> questions. HR and Coding rounds will have general questions.
+                    <div className="text-7xl mb-4 group-hover/upload:scale-110 transition-transform duration-300">📄</div>
+                    {resumeFile ? (
+                      <>
+                        <p className="text-green-400 font-bold mb-2 text-lg flex items-center justify-center gap-2">
+                          <span className="text-2xl">✓</span> {resumeFile.name}
+                        </p>
+                        <p className="text-gray-400 text-sm">Click to change file or drag & drop a new one</p>
+                      </>
+                    ) : (
+                      <>
+                        <p className="text-white font-bold mb-2 text-lg">Click to upload or drag & drop</p>
+                        <p className="text-gray-400 text-sm mb-3">PDF or DOCX (Max 5MB)</p>
+                        <div className="flex items-center justify-center gap-4 text-xs text-gray-500">
+                          <span className="flex items-center gap-1">
+                            <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                            Secure Upload
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+                            AI Parsing
+                          </span>
+                        </div>
+                      </>
+                    )}
+                    <input
+                      id="resume-file"
+                      type="file"
+                      accept=".pdf,.docx"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) setResumeFile(file);
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <div className="bg-gradient-to-r from-blue-500/10 to-indigo-500/10 border border-blue-500/30 rounded-xl p-5 mb-6 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-20 h-20 bg-blue-500/10 rounded-full filter blur-2xl"></div>
+                  <p className="text-blue-300 text-sm relative z-10">
+                    <span className="font-bold text-base">📌 How it works:</span>
+                    <br />
+                    <span className="text-blue-200/80">Your resume will be analyzed by AI to extract skills for <span className="font-bold text-blue-200">Technical Round</span> questions. Aptitude, Coding, and HR rounds use standardized questions.</span>
+                  </p>
+                </div>
+
+                <div className="flex gap-3">
+                  <button
+                    onClick={handleResumeUpload}
+                    disabled={!resumeFile || uploadingResume}
+                    className="flex-1 group/btn relative overflow-hidden px-8 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white rounded-xl font-bold text-lg transition-all duration-200 shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
+                  >
+                    {uploadingResume ? (
+                      <>
+                        <div className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"></div>
+                        Parsing Resume...
+                      </>
+                    ) : (
+                      <>
+                        Start Interview with Resume
+                        <svg className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                      </>
+                    )}
+                  </button>
+                  <button
+                    onClick={skipResumeUpload}
+                    disabled={uploadingResume}
+                    className="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-gray-300 hover:text-white rounded-xl font-bold text-lg transition-all duration-200 backdrop-blur-sm disabled:opacity-50"
+                  >
+                    Skip
+                  </button>
+                </div>
+
+                <p className="text-gray-500 text-xs text-center mt-4 flex items-center justify-center gap-2">
+                  <span className="w-1.5 h-1.5 bg-gray-500 rounded-full"></span>
+                  Skipping will use default skills (JavaScript, React, Node.js)
                 </p>
               </div>
-
-              <div className="flex gap-3">
-                <button
-                  onClick={handleResumeUpload}
-                  disabled={!resumeFile || uploadingResume}
-                  className="flex-1 btn-primary py-4 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {uploadingResume ? "Parsing Resume..." : "Start Interview with Resume"}
-                </button>
-                <button
-                  onClick={skipResumeUpload}
-                  disabled={uploadingResume}
-                  className="px-6 py-4 bg-white/5 hover:bg-white/10 text-gray-300 rounded-lg transition disabled:opacity-50"
-                >
-                  Skip
-                </button>
-              </div>
-
-              <p className="text-gray-500 text-xs text-center mt-4">
-                Skipping will use default skills (JavaScript, React, Node.js)
-              </p>
             </div>
           </div>
         </main>
@@ -433,26 +487,39 @@ export default function InterviewPage() {
 
   // Main Interview Screen
   return (
-    <div className="min-h-screen flex bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-[#071026] via-[#06071b] to-[#02040a]">
+    <div className="min-h-screen flex bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-[#071026] via-[#06071b] to-[#02040a] relative overflow-hidden">
+      {/* Animated Background */}
+      <div className="fixed inset-0 -z-10">
+        <div className="absolute top-20 right-20 w-96 h-96 bg-indigo-500/10 rounded-full filter blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 left-20 w-96 h-96 bg-purple-500/10 rounded-full filter blur-3xl animate-pulse animation-delay-2000"></div>
+      </div>
+
       <Sidebar />
       <main className="flex-1 p-8">
         <div className="max-w-6xl mx-auto">
           <TopNav />
 
-          <div className="mt-6 flex items-center justify-between">
+          <div className="mt-6 flex items-center justify-between animate-fade-in">
             <div>
-              <h1 className="text-3xl font-bold text-white">AI Interview</h1>
-              <p className="text-gray-300 mt-1">
-                Answer the questions to progress through the interview
+              <h1 className="text-4xl font-black text-white mb-2 bg-clip-text text-transparent bg-gradient-to-r from-white via-indigo-200 to-purple-200">
+                AI Interview Session
+              </h1>
+              <p className="text-gray-300 mt-1 text-lg">
+                Answer the questions to progress through the interview stages
               </p>
               {skills.length > 0 && (
-                <div className="flex gap-2 mt-2 flex-wrap">
-                  <span className="text-xs text-gray-400">Your skills:</span>
+                <div className="flex gap-2 mt-3 flex-wrap items-center">
+                  <span className="text-xs text-gray-400 font-semibold">Your Skills:</span>
                   {skills.slice(0, 5).map((skill, i) => (
-                    <span key={i} className="text-xs px-2 py-1 bg-indigo-500/20 text-indigo-300 rounded">
+                    <span key={i} className="text-xs px-3 py-1.5 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 text-indigo-300 rounded-full border border-indigo-500/30 font-medium hover:scale-105 transition-transform">
                       {skill}
                     </span>
                   ))}
+                  {skills.length > 5 && (
+                    <span className="text-xs px-3 py-1.5 bg-white/5 text-gray-400 rounded-full border border-white/10">
+                      +{skills.length - 5} more
+                    </span>
+                  )}
                 </div>
               )}
             </div>
@@ -461,7 +528,7 @@ export default function InterviewPage() {
               {!isComplete && sessionId && (
                 <button
                   onClick={endInterview}
-                  className="px-4 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-300 rounded-lg transition"
+                  className="px-5 py-2.5 bg-gradient-to-r from-red-500/20 to-red-600/20 hover:from-red-500/30 hover:to-red-600/30 text-red-300 rounded-xl transition-all duration-200 border border-red-500/30 hover:border-red-500/50 font-semibold hover:scale-105"
                 >
                   End Interview
                 </button>
@@ -470,220 +537,309 @@ export default function InterviewPage() {
           </div>
 
           {/* Chat Box */}
-          <div className="glass p-6 rounded-xl h-[40vh] overflow-y-auto mt-6">
-            {messages.length === 0 && loading && (
-              <div className="flex items-center justify-center h-full">
-                <div className="text-gray-400">Initializing interview...</div>
-              </div>
-            )}
-
-            {(() => {
-              // Show only the current question (last AI message) and latest user answer
-              const lastAiIndex = messages.findLastIndex(m => m.from === 'ai');
-              const lastUserIndex = messages.findLastIndex(m => m.from === 'user');
-
-              const messagesToShow: Array<ChatMessage & { originalIndex: number }> = [];
-
-              // Add last AI question (stripped of options if MCQ)
-              if (lastAiIndex !== -1) {
-                const aiMsg = messages[lastAiIndex];
-                const displayText = mcqOptions.length > 0 ? stripMCQOptions(aiMsg.text) : aiMsg.text;
-                messagesToShow.push({
-                  ...aiMsg,
-                  text: displayText,
-                  originalIndex: lastAiIndex
-                });
-              }
-
-              // Add last user answer if it came after the AI question
-              if (lastUserIndex !== -1 && lastUserIndex > lastAiIndex) {
-                messagesToShow.push({
-                  ...messages[lastUserIndex],
-                  originalIndex: lastUserIndex
-                });
-              }
-
-              return messagesToShow.map((m, i) => (
-                <div
-                  key={m.originalIndex}
-                  className={`mb-4 p-4 rounded-xl max-w-[80%] ${m.from === "user"
-                    ? "ml-auto bg-gradient-to-r from-indigo-600/40 to-purple-600/40 text-white"
-                    : m.from === "system"
-                      ? "bg-yellow-500/10 text-yellow-200 border border-yellow-500/20"
-                      : "bg-white/10 text-gray-200"
-                    }`}
-                >
-                  {m.from === "ai" && (
-                    <div className="text-xs text-gray-400 mb-1">🤖 AI Interviewer</div>
-                  )}
-                  {m.from === "user" && (
-                    <div className="text-xs text-gray-300 mb-1">You</div>
-                  )}
-                  <div className="whitespace-pre-wrap">{m.text}</div>
-                </div>
-              ));
-            })()}
-
-            {loading && (
-              <div className="p-4 bg-white/10 rounded-xl w-fit text-gray-200 flex items-center gap-2">
-                <div className="animate-spin h-4 w-4 border-2 border-gray-400 border-t-transparent rounded-full"></div>
-                AI is thinking...
-              </div>
-            )}
-
-            {isComplete && scores && (
-              <div className="mt-4 p-6 bg-gradient-to-r from-green-500/20 to-blue-500/20 rounded-xl border border-green-500/30">
-                <h3 className="text-xl font-bold text-white mb-3">Interview Complete! 🎉</h3>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-black/20 p-3 rounded-lg">
-                    <div className="text-gray-400 text-sm">Communication</div>
-                    <div className="text-white text-xl font-bold">
-                      {scores.communication?.toFixed(1) || '0'}/10
-                    </div>
-                  </div>
-                  <div className="bg-black/20 p-3 rounded-lg">
-                    <div className="text-gray-400 text-sm">Technical</div>
-                    <div className="text-white text-xl font-bold">
-                      {scores.technical?.toFixed(1) || '0'}/10
-                    </div>
-                  </div>
-                  <div className="bg-black/20 p-3 rounded-lg">
-                    <div className="text-gray-400 text-sm">Confidence</div>
-                    <div className="text-white text-xl font-bold">
-                      {scores.confidence?.toFixed(1) || '0'}/10
-                    </div>
-                  </div>
-                  <div className="bg-black/20 p-3 rounded-lg">
-                    <div className="text-gray-400 text-sm">Overall</div>
-                    <div className="text-white text-xl font-bold">
-                      {scores.overall?.toFixed(1) || '0'}/10
-                    </div>
+          <div className="glass p-6 rounded-2xl h-[40vh] overflow-y-auto mt-6 border border-white/10 hover:border-indigo-500/20 transition-all duration-300 relative group">
+            {/* Glow effect */}
+            <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none"></div>
+            
+            <div className="relative z-10">
+              {messages.length === 0 && loading && (
+                <div className="flex items-center justify-center h-full">
+                  <div className="text-center">
+                    <div className="animate-spin h-10 w-10 border-3 border-indigo-500 border-t-transparent rounded-full mx-auto mb-3"></div>
+                    <div className="text-gray-400 font-medium">Initializing AI interview...</div>
                   </div>
                 </div>
-                <p className="text-gray-300 mt-3 text-sm">Redirecting to your detailed report...</p>
-              </div>
-            )}
+              )}
+
+              {(() => {
+                // Show only the current question (last AI message) and latest user answer
+                const lastAiIndex = messages.findLastIndex(m => m.from === 'ai');
+                const lastUserIndex = messages.findLastIndex(m => m.from === 'user');
+
+                const messagesToShow: Array<ChatMessage & { originalIndex: number }> = [];
+
+                // Add last AI question (stripped of options if MCQ)
+                if (lastAiIndex !== -1) {
+                  const aiMsg = messages[lastAiIndex];
+                  const displayText = mcqOptions.length > 0 ? stripMCQOptions(aiMsg.text) : aiMsg.text;
+                  messagesToShow.push({
+                    ...aiMsg,
+                    text: displayText,
+                    originalIndex: lastAiIndex
+                  });
+                }
+
+                // Add last user answer if it came after the AI question
+                if (lastUserIndex !== -1 && lastUserIndex > lastAiIndex) {
+                  messagesToShow.push({
+                    ...messages[lastUserIndex],
+                    originalIndex: lastUserIndex
+                  });
+                }
+
+                return messagesToShow.map((m, i) => (
+                  <div
+                    key={m.originalIndex}
+                    className={`mb-4 p-5 rounded-xl max-w-[85%] transition-all duration-300 hover:scale-[1.02] ${m.from === "user"
+                      ? "ml-auto bg-gradient-to-r from-indigo-600/40 to-purple-600/40 text-white border border-indigo-500/30 shadow-lg shadow-indigo-500/20"
+                      : m.from === "system"
+                        ? "bg-gradient-to-r from-yellow-500/10 to-amber-500/10 text-yellow-200 border border-yellow-500/30 shadow-lg shadow-yellow-500/10"
+                        : "bg-gradient-to-br from-white/10 to-white/5 text-gray-200 border border-white/10 shadow-lg"
+                      }`}
+                  >
+                    {m.from === "ai" && (
+                      <div className="text-xs text-indigo-300 mb-2 font-semibold flex items-center gap-2">
+                        <span className="w-6 h-6 rounded-full bg-indigo-500/20 flex items-center justify-center">🤖</span>
+                        AI Interviewer
+                      </div>
+                    )}
+                    {m.from === "user" && (
+                      <div className="text-xs text-purple-300 mb-2 font-semibold flex items-center gap-2 justify-end">
+                        You
+                        <span className="w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center">👤</span>
+                      </div>
+                    )}
+                    <div className="whitespace-pre-wrap leading-relaxed">{m.text}</div>
+                  </div>
+                ));
+              })()}
+
+              {loading && (
+                <div className="p-5 bg-gradient-to-r from-white/10 to-white/5 rounded-xl w-fit text-gray-200 flex items-center gap-3 border border-white/10 shadow-lg">
+                  <div className="animate-spin h-5 w-5 border-2 border-indigo-400 border-t-transparent rounded-full"></div>
+                  <span className="font-medium">AI is analyzing your response...</span>
+                </div>
+              )}
+
+              {isComplete && scores && (
+                <div className="mt-4 p-8 bg-gradient-to-br from-green-500/20 via-blue-500/15 to-purple-500/20 rounded-2xl border border-green-500/30 shadow-2xl relative overflow-hidden group/complete">
+                  {/* Animated background */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 via-blue-500/10 to-purple-500/10 opacity-0 group-hover/complete:opacity-100 transition-opacity duration-500"></div>
+                  
+                  <div className="relative z-10">
+                    <h3 className="text-2xl font-black text-white mb-5 flex items-center gap-3">
+                      <span className="text-4xl">🎉</span>
+                      Interview Complete!
+                    </h3>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="bg-black/30 p-4 rounded-xl border border-white/10 hover:border-green-500/30 transition-all hover:scale-105">
+                        <div className="text-gray-400 text-sm mb-1 font-medium">Communication</div>
+                        <div className="text-white text-2xl font-black">
+                          {scores.communication?.toFixed(1) || '0'}<span className="text-gray-500 text-lg">/10</span>
+                        </div>
+                      </div>
+                      <div className="bg-black/30 p-4 rounded-xl border border-white/10 hover:border-blue-500/30 transition-all hover:scale-105">
+                        <div className="text-gray-400 text-sm mb-1 font-medium">Technical</div>
+                        <div className="text-white text-2xl font-black">
+                          {scores.technical?.toFixed(1) || '0'}<span className="text-gray-500 text-lg">/10</span>
+                        </div>
+                      </div>
+                      <div className="bg-black/30 p-4 rounded-xl border border-white/10 hover:border-purple-500/30 transition-all hover:scale-105">
+                        <div className="text-gray-400 text-sm mb-1 font-medium">Confidence</div>
+                        <div className="text-white text-2xl font-black">
+                          {scores.confidence?.toFixed(1) || '0'}<span className="text-gray-500 text-lg">/10</span>
+                        </div>
+                      </div>
+                      <div className="bg-gradient-to-br from-indigo-500/30 to-purple-500/30 p-4 rounded-xl border border-indigo-500/50 hover:scale-105 transition-all">
+                        <div className="text-indigo-300 text-sm mb-1 font-bold">Overall Score</div>
+                        <div className="text-white text-2xl font-black">
+                          {scores.overall?.toFixed(1) || '0'}<span className="text-gray-300 text-lg">/10</span>
+                        </div>
+                      </div>
+                    </div>
+                    <p className="text-gray-300 mt-5 text-sm flex items-center gap-2 justify-center">
+                      <div className="animate-spin h-4 w-4 border-2 border-green-400 border-t-transparent rounded-full"></div>
+                      Generating your detailed performance report...
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Answer Mode Selector */}
           {!isComplete && (
-            <div className="mt-4 flex gap-2">
+            <div className="mt-5 flex gap-3">
               <button
                 onClick={() => setAnswerMode('text')}
-                className={`px-4 py-2 rounded-lg transition ${answerMode === 'text' ? 'bg-indigo-500 text-white' : 'bg-white/5 text-gray-300 hover:bg-white/10'}`}
+                className={`flex-1 px-6 py-3.5 rounded-xl transition-all duration-200 font-semibold flex items-center justify-center gap-2 ${answerMode === 'text' 
+                  ? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg shadow-indigo-500/30 scale-105' 
+                  : 'bg-white/5 text-gray-300 hover:bg-white/10 border border-white/10 hover:border-indigo-500/30'}`}
               >
-                💬 Text
+                <span className="text-xl">💬</span>
+                Text Answer
               </button>
               <button
                 onClick={() => setAnswerMode('audio')}
-                className={`px-4 py-2 rounded-lg transition ${answerMode === 'audio' ? 'bg-indigo-500 text-white' : 'bg-white/5 text-gray-300 hover:bg-white/10'}`}
+                className={`flex-1 px-6 py-3.5 rounded-xl transition-all duration-200 font-semibold flex items-center justify-center gap-2 ${answerMode === 'audio' 
+                  ? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg shadow-indigo-500/30 scale-105' 
+                  : 'bg-white/5 text-gray-300 hover:bg-white/10 border border-white/10 hover:border-indigo-500/30'}`}
               >
-                🎤 Audio
+                <span className="text-xl">🎤</span>
+                Audio Answer
               </button>
               <button
                 onClick={() => setAnswerMode('video')}
-                className={`px-4 py-2 rounded-lg transition ${answerMode === 'video' ? 'bg-indigo-500 text-white' : 'bg-white/5 text-gray-300 hover:bg-white/10'}`}
+                className={`flex-1 px-6 py-3.5 rounded-xl transition-all duration-200 font-semibold flex items-center justify-center gap-2 ${answerMode === 'video' 
+                  ? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg shadow-indigo-500/30 scale-105' 
+                  : 'bg-white/5 text-gray-300 hover:bg-white/10 border border-white/10 hover:border-indigo-500/30'}`}
               >
-                📹 Video
+                <span className="text-xl">📹</span>
+                Video Answer
               </button>
             </div>
           )}
 
           {/* Input Area Based on Mode */}
           {!isComplete && (
-            <div className="mt-4">
+            <div className="mt-5">
               {/* MCQ Options for Aptitude Round */}
               {stage === 'aptitude' && mcqOptions.length > 0 ? (
-                <div className="glass p-6 rounded-xl">
-                  <h4 className="text-gray-300 text-sm mb-4 font-semibold">Select your answer:</h4>
-                  <div className="grid grid-cols-1 gap-3">
-                    {mcqOptions.map((option, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => handleOptionSelect(option)}
-                        disabled={loading}
-                        className={`p-4 rounded-lg text-left transition-all font-medium ${selectedOption === option
-                          ? 'bg-indigo-500 text-white ring-2 ring-indigo-400 shadow-lg'
-                          : 'bg-white/5 hover:bg-indigo-500/20 text-gray-200 hover:ring-2 hover:ring-indigo-500/50'
-                          } ${loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
-                      >
-                        {option}
-                      </button>
-                    ))}
+                <div className="glass p-8 rounded-2xl border border-white/10 hover:border-indigo-500/20 transition-all duration-300 relative group">
+                  {/* Glow effect */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none"></div>
+                  
+                  <div className="relative z-10">
+                    <h4 className="text-gray-300 text-sm mb-5 font-bold flex items-center gap-2 uppercase tracking-wider">
+                      <span className="w-8 h-8 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-300">✓</span>
+                      Select your answer:
+                    </h4>
+                    <div className="grid grid-cols-1 gap-4">
+                      {mcqOptions.map((option, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => handleOptionSelect(option)}
+                          disabled={loading}
+                          className={`group/option p-5 rounded-xl text-left transition-all duration-200 font-medium relative overflow-hidden ${selectedOption === option
+                            ? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white ring-2 ring-indigo-400 shadow-xl shadow-indigo-500/30 scale-105'
+                            : 'bg-white/5 hover:bg-indigo-500/10 text-gray-200 hover:ring-2 hover:ring-indigo-500/30 border border-white/10 hover:border-indigo-500/30'
+                            } ${loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:scale-102'}`}
+                        >
+                          {/* Corner decoration */}
+                          {selectedOption === option && (
+                            <div className="absolute top-0 right-0 w-12 h-12 bg-white/10 rounded-bl-full"></div>
+                          )}
+                          <span className="relative z-10">{option}</span>
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Next Button for MCQ */}
+                    {selectedOption && !loading && (
+                      <div className="mt-8 flex justify-end">
+                        <button
+                          onClick={submitMCQAnswer}
+                          className="group/btn px-10 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white rounded-xl font-bold text-lg transition-all duration-200 shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:scale-105 flex items-center gap-3"
+                        >
+                          Next Question
+                          <svg className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                          </svg>
+                        </button>
+                      </div>
+                    )}
+
+                    {loading && (
+                      <div className="mt-6 text-center text-gray-400 text-sm flex items-center justify-center gap-3 bg-indigo-500/10 py-4 rounded-xl border border-indigo-500/20">
+                        <div className="animate-spin h-5 w-5 border-2 border-indigo-500 border-t-transparent rounded-full"></div>
+                        <span className="font-medium">Processing your answer...</span>
+                      </div>
+                    )}
                   </div>
-
-                  {/* Next Button for MCQ */}
-                  {selectedOption && !loading && (
-                    <div className="mt-6 flex justify-end">
-                      <button
-                        onClick={submitMCQAnswer}
-                        className="btn-primary px-8 py-3 flex items-center gap-2 group"
-                      >
-                        Next Question
-                        <span className="group-hover:translate-x-1 transition-transform">→</span>
-                      </button>
-                    </div>
-                  )}
-
-                  {loading && (
-                    <div className="mt-4 text-center text-gray-400 text-sm flex items-center justify-center gap-2">
-                      <div className="animate-spin h-4 w-4 border-2 border-indigo-500 border-t-transparent rounded-full"></div>
-                      Processing your answer...
-                    </div>
-                  )}
                 </div>
               ) : (
                 // Regular input for non-MCQ questions
                 <>
                   {answerMode === 'text' && (
-                    <div className="space-y-3">
-                      <textarea
-                        value={input}
-                        onChange={(e) => setInput(e.target.value)}
-                        onKeyPress={handleKeyPress}
-                        className="w-full p-4 rounded-xl bg-white/5 border border-white/10 text-gray-100 resize-none focus:outline-none focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20"
-                        placeholder="Type your answer here... (Press Enter to send)"
-                        rows={4}
-                        disabled={loading}
-                      />
-                      <div className="flex justify-end">
+                    <div className="space-y-4">
+                      <div className="glass p-6 rounded-2xl border border-white/10 hover:border-indigo-500/20 transition-all duration-300 group relative overflow-hidden">
+                        {/* Glow effect */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none"></div>
+                        
+                        <textarea
+                          value={input}
+                          onChange={(e) => setInput(e.target.value)}
+                          onKeyPress={handleKeyPress}
+                          className="w-full p-0 bg-transparent border-none text-gray-100 resize-none focus:outline-none text-lg leading-relaxed placeholder-gray-500 relative z-10"
+                          placeholder="Type your answer here... (Press Enter to send)"
+                          rows={5}
+                          disabled={loading}
+                        />
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <p className="text-gray-500 text-xs flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 bg-gray-500 rounded-full"></span>
+                          Press Enter to send or click the button
+                        </p>
                         <button
                           onClick={sendTextAnswer}
                           disabled={loading || !input.trim()}
-                          className="btn-primary px-6 py-2.5 disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="group/btn px-8 py-3.5 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white rounded-xl font-bold transition-all duration-200 shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center gap-2"
                         >
-                          {loading ? "Sending..." : "Send Answer"}
+                          {loading ? (
+                            <>
+                              <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>
+                              Sending...
+                            </>
+                          ) : (
+                            <>
+                              Send Answer
+                              <svg className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                              </svg>
+                            </>
+                          )}
                         </button>
                       </div>
                     </div>
                   )}
 
                   {answerMode === 'audio' && (
-                    <div className="glass p-6 rounded-xl">
-                      {!isRecordingAudio ? (
-                        <button
-                          onClick={startAudioRecording}
-                          disabled={loading}
-                          className="w-full py-4 bg-green-500/20 hover:bg-green-500/30 text-green-300 rounded-xl font-bold transition disabled:opacity-50"
-                        >
-                          🎤 Start Audio Recording
-                        </button>
-                      ) : (
-                        <button
-                          onClick={stopAudioRecording}
-                          className="w-full py-4 bg-red-600/30 hover:bg-red-600/40 text-white rounded-xl font-bold animate-pulse"
-                        >
-                          ⏹ Stop Recording
-                        </button>
-                      )}
-                      <p className="text-gray-400 text-sm text-center mt-2">
-                        {isRecordingAudio ? "Speak clearly into your microphone" : "Click to record your answer"}
-                      </p>
+                    <div className="glass p-8 rounded-2xl border border-white/10 hover:border-green-500/20 transition-all duration-300 group relative overflow-hidden">
+                      {/* Glow effect */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none"></div>
+                      
+                      <div className="relative z-10">
+                        {!isRecordingAudio ? (
+                          <button
+                            onClick={startAudioRecording}
+                            disabled={loading}
+                            className="w-full py-6 bg-gradient-to-r from-green-500/20 to-emerald-500/20 hover:from-green-500/30 hover:to-emerald-500/30 text-green-300 rounded-xl font-bold text-lg transition-all duration-200 border border-green-500/30 hover:border-green-500/50 disabled:opacity-50 hover:scale-105 flex items-center justify-center gap-3 group/btn"
+                          >
+                            <span className="text-3xl group-hover/btn:scale-110 transition-transform">🎤</span>
+                            Start Audio Recording
+                          </button>
+                        ) : (
+                          <button
+                            onClick={stopAudioRecording}
+                            className="w-full py-6 bg-gradient-to-r from-red-600/30 to-red-700/30 hover:from-red-600/40 hover:to-red-700/40 text-white rounded-xl font-bold text-lg animate-pulse border border-red-500/50 flex items-center justify-center gap-3"
+                          >
+                            <span className="text-3xl">⏹</span>
+                            Stop Recording
+                          </button>
+                        )}
+                        <p className="text-gray-400 text-sm text-center mt-4 flex items-center justify-center gap-2">
+                          {isRecordingAudio ? (
+                            <>
+                              <span className="relative flex h-3 w-3">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                              </span>
+                              Speak clearly into your microphone
+                            </>
+                          ) : (
+                            <>
+                              <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                              Click to record your answer
+                            </>
+                          )}
+                        </p>
+                      </div>
                     </div>
                   )}
 
                   {answerMode === 'video' && (
-                    <div className="glass p-6 rounded-xl">
+                    <div className="glass p-8 rounded-2xl border border-white/10 hover:border-purple-500/20 transition-all duration-300">
                       <VideoRecorder
                         onVideoRecorded={handleVideoRecorded}
                         disabled={loading}
