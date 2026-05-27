@@ -417,9 +417,9 @@ export default function InterviewPage() {
                       }}
                     />
                   </div>
-                </div>
+              </div>
 
-                <div className="bg-gradient-to-r from-blue-500/10 to-indigo-500/10 border border-blue-500/30 rounded-xl p-5 mb-6">
+              <div className="bg-gradient-to-r from-blue-500/10 to-indigo-500/10 border border-blue-500/30 rounded-xl p-5 mb-6">
                   <p className="text-blue-300 text-sm">
                     <span className="font-bold text-base">📌 How it works:</span>
                     <br />
@@ -460,7 +460,6 @@ export default function InterviewPage() {
                   <span className="w-1.5 h-1.5 bg-gray-500 rounded-full"></span>
                   Skipping will use default skills (JavaScript, React, Node.js)
                 </p>
-              </div>
             </div>
           </div>
         </main>
@@ -620,10 +619,8 @@ export default function InterviewPage() {
                       <div className="animate-spin h-4 w-4 border-2 border-green-400 border-t-transparent rounded-full"></div>
                       Generating your detailed performance report...
                     </p>
-                  </div>
                 </div>
               )}
-            </div>
           </div>
 
           {/* Answer Mode Selector */}

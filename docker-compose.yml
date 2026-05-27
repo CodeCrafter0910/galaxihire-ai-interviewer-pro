@@ -5,6 +5,8 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER:-mongoadmin}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS:-example}
+    ports:
+      - "27017:27017"
     volumes:
       - mongo_data:/data/db
 

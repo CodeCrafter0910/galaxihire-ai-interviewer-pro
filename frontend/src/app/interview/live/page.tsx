@@ -90,7 +90,7 @@ export default function LiveInterview() {
 
           {/* Chat Area */}
           <div className="mt-6 glass p-6 rounded-2xl h-[50vh] overflow-y-auto border border-white/10 hover:border-indigo-500/20 transition-all duration-300">
-              {chatHistory.length === 0 ? (
+            {chatHistory.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-center">
                   <div className="text-7xl mb-6">🤖</div>
                   <h3 className="text-2xl font-bold text-white mb-3">Ready to Practice?</h3>
@@ -162,7 +162,6 @@ export default function LiveInterview() {
                   )}
                 </div>
               )}
-            </div>
           </div>
 
           {/* Input Area */}

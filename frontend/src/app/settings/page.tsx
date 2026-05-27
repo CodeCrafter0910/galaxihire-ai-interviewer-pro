@@ -5,9 +5,12 @@ import { useRouter } from "next/navigation";
 import Sidebar from "@/components/Sidebar";
 import TopNav from "@/components/TopNav";
 import toast from "react-hot-toast";
+import { User, Shield, Sliders, Mail, Phone, MapPin, Lock, Download, AlertTriangle, Check, Loader2 } from "lucide-react";
 
 export default function SettingsPage() {
   const router = useRouter();
+
+  const [activeTab, setActiveTab] = useState<"profile" | "security" | "preferences">("profile");
 
   const [profile, setProfile] = useState({
     name: "",
@@ -24,7 +27,6 @@ export default function SettingsPage() {
 
   const [saving, setSaving] = useState(false);
 
-  // Load user info from JWT on mount
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) { router.replace("/login"); return; }
@@ -57,122 +59,287 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex bg-[#02040a] relative overflow-hidden">
+      {/* Background Orbs */}
+      <div className="fixed inset-0 pointer-events-none -z-0">
+        <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-indigo-500/[0.04] rounded-full blur-[100px]" />
+        <div className="absolute bottom-[-10%] left-[-5%] w-[600px] h-[600px] bg-purple-500/[0.04] rounded-full blur-[120px]" />
+      </div>
+
       <Sidebar />
-      <main className="flex-1 p-6 lg:p-8 overflow-auto">
-        <div className="max-w-4xl mx-auto">
+      <main className="flex-1 p-6 lg:p-10 relative z-10 ml-0 md:ml-64 h-screen overflow-y-auto custom-scrollbar">
+        <div className="max-w-5xl mx-auto">
           <TopNav />
 
-          <div className="mt-6">
-            <h1 className="text-3xl font-bold text-white">Settings</h1>
-            <p className="text-gray-400 mt-1 text-sm">Manage your account and preferences</p>
+          <div className="mt-10 mb-8" style={{ animation: "fadeInUp 0.5s ease-out" }}>
+            <h1 className="text-4xl font-black text-white mb-2">Account Settings</h1>
+            <p className="text-gray-400 text-lg">Manage your personal information, security, and app preferences.</p>
           </div>
 
-          {/* Profile */}
-          <div className="glass p-6 rounded-2xl mt-6">
-            <h2 className="text-lg font-bold text-white mb-4">Profile Information</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {[
-                { field: "name", label: "Full Name", type: "text", placeholder: "John Doe" },
-                { field: "email", label: "Email", type: "email", placeholder: "john@example.com" },
-                { field: "phone", label: "Phone", type: "tel", placeholder: "+1 234 567 8900" },
-                { field: "location", label: "Location", type: "text", placeholder: "San Francisco, CA" },
-              ].map(({ field, label, type, placeholder }) => (
-                <div key={field}>
-                  <label className="block text-sm text-gray-300 font-medium mb-2">{label}</label>
-                  <input
-                    type={type}
-                    value={profile[field as keyof typeof profile]}
-                    onChange={(e) => handleProfileChange(field, e.target.value)}
-                    className="input"
-                    placeholder={placeholder}
-                  />
-                </div>
-              ))}
+          <div className="flex flex-col lg:flex-row gap-8" style={{ animation: "fadeInUp 0.6s ease-out both" }}>
+            
+            {/* Sidebar Tabs */}
+            <div className="lg:w-64 flex-shrink-0">
+              <div className="flex flex-row lg:flex-col gap-2 p-2 bg-white/[0.02] border border-white/5 rounded-2xl overflow-x-auto">
+                <button
+                  onClick={() => setActiveTab("profile")}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-all duration-300 whitespace-nowrap ${
+                    activeTab === "profile" 
+                      ? "bg-indigo-500/10 text-indigo-400 border border-indigo-500/20" 
+                      : "text-gray-400 hover:text-white hover:bg-white/5 border border-transparent"
+                  }`}
+                >
+                  <User size={18} /> Profile
+                </button>
+                <button
+                  onClick={() => setActiveTab("security")}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-all duration-300 whitespace-nowrap ${
+                    activeTab === "security" 
+                      ? "bg-indigo-500/10 text-indigo-400 border border-indigo-500/20" 
+                      : "text-gray-400 hover:text-white hover:bg-white/5 border border-transparent"
+                  }`}
+                >
+                  <Shield size={18} /> Security
+                </button>
+                <button
+                  onClick={() => setActiveTab("preferences")}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-all duration-300 whitespace-nowrap ${
+                    activeTab === "preferences" 
+                      ? "bg-indigo-500/10 text-indigo-400 border border-indigo-500/20" 
+                      : "text-gray-400 hover:text-white hover:bg-white/5 border border-transparent"
+                  }`}
+                >
+                  <Sliders size={18} /> Preferences
+                </button>
+              </div>
             </div>
-          </div>
 
-          {/* Notifications */}
-          <div className="glass p-6 rounded-2xl mt-4">
-            <h2 className="text-lg font-bold text-white mb-4">Notifications</h2>
-            <div className="space-y-3">
-              {[
-                { field: "emailNotifications", label: "Email Notifications", desc: "Receive updates via email" },
-                { field: "interviewReminders", label: "Interview Reminders", desc: "Get reminded before interviews" },
-                { field: "reportAlerts", label: "Report Alerts", desc: "Get notified when reports are ready" },
-              ].map(({ field, label, desc }) => (
-                <div key={field} className="flex items-center justify-between p-4 bg-white/4 rounded-xl border border-white/5">
-                  <div>
-                    <p className="text-white font-medium text-sm">{label}</p>
-                    <p className="text-gray-500 text-xs mt-0.5">{desc}</p>
+            {/* Content Area */}
+            <div className="flex-1">
+              <div className="bg-white/[0.02] border border-white/10 rounded-3xl p-8 backdrop-blur-xl shadow-2xl min-h-[500px]">
+                
+                {/* PROFILE TAB */}
+                {activeTab === "profile" && (
+                  <div className="animate-fade-in space-y-8">
+                    <div>
+                      <h2 className="text-2xl font-bold text-white mb-1">Profile Information</h2>
+                      <p className="text-sm text-gray-400">Update your personal details here.</p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="group relative">
+                        <label className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 block group-focus-within:text-indigo-400 transition-colors">
+                          Full Name
+                        </label>
+                        <div className="relative">
+                          <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-indigo-400 transition-colors" size={20} />
+                          <input
+                            type="text"
+                            value={profile.name}
+                            onChange={(e) => handleProfileChange("name", e.target.value)}
+                            placeholder="John Doe"
+                            className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder-gray-600 focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="group relative">
+                        <label className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 block group-focus-within:text-indigo-400 transition-colors">
+                          Email Address
+                        </label>
+                        <div className="relative">
+                          <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-indigo-400 transition-colors" size={20} />
+                          <input
+                            type="email"
+                            value={profile.email}
+                            onChange={(e) => handleProfileChange("email", e.target.value)}
+                            placeholder="john@example.com"
+                            className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder-gray-600 focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="group relative">
+                        <label className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 block group-focus-within:text-indigo-400 transition-colors">
+                          Phone Number
+                        </label>
+                        <div className="relative">
+                          <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-indigo-400 transition-colors" size={20} />
+                          <input
+                            type="tel"
+                            value={profile.phone}
+                            onChange={(e) => handleProfileChange("phone", e.target.value)}
+                            placeholder="+1 (555) 000-0000"
+                            className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder-gray-600 focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="group relative">
+                        <label className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 block group-focus-within:text-indigo-400 transition-colors">
+                          Location
+                        </label>
+                        <div className="relative">
+                          <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-indigo-400 transition-colors" size={20} />
+                          <input
+                            type="text"
+                            value={profile.location}
+                            onChange={(e) => handleProfileChange("location", e.target.value)}
+                            placeholder="San Francisco, CA"
+                            className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder-gray-600 focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all"
+                          />
+                        </div>
+                      </div>
+                    </div>
                   </div>
+                )}
+
+                {/* SECURITY TAB */}
+                {activeTab === "security" && (
+                  <div className="animate-fade-in space-y-8">
+                    <div>
+                      <h2 className="text-2xl font-bold text-white mb-1">Security & Data</h2>
+                      <p className="text-sm text-gray-400">Manage your password and data exports.</p>
+                    </div>
+
+                    <div className="space-y-4">
+                      <button
+                        onClick={() => toast("Change password feature coming soon.", { icon: "🔒" })}
+                        className="w-full flex items-center justify-between p-5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition-all group"
+                      >
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-gray-400 group-hover:text-white transition-colors">
+                            <Lock size={20} />
+                          </div>
+                          <div className="text-left">
+                            <h3 className="text-white font-bold">Change Password</h3>
+                            <p className="text-sm text-gray-400">Update your account password</p>
+                          </div>
+                        </div>
+                        <div className="text-gray-500 group-hover:translate-x-1 transition-transform">→</div>
+                      </button>
+
+                      <button
+                        onClick={() => toast("Data export coming soon.", { icon: "📦" })}
+                        className="w-full flex items-center justify-between p-5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition-all group"
+                      >
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-gray-400 group-hover:text-white transition-colors">
+                            <Download size={20} />
+                          </div>
+                          <div className="text-left">
+                            <h3 className="text-white font-bold">Download My Data</h3>
+                            <p className="text-sm text-gray-400">Export all your interview history and reports</p>
+                          </div>
+                        </div>
+                        <div className="text-gray-500 group-hover:translate-x-1 transition-transform">→</div>
+                      </button>
+                    </div>
+
+                    <div className="pt-6 mt-6 border-t border-white/10">
+                      <h3 className="text-red-400 font-bold mb-4 flex items-center gap-2">
+                        <AlertTriangle size={18} /> Danger Zone
+                      </h3>
+                      <div className="flex flex-col md:flex-row items-center justify-between p-6 bg-red-500/5 border border-red-500/20 rounded-2xl gap-4">
+                        <div>
+                          <h4 className="text-white font-bold mb-1">Delete Account</h4>
+                          <p className="text-sm text-gray-400">Permanently delete your account and all data. This cannot be undone.</p>
+                        </div>
+                        <button
+                          onClick={() => toast.error("Account deletion is permanently disabled in demo mode.")}
+                          className="flex-shrink-0 px-6 py-3 bg-red-500/10 hover:bg-red-500/20 text-red-400 font-bold rounded-xl border border-red-500/30 transition-all hover:scale-105"
+                        >
+                          Delete Account
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* PREFERENCES TAB */}
+                {activeTab === "preferences" && (
+                  <div className="animate-fade-in space-y-8">
+                    <div>
+                      <h2 className="text-2xl font-bold text-white mb-1">Preferences</h2>
+                      <p className="text-sm text-gray-400">Customize your notification settings.</p>
+                    </div>
+
+                    <div className="space-y-4">
+                      {[
+                        { field: "emailNotifications", label: "Email Notifications", desc: "Receive general updates and news via email" },
+                        { field: "interviewReminders", label: "Interview Reminders", desc: "Get notified 1 hour before scheduled interviews" },
+                        { field: "reportAlerts", label: "Report Alerts", desc: "Get instantly notified when your AI report is ready" },
+                      ].map(({ field, label, desc }) => {
+                        const isOn = preferences[field as keyof typeof preferences];
+                        return (
+                          <div key={field} className="flex items-center justify-between p-5 bg-white/5 border border-white/10 rounded-2xl">
+                            <div>
+                              <h3 className="text-white font-bold mb-1">{label}</h3>
+                              <p className="text-sm text-gray-400">{desc}</p>
+                            </div>
+                            <button
+                              onClick={() => handlePreferenceToggle(field)}
+                              className={`relative flex-shrink-0 w-14 h-8 rounded-full transition-colors duration-300 focus:outline-none ${
+                                isOn ? "bg-indigo-500" : "bg-gray-700"
+                              }`}
+                            >
+                              <div
+                                className={`absolute top-1 w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-300 flex items-center justify-center ${
+                                  isOn ? "translate-x-7" : "translate-x-1"
+                                }`}
+                              >
+                                {isOn && <Check size={14} className="text-indigo-500" />}
+                              </div>
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {/* Bottom Actions */}
+                <div className="mt-10 pt-6 border-t border-white/10 flex justify-end gap-4">
+                  <button onClick={() => router.back()} className="px-6 py-3 rounded-xl font-bold text-gray-400 hover:text-white hover:bg-white/5 transition-all">
+                    Cancel
+                  </button>
                   <button
-                    onClick={() => handlePreferenceToggle(field)}
-                    className={`relative w-12 h-6 rounded-full transition-colors duration-200 ${
-                      preferences[field as keyof typeof preferences] ? "bg-indigo-500" : "bg-white/10"
-                    }`}
+                    onClick={saveSettings}
+                    disabled={saving}
+                    className="px-8 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold rounded-xl shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/40 transition-all hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 flex items-center gap-2"
                   >
-                    <div
-                      className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-transform duration-200 ${
-                        preferences[field as keyof typeof preferences] ? "left-7" : "left-1"
-                      }`}
-                    />
+                    {saving ? (
+                      <>
+                        <Loader2 className="animate-spin" size={18} />
+                        Saving...
+                      </>
+                    ) : (
+                      "Save Changes"
+                    )}
                   </button>
                 </div>
-              ))}
+              </div>
             </div>
-          </div>
-
-          {/* Account Actions */}
-          <div className="glass p-6 rounded-2xl mt-4">
-            <h2 className="text-lg font-bold text-white mb-4">Account</h2>
-            <div className="space-y-2">
-              <button
-                onClick={() => toast("Change password feature coming soon.", { icon: "🔒" })}
-                className="w-full p-4 bg-yellow-500/8 hover:bg-yellow-500/15 border border-yellow-500/20 text-yellow-300 rounded-xl transition text-left"
-              >
-                <p className="font-medium text-sm">Change Password</p>
-                <p className="text-xs text-yellow-400/60 mt-0.5">Update your account password</p>
-              </button>
-              <button
-                onClick={() => toast("Data export coming soon.", { icon: "📦" })}
-                className="w-full p-4 bg-blue-500/8 hover:bg-blue-500/15 border border-blue-500/20 text-blue-300 rounded-xl transition text-left"
-              >
-                <p className="font-medium text-sm">Download My Data</p>
-                <p className="text-xs text-blue-400/60 mt-0.5">Export all your interview data</p>
-              </button>
-              <button
-                onClick={() => toast.error("Account deletion is permanently disabled in demo mode.")}
-                className="w-full p-4 bg-red-500/8 hover:bg-red-500/15 border border-red-500/20 text-red-300 rounded-xl transition text-left"
-              >
-                <p className="font-medium text-sm">Delete Account</p>
-                <p className="text-xs text-red-400/60 mt-0.5">Permanently delete your account</p>
-              </button>
-            </div>
-          </div>
-
-          {/* Actions */}
-          <div className="mt-5 flex justify-end gap-3">
-            <button onClick={() => router.back()} className="btn-ghost px-6 py-2.5 text-sm">
-              Cancel
-            </button>
-            <button
-              onClick={saveSettings}
-              disabled={saving}
-              className="btn-primary px-6 py-2.5 text-sm"
-            >
-              {saving ? (
-                <span className="flex items-center gap-2">
-                  <span className="w-3.5 h-3.5 rounded-full border-2 border-white/30 border-t-white animate-spin" />
-                  Saving...
-                </span>
-              ) : (
-                "Save Changes"
-              )}
-            </button>
           </div>
         </div>
       </main>
+
+      <style jsx>{`
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        .animate-fade-in {
+          animation: fadeIn 0.4s ease-out;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+      `}</style>
     </div>
   );
 }
