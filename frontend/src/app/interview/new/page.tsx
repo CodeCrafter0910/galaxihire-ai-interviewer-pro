@@ -347,19 +347,13 @@ export default function InterviewPage() {
   // Resume Upload Screen
   if (showResumeUpload) {
     return (
-      <div className="min-h-screen flex bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-[#071026] via-[#06071b] to-[#02040a] relative overflow-hidden">
-        {/* Animated Background Elements */}
-        <div className="fixed inset-0 -z-10">
-          <div className="absolute top-20 left-10 w-64 h-64 bg-indigo-500/10 rounded-full filter blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-20 right-10 w-80 h-80 bg-purple-500/10 rounded-full filter blur-3xl animate-pulse animation-delay-2000"></div>
-        </div>
-
+      <div className="min-h-screen flex bg-gradient-to-br from-[#0a0f1e] via-[#0d1425] to-[#060b18]">
         <Sidebar />
         <main className="flex-1 p-8">
           <div className="max-w-2xl mx-auto">
             <TopNav />
 
-            <div className="mt-12 text-center animate-fade-in">
+            <div className="mt-12 text-center">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-xs font-semibold mb-6 uppercase tracking-widest backdrop-blur-sm">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
@@ -367,7 +361,7 @@ export default function InterviewPage() {
                 </span>
                 Step 1 of 2
               </div>
-              <h1 className="text-5xl font-black text-white mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white via-indigo-200 to-purple-200">
+              <h1 className="text-5xl font-black text-white mb-4">
                 Upload Your Resume
               </h1>
               <p className="text-gray-300 text-lg max-w-xl mx-auto">
@@ -375,30 +369,20 @@ export default function InterviewPage() {
               </p>
             </div>
 
-            <div className="glass p-8 rounded-2xl mt-8 border border-white/10 hover:border-indigo-500/30 transition-all duration-300 group relative overflow-hidden">
-              {/* Glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
-              <div className="relative z-10">
-                <div className="mb-6">
-                  <div className="border-2 border-dashed border-white/20 rounded-xl p-10 text-center hover:border-indigo-500/50 hover:bg-indigo-500/5 transition-all duration-300 cursor-pointer group/upload relative overflow-hidden"
-                    onClick={() => document.getElementById('resume-file')?.click()}
-                    onDragOver={(e) => e.preventDefault()}
-                    onDrop={(e) => {
-                      e.preventDefault();
-                      const file = e.dataTransfer.files[0];
-                      if (file && (file.type === 'application/pdf' || file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')) {
-                        setResumeFile(file);
-                      }
-                    }}
-                  >
-                    {/* Animated corner decorations */}
-                    <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-indigo-500/30 group-hover/upload:border-indigo-500/60 transition-colors"></div>
-                    <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-indigo-500/30 group-hover/upload:border-indigo-500/60 transition-colors"></div>
-                    <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-indigo-500/30 group-hover/upload:border-indigo-500/60 transition-colors"></div>
-                    <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-indigo-500/30 group-hover/upload:border-indigo-500/60 transition-colors"></div>
-
-                    <div className="text-7xl mb-4 group-hover/upload:scale-110 transition-transform duration-300">📄</div>
+            <div className="glass p-8 rounded-2xl mt-8 border border-white/10 hover:border-indigo-500/30 transition-all duration-300">
+              <div className="mb-6">
+                <div className="border-2 border-dashed border-white/20 rounded-xl p-10 text-center hover:border-indigo-500/50 hover:bg-indigo-500/5 transition-all duration-300 cursor-pointer"
+                  onClick={() => document.getElementById('resume-file')?.click()}
+                  onDragOver={(e) => e.preventDefault()}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    const file = e.dataTransfer.files[0];
+                    if (file && (file.type === 'application/pdf' || file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')) {
+                      setResumeFile(file);
+                    }
+                  }}
+                >
+                  <div className="text-7xl mb-4">📄</div>
                     {resumeFile ? (
                       <>
                         <p className="text-green-400 font-bold mb-2 text-lg flex items-center justify-center gap-2">
@@ -435,9 +419,8 @@ export default function InterviewPage() {
                   </div>
                 </div>
 
-                <div className="bg-gradient-to-r from-blue-500/10 to-indigo-500/10 border border-blue-500/30 rounded-xl p-5 mb-6 relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-blue-500/10 rounded-full filter blur-2xl"></div>
-                  <p className="text-blue-300 text-sm relative z-10">
+                <div className="bg-gradient-to-r from-blue-500/10 to-indigo-500/10 border border-blue-500/30 rounded-xl p-5 mb-6">
+                  <p className="text-blue-300 text-sm">
                     <span className="font-bold text-base">📌 How it works:</span>
                     <br />
                     <span className="text-blue-200/80">Your resume will be analyzed by AI to extract skills for <span className="font-bold text-blue-200">Technical Round</span> questions. Aptitude, Coding, and HR rounds use standardized questions.</span>
@@ -448,7 +431,7 @@ export default function InterviewPage() {
                   <button
                     onClick={handleResumeUpload}
                     disabled={!resumeFile || uploadingResume}
-                    className="flex-1 group/btn relative overflow-hidden px-8 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white rounded-xl font-bold text-lg transition-all duration-200 shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
+                    className="flex-1 px-8 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white rounded-xl font-bold text-lg transition-all duration-200 shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     {uploadingResume ? (
                       <>
@@ -458,7 +441,7 @@ export default function InterviewPage() {
                     ) : (
                       <>
                         Start Interview with Resume
-                        <svg className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                         </svg>
                       </>
@@ -487,21 +470,15 @@ export default function InterviewPage() {
 
   // Main Interview Screen
   return (
-    <div className="min-h-screen flex bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-[#071026] via-[#06071b] to-[#02040a] relative overflow-hidden">
-      {/* Animated Background */}
-      <div className="fixed inset-0 -z-10">
-        <div className="absolute top-20 right-20 w-96 h-96 bg-indigo-500/10 rounded-full filter blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 left-20 w-96 h-96 bg-purple-500/10 rounded-full filter blur-3xl animate-pulse animation-delay-2000"></div>
-      </div>
-
+    <div className="min-h-screen flex bg-gradient-to-br from-[#0a0f1e] via-[#0d1425] to-[#060b18]">
       <Sidebar />
       <main className="flex-1 p-8">
         <div className="max-w-6xl mx-auto">
           <TopNav />
 
-          <div className="mt-6 flex items-center justify-between animate-fade-in">
+          <div className="mt-6 flex items-center justify-between">
             <div>
-              <h1 className="text-4xl font-black text-white mb-2 bg-clip-text text-transparent bg-gradient-to-r from-white via-indigo-200 to-purple-200">
+              <h1 className="text-4xl font-black text-white mb-2">
                 AI Interview Session
               </h1>
               <p className="text-gray-300 mt-1 text-lg">
@@ -511,7 +488,7 @@ export default function InterviewPage() {
                 <div className="flex gap-2 mt-3 flex-wrap items-center">
                   <span className="text-xs text-gray-400 font-semibold">Your Skills:</span>
                   {skills.slice(0, 5).map((skill, i) => (
-                    <span key={i} className="text-xs px-3 py-1.5 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 text-indigo-300 rounded-full border border-indigo-500/30 font-medium hover:scale-105 transition-transform">
+                    <span key={i} className="text-xs px-3 py-1.5 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 text-indigo-300 rounded-full border border-indigo-500/30 font-medium">
                       {skill}
                     </span>
                   ))}
@@ -528,7 +505,7 @@ export default function InterviewPage() {
               {!isComplete && sessionId && (
                 <button
                   onClick={endInterview}
-                  className="px-5 py-2.5 bg-gradient-to-r from-red-500/20 to-red-600/20 hover:from-red-500/30 hover:to-red-600/30 text-red-300 rounded-xl transition-all duration-200 border border-red-500/30 hover:border-red-500/50 font-semibold hover:scale-105"
+                  className="px-5 py-2.5 bg-gradient-to-r from-red-500/20 to-red-600/20 hover:from-red-500/30 hover:to-red-600/30 text-red-300 rounded-xl transition-all duration-200 border border-red-500/30 hover:border-red-500/50 font-semibold"
                 >
                   End Interview
                 </button>
@@ -537,12 +514,8 @@ export default function InterviewPage() {
           </div>
 
           {/* Chat Box */}
-          <div className="glass p-6 rounded-2xl h-[40vh] overflow-y-auto mt-6 border border-white/10 hover:border-indigo-500/20 transition-all duration-300 relative group">
-            {/* Glow effect */}
-            <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none"></div>
-            
-            <div className="relative z-10">
-              {messages.length === 0 && loading && (
+          <div className="glass p-6 rounded-2xl h-[40vh] overflow-y-auto mt-6 border border-white/10 hover:border-indigo-500/20 transition-all duration-300">
+            {messages.length === 0 && loading && (
                 <div className="flex items-center justify-center h-full">
                   <div className="text-center">
                     <div className="animate-spin h-10 w-10 border-3 border-indigo-500 border-t-transparent rounded-full mx-auto mb-3"></div>
@@ -580,7 +553,7 @@ export default function InterviewPage() {
                 return messagesToShow.map((m, i) => (
                   <div
                     key={m.originalIndex}
-                    className={`mb-4 p-5 rounded-xl max-w-[85%] transition-all duration-300 hover:scale-[1.02] ${m.from === "user"
+                    className={`mb-4 p-5 rounded-xl max-w-[85%] transition-all duration-300 ${m.from === "user"
                       ? "ml-auto bg-gradient-to-r from-indigo-600/40 to-purple-600/40 text-white border border-indigo-500/30 shadow-lg shadow-indigo-500/20"
                       : m.from === "system"
                         ? "bg-gradient-to-r from-yellow-500/10 to-amber-500/10 text-yellow-200 border border-yellow-500/30 shadow-lg shadow-yellow-500/10"
@@ -612,35 +585,31 @@ export default function InterviewPage() {
               )}
 
               {isComplete && scores && (
-                <div className="mt-4 p-8 bg-gradient-to-br from-green-500/20 via-blue-500/15 to-purple-500/20 rounded-2xl border border-green-500/30 shadow-2xl relative overflow-hidden group/complete">
-                  {/* Animated background */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 via-blue-500/10 to-purple-500/10 opacity-0 group-hover/complete:opacity-100 transition-opacity duration-500"></div>
-                  
-                  <div className="relative z-10">
-                    <h3 className="text-2xl font-black text-white mb-5 flex items-center gap-3">
-                      <span className="text-4xl">🎉</span>
-                      Interview Complete!
-                    </h3>
+                <div className="mt-4 p-8 bg-gradient-to-br from-green-500/20 via-blue-500/15 to-purple-500/20 rounded-2xl border border-green-500/30 shadow-2xl">
+                  <h3 className="text-2xl font-black text-white mb-5 flex items-center gap-3">
+                    <span className="text-4xl">🎉</span>
+                    Interview Complete!
+                  </h3>
                     <div className="grid grid-cols-2 gap-4">
-                      <div className="bg-black/30 p-4 rounded-xl border border-white/10 hover:border-green-500/30 transition-all hover:scale-105">
+                      <div className="bg-black/30 p-4 rounded-xl border border-white/10 hover:border-green-500/30 transition-all">
                         <div className="text-gray-400 text-sm mb-1 font-medium">Communication</div>
                         <div className="text-white text-2xl font-black">
                           {scores.communication?.toFixed(1) || '0'}<span className="text-gray-500 text-lg">/10</span>
                         </div>
                       </div>
-                      <div className="bg-black/30 p-4 rounded-xl border border-white/10 hover:border-blue-500/30 transition-all hover:scale-105">
+                      <div className="bg-black/30 p-4 rounded-xl border border-white/10 hover:border-blue-500/30 transition-all">
                         <div className="text-gray-400 text-sm mb-1 font-medium">Technical</div>
                         <div className="text-white text-2xl font-black">
                           {scores.technical?.toFixed(1) || '0'}<span className="text-gray-500 text-lg">/10</span>
                         </div>
                       </div>
-                      <div className="bg-black/30 p-4 rounded-xl border border-white/10 hover:border-purple-500/30 transition-all hover:scale-105">
+                      <div className="bg-black/30 p-4 rounded-xl border border-white/10 hover:border-purple-500/30 transition-all">
                         <div className="text-gray-400 text-sm mb-1 font-medium">Confidence</div>
                         <div className="text-white text-2xl font-black">
                           {scores.confidence?.toFixed(1) || '0'}<span className="text-gray-500 text-lg">/10</span>
                         </div>
                       </div>
-                      <div className="bg-gradient-to-br from-indigo-500/30 to-purple-500/30 p-4 rounded-xl border border-indigo-500/50 hover:scale-105 transition-all">
+                      <div className="bg-gradient-to-br from-indigo-500/30 to-purple-500/30 p-4 rounded-xl border border-indigo-500/50">
                         <div className="text-indigo-300 text-sm mb-1 font-bold">Overall Score</div>
                         <div className="text-white text-2xl font-black">
                           {scores.overall?.toFixed(1) || '0'}<span className="text-gray-300 text-lg">/10</span>

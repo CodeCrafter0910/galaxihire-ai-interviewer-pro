@@ -54,21 +54,15 @@ export default function LiveInterview() {
   }
 
   return (
-    <div className="min-h-screen flex bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-[#071026] via-[#06071b] to-[#02040a] relative overflow-hidden">
-      {/* Animated Background */}
-      <div className="fixed inset-0 -z-10">
-        <div className="absolute top-20 right-20 w-96 h-96 bg-indigo-500/10 rounded-full filter blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 left-20 w-96 h-96 bg-purple-500/10 rounded-full filter blur-3xl animate-pulse animation-delay-2000"></div>
-      </div>
-
+    <div className="min-h-screen flex bg-gradient-to-br from-[#0a0f1e] via-[#0d1425] to-[#060b18]">
       <Sidebar />
       <main className="flex-1 p-8">
         <div className="max-w-6xl mx-auto">
           <TopNav />
 
-          <div className="mt-6 flex items-center justify-between animate-fade-in">
+          <div className="mt-6 flex items-center justify-between">
             <div>
-              <h1 className="text-4xl font-black text-white mb-2 bg-clip-text text-transparent bg-gradient-to-r from-white via-indigo-200 to-purple-200">
+              <h1 className="text-4xl font-black text-white mb-2">
                 Live AI Interview
               </h1>
               <p className="text-gray-300 text-lg">
@@ -86,7 +80,7 @@ export default function LiveInterview() {
               {chatHistory.length > 0 && (
                 <button
                   onClick={clearChat}
-                  className="px-5 py-2.5 bg-gradient-to-r from-red-500/20 to-red-600/20 hover:from-red-500/30 hover:to-red-600/30 text-red-300 rounded-xl transition-all duration-200 border border-red-500/30 hover:border-red-500/50 font-semibold hover:scale-105"
+                  className="px-5 py-2.5 bg-gradient-to-r from-red-500/20 to-red-600/20 hover:from-red-500/30 hover:to-red-600/30 text-red-300 rounded-xl transition-all duration-200 border border-red-500/30 hover:border-red-500/50 font-semibold"
                 >
                   Clear Chat
                 </button>
@@ -95,11 +89,7 @@ export default function LiveInterview() {
           </div>
 
           {/* Chat Area */}
-          <div className="mt-6 glass p-6 rounded-2xl h-[50vh] overflow-y-auto border border-white/10 hover:border-indigo-500/20 transition-all duration-300 relative group">
-            {/* Glow effect */}
-            <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none"></div>
-            
-            <div className="relative z-10">
+          <div className="mt-6 glass p-6 rounded-2xl h-[50vh] overflow-y-auto border border-white/10 hover:border-indigo-500/20 transition-all duration-300">
               {chatHistory.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-center">
                   <div className="text-7xl mb-6">🤖</div>
@@ -110,30 +100,30 @@ export default function LiveInterview() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-2xl">
                     <button
                       onClick={() => setQuestion("Tell me about yourself")}
-                      className="p-4 bg-white/5 hover:bg-indigo-500/10 border border-white/10 hover:border-indigo-500/30 rounded-xl text-left transition-all hover:scale-105 group/suggestion"
+                      className="p-4 bg-white/5 hover:bg-indigo-500/10 border border-white/10 hover:border-indigo-500/30 rounded-xl text-left transition-all"
                     >
-                      <div className="text-indigo-300 font-semibold mb-1 group-hover/suggestion:text-indigo-200">Tell me about yourself</div>
+                      <div className="text-indigo-300 font-semibold mb-1">Tell me about yourself</div>
                       <div className="text-gray-500 text-xs">Common opening question</div>
                     </button>
                     <button
                       onClick={() => setQuestion("What are your strengths and weaknesses?")}
-                      className="p-4 bg-white/5 hover:bg-purple-500/10 border border-white/10 hover:border-purple-500/30 rounded-xl text-left transition-all hover:scale-105 group/suggestion"
+                      className="p-4 bg-white/5 hover:bg-purple-500/10 border border-white/10 hover:border-purple-500/30 rounded-xl text-left transition-all"
                     >
-                      <div className="text-purple-300 font-semibold mb-1 group-hover/suggestion:text-purple-200">Strengths & weaknesses?</div>
+                      <div className="text-purple-300 font-semibold mb-1">Strengths & weaknesses?</div>
                       <div className="text-gray-500 text-xs">Self-assessment question</div>
                     </button>
                     <button
                       onClick={() => setQuestion("Explain a challenging project you worked on")}
-                      className="p-4 bg-white/5 hover:bg-blue-500/10 border border-white/10 hover:border-blue-500/30 rounded-xl text-left transition-all hover:scale-105 group/suggestion"
+                      className="p-4 bg-white/5 hover:bg-blue-500/10 border border-white/10 hover:border-blue-500/30 rounded-xl text-left transition-all"
                     >
-                      <div className="text-blue-300 font-semibold mb-1 group-hover/suggestion:text-blue-200">Challenging project?</div>
+                      <div className="text-blue-300 font-semibold mb-1">Challenging project?</div>
                       <div className="text-gray-500 text-xs">Technical experience</div>
                     </button>
                     <button
                       onClick={() => setQuestion("Why do you want to work here?")}
-                      className="p-4 bg-white/5 hover:bg-green-500/10 border border-white/10 hover:border-green-500/30 rounded-xl text-left transition-all hover:scale-105 group/suggestion"
+                      className="p-4 bg-white/5 hover:bg-green-500/10 border border-white/10 hover:border-green-500/30 rounded-xl text-left transition-all"
                     >
-                      <div className="text-green-300 font-semibold mb-1 group-hover/suggestion:text-green-200">Why this company?</div>
+                      <div className="text-green-300 font-semibold mb-1">Why this company?</div>
                       <div className="text-gray-500 text-xs">Motivation question</div>
                     </button>
                   </div>
@@ -143,7 +133,7 @@ export default function LiveInterview() {
                   {chatHistory.map((msg, idx) => (
                     <div
                       key={idx}
-                      className={`p-5 rounded-xl max-w-[85%] transition-all duration-300 hover:scale-[1.02] ${
+                      className={`p-5 rounded-xl max-w-[85%] transition-all duration-300 ${
                         msg.role === "user"
                           ? "ml-auto bg-gradient-to-r from-indigo-600/40 to-purple-600/40 text-white border border-indigo-500/30 shadow-lg shadow-indigo-500/20"
                           : "bg-gradient-to-br from-white/10 to-white/5 text-gray-200 border border-white/10 shadow-lg"
@@ -177,15 +167,12 @@ export default function LiveInterview() {
 
           {/* Input Area */}
           <div className="mt-5 space-y-4">
-            <div className="glass p-6 rounded-2xl border border-white/10 hover:border-indigo-500/20 transition-all duration-300 group relative overflow-hidden">
-              {/* Glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none"></div>
-              
+            <div className="glass p-6 rounded-2xl border border-white/10 hover:border-indigo-500/20 transition-all duration-300">
               <textarea
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
                 onKeyPress={handleKeyPress}
-                className="w-full p-0 bg-transparent border-none text-gray-100 resize-none focus:outline-none text-lg leading-relaxed placeholder-gray-500 relative z-10"
+                className="w-full p-0 bg-transparent border-none text-gray-100 resize-none focus:outline-none text-lg leading-relaxed placeholder-gray-500"
                 placeholder="Ask any interview question... (Press Enter to send)"
                 rows={3}
                 disabled={loading}
@@ -200,7 +187,7 @@ export default function LiveInterview() {
               <button
                 onClick={askQuestion}
                 disabled={loading || !question.trim()}
-                className="group/btn px-10 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white rounded-xl font-bold text-lg transition-all duration-200 shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center gap-3"
+                className="group/btn px-10 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white rounded-xl font-bold text-lg transition-all duration-200 shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-3"
               >
                 {loading ? (
                   <>
@@ -222,21 +209,21 @@ export default function LiveInterview() {
 
           {/* Info Cards */}
           <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="glass p-5 rounded-xl border border-white/10 hover:border-indigo-500/20 transition-all hover:scale-105 group">
+            <div className="glass p-5 rounded-xl border border-white/10 hover:border-indigo-500/20 transition-all">
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-10 h-10 rounded-xl bg-indigo-500/20 flex items-center justify-center text-xl">💬</div>
                 <h4 className="font-bold text-white">Real-time Responses</h4>
               </div>
               <p className="text-gray-400 text-sm">Get instant AI-powered answers to practice your interview skills</p>
             </div>
-            <div className="glass p-5 rounded-xl border border-white/10 hover:border-purple-500/20 transition-all hover:scale-105 group">
+            <div className="glass p-5 rounded-xl border border-white/10 hover:border-purple-500/20 transition-all">
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-10 h-10 rounded-xl bg-purple-500/20 flex items-center justify-center text-xl">🎯</div>
                 <h4 className="font-bold text-white">Any Question</h4>
               </div>
               <p className="text-gray-400 text-sm">Ask behavioral, technical, or HR questions - no limits!</p>
             </div>
-            <div className="glass p-5 rounded-xl border border-white/10 hover:border-green-500/20 transition-all hover:scale-105 group">
+            <div className="glass p-5 rounded-xl border border-white/10 hover:border-green-500/20 transition-all">
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center text-xl">⚡</div>
                 <h4 className="font-bold text-white">Instant Practice</h4>
