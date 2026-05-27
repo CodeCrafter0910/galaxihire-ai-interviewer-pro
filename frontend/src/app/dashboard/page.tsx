@@ -187,9 +187,9 @@ export default function DashboardPage() {
     <div className="min-h-screen flex bg-[#060b18] font-sans selection:bg-indigo-500/30 selection:text-indigo-200">
       <Sidebar />
       <main className="flex-1 ml-64 p-6 lg:p-8 xl:p-10 overflow-auto min-h-screen relative">
-        {/* Background ambient orbs */}
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
-        <div className="absolute bottom-1/4 right-0 w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
+        {/* Background ambient orbs - simplified */}
+        <div className="absolute top-0 left-1/4 w-[300px] h-[300px] bg-indigo-500/5 rounded-full blur-[60px] pointer-events-none" />
+        <div className="absolute bottom-1/4 right-0 w-[250px] h-[250px] bg-purple-500/5 rounded-full blur-[60px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto relative z-10">
           <TopNav />
@@ -200,31 +200,19 @@ export default function DashboardPage() {
             style={{
               background: "linear-gradient(135deg, rgba(30,27,75,0.6) 0%, rgba(17,24,39,0.8) 100%)",
               border: "1px solid rgba(79,70,229,0.2)",
-              backdropFilter: "blur(20px)",
             }}
           >
-            {/* Decorative animated orbs inside banner */}
-            <div className="absolute -top-24 -right-24 w-64 h-64 bg-indigo-500/30 rounded-full blur-[60px] animate-pulse pointer-events-none" />
-            <div className="absolute -bottom-24 left-1/4 w-48 h-48 bg-purple-500/20 rounded-full blur-[50px] animate-pulse pointer-events-none delay-700" />
-
             <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
               <div>
                 <p className="text-sm text-indigo-300 font-bold uppercase tracking-widest mb-3">{today}</p>
                 <h2 className="text-3xl lg:text-4xl font-black text-white leading-tight mb-2">
                   Welcome back,{" "}
                   <span
-                    className="inline-block"
-                    style={{
-                      background: "linear-gradient(to right, #818cf8, #c084fc, #818cf8)",
-                      backgroundSize: "200% auto",
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                      animation: "gradientFlow 4s linear infinite",
-                    }}
+                    className="inline-block text-indigo-300"
                   >
                     {userName}
                   </span>{" "}
-                  <span className="inline-block origin-bottom-right" style={{ animation: "wave 2.5s ease-in-out infinite" }}>👋</span>
+                  <span className="inline-block">👋</span>
                 </h2>
                 <p className="text-slate-400 text-base md:text-lg max-w-xl">
                   Ready to ace your next interview? Let&apos;s build your confidence and make today count.
@@ -232,17 +220,16 @@ export default function DashboardPage() {
               </div>
               <button
                 onClick={() => router.push("/interview/new")}
-                className="group relative flex items-center gap-2 px-8 py-4 rounded-2xl text-white font-bold text-base transition-all duration-300 hover:scale-105 active:scale-95 flex-shrink-0 overflow-hidden shadow-[0_0_20px_rgba(79,70,229,0.4)]"
+                className="flex items-center gap-2 px-8 py-4 rounded-2xl text-white font-bold text-base transition-all duration-300 hover:scale-105 active:scale-95 flex-shrink-0 shadow-lg"
                 style={{
                   background: "linear-gradient(135deg, #4f46e5, #7c3aed)",
                 }}
               >
-                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out" />
-                <svg className="w-5 h-5 relative z-10 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span className="relative z-10">Start Interview</span>
+                <span>Start Interview</span>
               </button>
             </div>
           </section>
@@ -255,28 +242,12 @@ export default function DashboardPage() {
               return (
                 <div
                   key={cfg.label}
-                  className="group relative rounded-3xl p-6 transition-all duration-500 hover:-translate-y-2 cursor-default overflow-hidden backdrop-blur-md"
+                  className="group relative rounded-3xl p-6 transition-all duration-300 hover:-translate-y-1 cursor-default overflow-hidden"
                   style={{
                     background: cfg.gradient,
                     border: `1px solid ${cfg.borderColor}`,
-                    animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`,
                   }}
                 >
-                  {/* Hover glow */}
-                  <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                    style={{
-                      background: `radial-gradient(circle at 50% 0%, ${cfg.glowColor}, transparent 70%)`,
-                    }}
-                  />
-
-                  {/* Sparkle on hover */}
-                  <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-700 transform group-hover:rotate-180 scale-50 group-hover:scale-100">
-                    <svg className="w-5 h-5 text-white/30" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 0l3.09 6.26L22 7.27l-5 4.87 1.18 6.88L12 15.4l-6.18 3.25L7 11.87 2 7.27l6.91-1.01L12 0z" />
-                    </svg>
-                  </div>
-
                   <div className={`${cfg.iconColor} mb-4 p-3 rounded-2xl inline-block bg-white/5 border border-white/5`}>
                     {cfg.icon}
                   </div>
@@ -304,32 +275,11 @@ export default function DashboardPage() {
                     style={{
                       background: "rgba(30,41,59,0.4)",
                       border: "1px solid rgba(255,255,255,0.05)",
-                      backdropFilter: "blur(12px)",
-                      animation: `fadeInUp 0.6s ease-out ${0.2 + index * 0.1}s both`,
                     }}
                   >
-                    {/* Animated gradient border on hover */}
-                    <div
-                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                      style={{
-                        border: `2px solid ${qa.accentFrom}40`,
-                        background: `linear-gradient(135deg, ${qa.accentFrom}10, ${qa.accentTo}05)`,
-                        borderRadius: "inherit"
-                      }}
-                    />
-
-                    {/* Gradient orb */}
-                    <div
-                      className="absolute -top-12 -right-12 w-32 h-32 opacity-0 group-hover:opacity-20 transition-all duration-700 pointer-events-none group-hover:scale-150"
-                      style={{
-                        background: `radial-gradient(circle, ${qa.accentFrom}, transparent 70%)`,
-                        filter: "blur(20px)",
-                      }}
-                    />
-
                     <div className="relative z-10">
                       <div
-                        className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 transition-all duration-300 group-hover:scale-110 shadow-lg"
+                        className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 transition-all duration-300 group-hover:scale-105"
                         style={{
                           background: `linear-gradient(135deg, ${qa.accentFrom}20, ${qa.accentTo}10)`,
                           border: `1px solid ${qa.accentFrom}30`,
@@ -346,7 +296,7 @@ export default function DashboardPage() {
                       </p>
 
                       {/* Arrow */}
-                      <div className="flex items-center gap-2 mt-auto text-indigo-400 group-hover:text-indigo-300 transition-all duration-300 transform group-hover:translate-x-2">
+                      <div className="flex items-center gap-2 mt-auto text-indigo-400 group-hover:text-indigo-300 transition-all duration-300">
                         <span className="text-sm font-bold uppercase tracking-wider">Get started</span>
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -369,7 +319,6 @@ export default function DashboardPage() {
                 style={{
                   background: "rgba(30,41,59,0.4)",
                   border: "1px solid rgba(255,255,255,0.05)",
-                  backdropFilter: "blur(12px)",
                 }}
               >
                 {tips.map((tip, i) => (
@@ -377,7 +326,7 @@ export default function DashboardPage() {
                     key={i}
                     className="group flex items-start gap-4 p-4 rounded-2xl transition-all duration-300 hover:bg-slate-800/80 border border-transparent hover:border-slate-700/50"
                   >
-                    <div className="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-lg flex-shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-inner">
+                    <div className="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-lg flex-shrink-0">
                       {tip.icon}
                     </div>
                     <p className="text-slate-300 text-sm leading-relaxed pt-1">
@@ -395,39 +344,13 @@ export default function DashboardPage() {
               <h2 className="text-2xl font-bold text-white tracking-tight">Recent Activity</h2>
               <div className="h-px flex-1 ml-6 bg-gradient-to-r from-slate-700/50 to-transparent" />
             </div>
-            <div className="rounded-3xl bg-slate-900/50 border border-slate-800/80 backdrop-blur-xl overflow-hidden shadow-2xl">
+            <div className="rounded-3xl bg-slate-900/50 border border-slate-800/80 overflow-hidden shadow-2xl">
               <InterviewHistory />
             </div>
           </section>
         </div>
       </main>
 
-      <style jsx>{`
-        @keyframes wave {
-          0% { transform: rotate(0deg); }
-          10% { transform: rotate(14deg); }
-          20% { transform: rotate(-8deg); }
-          30% { transform: rotate(14deg); }
-          40% { transform: rotate(-4deg); }
-          50% { transform: rotate(10deg); }
-          60% { transform: rotate(0deg); }
-          100% { transform: rotate(0deg); }
-        }
-        @keyframes gradientFlow {
-          0% { background-position: 0% 50%; }
-          100% { background-position: 200% 50%; }
-        }
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
     </div>
   );
 }

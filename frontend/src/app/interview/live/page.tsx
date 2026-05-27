@@ -71,10 +71,7 @@ export default function LiveInterview() {
             </div>
             <div className="flex items-center gap-3">
               <div className="px-4 py-2 rounded-xl bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 flex items-center gap-2">
-                <span className="relative flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-                </span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
                 <span className="text-green-300 font-semibold text-sm">Live Session</span>
               </div>
               {chatHistory.length > 0 && (
@@ -89,7 +86,7 @@ export default function LiveInterview() {
           </div>
 
           {/* Chat Area */}
-          <div className="mt-6 glass p-6 rounded-2xl h-[50vh] overflow-y-auto border border-white/10 hover:border-indigo-500/20 transition-all duration-300">
+          <div className="mt-6 bg-slate-900/50 p-6 rounded-2xl h-[50vh] overflow-y-auto border border-white/10 hover:border-indigo-500/20 transition-all duration-300">
             {chatHistory.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-center">
                   <div className="text-7xl mb-6">🤖</div>
@@ -166,7 +163,7 @@ export default function LiveInterview() {
 
           {/* Input Area */}
           <div className="mt-5 space-y-4">
-            <div className="glass p-6 rounded-2xl border border-white/10 hover:border-indigo-500/20 transition-all duration-300">
+            <div className="bg-slate-900/50 p-6 rounded-2xl border border-white/10 hover:border-indigo-500/20 transition-all duration-300">
               <textarea
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
@@ -208,21 +205,21 @@ export default function LiveInterview() {
 
           {/* Info Cards */}
           <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="glass p-5 rounded-xl border border-white/10 hover:border-indigo-500/20 transition-all">
+            <div className="bg-slate-900/50 p-5 rounded-xl border border-white/10 hover:border-indigo-500/20 transition-all">
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-10 h-10 rounded-xl bg-indigo-500/20 flex items-center justify-center text-xl">💬</div>
                 <h4 className="font-bold text-white">Real-time Responses</h4>
               </div>
               <p className="text-gray-400 text-sm">Get instant AI-powered answers to practice your interview skills</p>
             </div>
-            <div className="glass p-5 rounded-xl border border-white/10 hover:border-purple-500/20 transition-all">
+            <div className="bg-slate-900/50 p-5 rounded-xl border border-white/10 hover:border-purple-500/20 transition-all">
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-10 h-10 rounded-xl bg-purple-500/20 flex items-center justify-center text-xl">🎯</div>
                 <h4 className="font-bold text-white">Any Question</h4>
               </div>
               <p className="text-gray-400 text-sm">Ask behavioral, technical, or HR questions - no limits!</p>
             </div>
-            <div className="glass p-5 rounded-xl border border-white/10 hover:border-green-500/20 transition-all">
+            <div className="bg-slate-900/50 p-5 rounded-xl border border-white/10 hover:border-green-500/20 transition-all">
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center text-xl">⚡</div>
                 <h4 className="font-bold text-white">Instant Practice</h4>

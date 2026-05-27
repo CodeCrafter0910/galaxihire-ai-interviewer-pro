@@ -157,7 +157,7 @@ export default function Sidebar() {
 
   return (
     <aside
-      className="w-64 h-screen flex flex-col fixed top-0 left-0 z-40 bg-[#060b18]/80 backdrop-blur-2xl"
+      className="w-64 h-screen flex flex-col fixed top-0 left-0 z-40 bg-[#060b18]/90 backdrop-blur-lg"
     >
       {/* Subtle gradient border on right edge */}
       <div
@@ -171,7 +171,7 @@ export default function Sidebar() {
       {/* Brand Section */}
       <div className="px-5 pt-8 pb-6">
         <div className="flex items-center gap-3">
-          {/* Animated Logo */}
+          {/* Logo */}
           <div className="relative flex-shrink-0 group cursor-pointer">
             <div
               className="w-10 h-10 rounded-xl flex items-center justify-center relative z-10 overflow-hidden"
@@ -183,15 +183,6 @@ export default function Sidebar() {
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out" />
               <span className="text-white font-black text-lg tracking-tighter relative z-10">G</span>
             </div>
-            {/* Glow pulse */}
-            <div
-              className="absolute inset-0 rounded-xl opacity-60"
-              style={{
-                background: "linear-gradient(135deg, #4f46e5, #7c3aed)",
-                filter: "blur(12px)",
-                animation: "pulseGlow 3s ease-in-out infinite",
-              }}
-            />
           </div>
 
           <div className="flex flex-col">
@@ -286,10 +277,6 @@ export default function Sidebar() {
 
       {/* Animations */}
       <style jsx>{`
-        @keyframes pulseGlow {
-          0%, 100% { opacity: 0.5; transform: scale(1); }
-          50% { opacity: 0.8; transform: scale(1.08); }
-        }
         .scrollbar-hide::-webkit-scrollbar {
           display: none;
         }

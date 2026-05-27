@@ -152,55 +152,27 @@ const testimonials = [
   },
 ];
 
-// Server-side deterministic particles for background
-const particles = [
-  { left: "10%", delay: "0s", dur: "12s" },
-  { left: "25%", delay: "-2s", dur: "15s" },
-  { left: "40%", delay: "-5s", dur: "10s" },
-  { left: "55%", delay: "-7s", dur: "18s" },
-  { left: "70%", delay: "-3s", dur: "14s" },
-  { left: "85%", delay: "-8s", dur: "16s" },
-];
+// Removed particles for performance
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#03050f] text-slate-200 font-sans relative overflow-x-hidden selection:bg-indigo-500/30">
       <style>{`
-        @keyframes orb-float {
-          0%, 100% { transform: translateY(0) scale(1); }
-          50% { transform: translateY(-40px) scale(1.05); }
-        }
-        @keyframes orb-float-reverse {
-          0%, 100% { transform: translateY(0) scale(1); }
-          50% { transform: translateY(40px) scale(0.95); }
-        }
         @keyframes fade-in-up {
-          0% { opacity: 0; transform: translateY(30px); }
+          0% { opacity: 0; transform: translateY(20px); }
           100% { opacity: 1; transform: translateY(0); }
         }
         @keyframes gradient-x {
           0%, 100% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
         }
-        @keyframes pulse-glow {
-          0%, 100% { opacity: 0.5; transform: scale(1); }
-          50% { opacity: 1; transform: scale(1.05); }
-        }
-        @keyframes particle-up {
-          0% { transform: translateY(100vh) scale(0); opacity: 0; }
-          20% { opacity: 1; transform: translateY(80vh) scale(1); }
-          80% { opacity: 1; transform: translateY(20vh) scale(1); }
-          100% { transform: translateY(-20vh) scale(0); opacity: 0; }
-        }
         
-        .animate-orb { animation: orb-float 20s ease-in-out infinite; }
-        .animate-orb-rev { animation: orb-float-reverse 24s ease-in-out infinite; }
         .animate-gradient-text { 
           background-size: 200% auto;
-          animation: gradient-x 4s linear infinite; 
+          animation: gradient-x 6s linear infinite; 
         }
         
-        .fade-up { animation: fade-in-up 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+        .fade-up { animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
         .delay-100 { animation-delay: 100ms; }
         .delay-200 { animation-delay: 200ms; }
         .delay-300 { animation-delay: 300ms; }
@@ -208,21 +180,13 @@ export default function Home() {
         .delay-500 { animation-delay: 500ms; }
         
         .glass-nav {
-          background: rgba(3, 5, 15, 0.6);
-          backdrop-filter: blur(10px);
-          -webkit-backdrop-filter: blur(10px);
+          background: rgba(3, 5, 15, 0.8);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
           border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        @media (max-width: 1024px) {
-          .animate-gradient-text {
-            animation-duration: 10s;
-          }
-        }
-
         @media (max-width: 768px) {
-          .animate-orb,
-          .animate-orb-rev,
           .fade-up {
             animation: none !important;
             transform: none !important;
@@ -239,24 +203,10 @@ export default function Home() {
       `}</style>
 
       {/* ── Global Background Elements ── */}
-      <div className="fixed inset-0 z-0 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at center, rgba(255,255,255,0.03) 1px, transparent 1px)', backgroundSize: '28px 28px' }}></div>
+      <div className="fixed inset-0 z-0 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at center, rgba(255,255,255,0.02) 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[-15%] left-[-10%] w-[420px] h-[420px] rounded-full bg-indigo-600/10 blur-[90px] animate-orb"></div>
-        <div className="absolute top-[30%] right-[-10%] w-[380px] h-[380px] rounded-full bg-purple-600/10 blur-[90px] animate-orb-rev"></div>
-        <div className="absolute bottom-[-10%] left-[20%] w-[520px] h-[520px] rounded-full bg-blue-600/10 blur-[110px] animate-orb hidden md:block" style={{ animationDelay: '-5s' }}></div>
-        
-        {/* Floating Particles */}
-        {particles.map((p, i) => (
-          <div
-            key={i} 
-            className="absolute w-1.5 h-1.5 bg-indigo-400/35 rounded-full hidden sm:block"
-            style={{
-              left: p.left,
-              animation: `particle-up ${p.dur} linear infinite`,
-              animationDelay: p.delay
-            }}
-          />
-        ))}
+        <div className="absolute top-[-15%] left-[-10%] w-[300px] h-[300px] rounded-full bg-indigo-600/5 blur-[60px]"></div>
+        <div className="absolute top-[30%] right-[-10%] w-[280px] h-[280px] rounded-full bg-purple-600/5 blur-[60px]"></div>
       </div>
 
       {/* ── Navbar ── */}
@@ -292,12 +242,9 @@ export default function Home() {
             </Link>
             <Link
               href="/register"
-              className="relative group inline-flex items-center justify-center"
+              className="relative px-5 py-2.5 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white rounded-xl font-semibold text-sm transition-all duration-300"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl blur opacity-40 group-hover:opacity-80 transition-opacity duration-300"></div>
-              <div className="relative px-5 py-2.5 bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 text-white rounded-xl font-semibold text-sm transition-all duration-300">
-                Get Started Free
-              </div>
+              Get Started Free
             </Link>
           </div>
         </div>
@@ -334,19 +281,16 @@ export default function Home() {
           <div className="fade-up delay-300 flex flex-wrap items-center justify-center gap-5 mb-20">
             <Link
               href="/register"
-              className="relative group inline-flex"
+              className="relative px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 rounded-2xl font-bold text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-3"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500 rounded-2xl blur-lg opacity-60 group-hover:opacity-100 transition-opacity duration-500 animate-pulse-glow"></div>
-              <div className="relative px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl font-bold text-white shadow-xl group-hover:scale-[1.02] transition-transform duration-300 flex items-center gap-3">
-                <span>Start Practicing Free</span>
-                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
-              </div>
+              <span>Start Practicing Free</span>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
             </Link>
             <Link
               href="/login"
-              className="px-8 py-4 bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-white rounded-2xl font-bold transition-all duration-300 backdrop-blur-sm"
+              className="px-8 py-4 bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-white rounded-2xl font-bold transition-all duration-300"
             >
               Sign In
             </Link>
@@ -393,22 +337,14 @@ export default function Home() {
           {features.map((f, i) => (
             <div
               key={f.title}
-              className="group relative p-[1px] rounded-[1.25rem] overflow-hidden fade-up"
+              className="group relative bg-[#050814] rounded-[1.25rem] p-8 border border-white/5 hover:border-indigo-500/20 transition-all duration-300 fade-up"
               style={{ animationDelay: `${i * 100}ms` }}
             >
-              {/* Spinning Conic Gradient Border */}
-              <div className="absolute inset-[-100%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_70%,rgba(99,102,241,0.7)_100%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
-              <div className="relative h-full bg-[#050814] rounded-[1.15rem] p-8 transition-colors duration-500 border border-white/5 group-hover:border-transparent overflow-hidden">
-                {/* Subtle background glow */}
-                <div className={`absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br ${f.iconGradient} opacity-[0.03] group-hover:opacity-[0.15] blur-2xl rounded-full transition-opacity duration-700`}></div>
-                
-                <div className={`relative w-14 h-14 rounded-xl bg-gradient-to-br ${f.iconGradient} flex items-center justify-center mb-6 text-white shadow-lg shadow-indigo-500/10 transition-transform duration-500 group-hover:scale-110 group-hover:-translate-y-1`}>
-                  {f.icon}
-                </div>
-                <h3 className="relative text-xl font-bold text-white mb-3 tracking-tight group-hover:text-indigo-300 transition-colors duration-300">{f.title}</h3>
-                <p className="relative text-gray-400 text-sm leading-relaxed">{f.description}</p>
+              <div className={`relative w-14 h-14 rounded-xl bg-gradient-to-br ${f.iconGradient} flex items-center justify-center mb-6 text-white shadow-lg shadow-indigo-500/10 transition-transform duration-300 group-hover:scale-105`}>
+                {f.icon}
               </div>
+              <h3 className="relative text-xl font-bold text-white mb-3 tracking-tight group-hover:text-indigo-300 transition-colors duration-300">{f.title}</h3>
+              <p className="relative text-gray-400 text-sm leading-relaxed">{f.description}</p>
             </div>
           ))}
         </div>
@@ -477,30 +413,27 @@ export default function Home() {
           {testimonials.map((t, i) => (
             <div
               key={t.name}
-              className="group relative p-[1px] rounded-3xl overflow-hidden fade-up"
+              className="group relative bg-[#050814] rounded-3xl p-8 border border-white/5 hover:border-pink-500/20 transition-all duration-300 fade-up flex flex-col justify-between"
               style={{ animationDelay: `${i * 150}ms` }}
             >
-              <div className="absolute inset-[-100%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_70%,rgba(236,72,153,0.5)_100%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative h-full bg-[#050814] rounded-[23px] p-8 border border-white/5 group-hover:border-transparent transition-colors duration-500 flex flex-col justify-between">
-                <div className="absolute top-6 right-6 text-7xl font-serif text-white/5 select-none leading-none group-hover:text-pink-500/10 transition-colors duration-300">&ldquo;</div>
-                <div className="relative z-10">
-                  <div className="flex gap-1 mb-6">
-                    {[...Array(5)].map((_, j) => (
-                      <svg key={j} className="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    ))}
-                  </div>
-                  <p className="text-gray-300 text-sm leading-relaxed mb-8 italic">"{t.quote}"</p>
+              <div className="absolute top-6 right-6 text-7xl font-serif text-white/5 select-none leading-none">&ldquo;</div>
+              <div className="relative z-10">
+                <div className="flex gap-1 mb-6">
+                  {[...Array(5)].map((_, j) => (
+                    <svg key={j} className="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
                 </div>
-                <div className="relative z-10 flex items-center gap-4 mt-auto">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold shadow-lg shadow-purple-500/20">
-                    {t.avatar}
-                  </div>
-                  <div>
-                    <div className="text-white font-semibold text-sm">{t.name}</div>
-                    <div className="text-gray-500 text-xs mt-0.5">{t.role}</div>
-                  </div>
+                <p className="text-gray-300 text-sm leading-relaxed mb-8 italic">"{t.quote}"</p>
+              </div>
+              <div className="relative z-10 flex items-center gap-4 mt-auto">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold shadow-lg shadow-purple-500/20">
+                  {t.avatar}
+                </div>
+                <div>
+                  <div className="text-white font-semibold text-sm">{t.name}</div>
+                  <div className="text-gray-500 text-xs mt-0.5">{t.role}</div>
                 </div>
               </div>
             </div>
@@ -510,18 +443,7 @@ export default function Home() {
 
       {/* ── CTA Banner ── */}
       <section className="relative z-10 px-6 py-24 lg:py-32 max-w-5xl mx-auto w-full fade-up delay-200">
-        <div className="relative p-12 md:p-20 rounded-[2.5rem] text-center overflow-hidden border border-white/10 shadow-2xl">
-          {/* Mesh gradient background */}
-          <div className="absolute inset-0 bg-[#030614]"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,rgba(99,102,241,0.15),transparent_50%)]"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(168,85,247,0.15),transparent_50%)]"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_80%,rgba(236,72,153,0.1),transparent_50%)]"></div>
-          <div className="absolute inset-0 bg-white/[0.02] backdrop-blur-xl"></div>
-
-          {/* Floating elements inside banner */}
-          <div className="absolute top-10 left-10 w-20 h-20 rounded-full bg-indigo-500/20 blur-xl animate-orb"></div>
-          <div className="absolute bottom-10 right-10 w-24 h-24 rounded-full bg-purple-500/20 blur-xl animate-orb-rev"></div>
-
+        <div className="relative p-12 md:p-20 rounded-[2.5rem] text-center overflow-hidden border border-white/10 shadow-2xl bg-gradient-to-br from-indigo-500/10 to-purple-500/5">
           <div className="relative z-10">
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 tracking-tighter">
               Ready to level up?
@@ -531,15 +453,12 @@ export default function Home() {
             </p>
             <Link
               href="/register"
-              className="relative group inline-flex"
+              className="inline-flex px-10 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white rounded-2xl font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-3"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl blur-md opacity-70 group-hover:opacity-100 transition-opacity duration-300 animate-pulse-glow"></div>
-              <div className="relative px-10 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl font-bold text-lg transition-transform duration-300 group-hover:scale-[1.03] shadow-xl flex items-center gap-3">
-                Create Free Account
-                <svg className="w-5 h-5 group-hover:translate-x-1.5 transition-transform duration-300" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
-              </div>
+              Create Free Account
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
             </Link>
           </div>
         </div>
