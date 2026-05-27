@@ -84,13 +84,12 @@ const stats = [
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col relative overflow-hidden">
-      {/* Animated Background */}
-      <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900/20 via-purple-900/10 to-transparent"></div>
-        <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
-        <div className="absolute top-0 -right-4 w-72 h-72 bg-indigo-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+    <main className="min-h-screen flex flex-col relative">
+      {/* Optimized Static Background */}
+      <div className="fixed inset-0 -z-10 bg-gradient-to-br from-[#0a0f1e] via-[#0d1425] to-[#060b18]"></div>
+      <div className="fixed inset-0 -z-10 opacity-30">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-indigo-900/30 via-transparent to-transparent"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-purple-900/20 via-transparent to-transparent"></div>
       </div>
 
       {/* ── Nav bar ── */}
@@ -113,13 +112,9 @@ export default function Home() {
       </header>
 
       {/* ── Hero ── */}
-      <section className="flex-1 flex flex-col items-center justify-center text-center px-6 pt-32 pb-20 relative">
-        {/* Floating Elements */}
-        <div className="absolute top-40 left-10 w-20 h-20 border border-indigo-500/20 rounded-lg rotate-12 animate-float"></div>
-        <div className="absolute bottom-40 right-10 w-16 h-16 border border-purple-500/20 rounded-full animate-float animation-delay-2000"></div>
-        
-        <div className="animate-fade-in">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-xs font-semibold mb-8 uppercase tracking-widest backdrop-blur-sm hover:scale-105 transition-transform">
+      <section className="flex-1 flex flex-col items-center justify-center text-center px-6 pt-32 pb-20">
+        <div>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-xs font-semibold mb-8 uppercase tracking-widest backdrop-blur-sm">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
@@ -129,7 +124,7 @@ export default function Home() {
 
           <h1 className="text-6xl md:text-8xl font-black mb-8 leading-tight tracking-tight">
             <span className="block mb-2">Ace Every</span>
-            <span className="block bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 animate-gradient">
+            <span className="block bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
               Interview
             </span>
             <span className="block mt-2 text-5xl md:text-6xl">with AI Coaching</span>
@@ -140,7 +135,7 @@ export default function Home() {
           </p>
 
           <div className="flex flex-wrap gap-4 justify-center mb-16">
-            <Link href="/register" className="group px-8 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white rounded-xl font-bold text-lg transition-all duration-200 shadow-2xl shadow-indigo-500/50 hover:shadow-indigo-500/70 hover:scale-105 flex items-center gap-2">
+            <Link href="/register" className="group px-8 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white rounded-xl font-bold text-lg transition-all duration-200 shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 flex items-center gap-2">
               Start Practicing Free
               <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -153,9 +148,9 @@ export default function Home() {
 
           {/* Stats row */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl w-full">
-            {stats.map((s, i) => (
-              <div key={s.label} className="glass p-5 rounded-2xl text-center border border-white/10 hover:border-indigo-500/30 transition-all duration-300 hover:scale-105 group" style={{ animationDelay: `${i * 100}ms` }}>
-                <div className="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400 mb-2 group-hover:scale-110 transition-transform">{s.value}</div>
+            {stats.map((s) => (
+              <div key={s.label} className="glass p-5 rounded-2xl text-center border border-white/10 hover:border-indigo-500/30 transition-all duration-300">
+                <div className="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400 mb-2">{s.value}</div>
                 <div className="text-xs text-gray-400 font-medium">{s.label}</div>
               </div>
             ))}
@@ -164,7 +159,7 @@ export default function Home() {
       </section>
 
       {/* ── Features ── */}
-      <section className="px-6 pb-24 max-w-7xl mx-auto w-full relative">
+      <section className="px-6 pb-24 max-w-7xl mx-auto w-full">
         <div className="text-center mb-16">
           <div className="inline-block px-4 py-2 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-sm font-semibold mb-4">
             ✨ Features
@@ -178,25 +173,16 @@ export default function Home() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((f, i) => (
+          {features.map((f) => (
             <div
               key={f.title}
-              className={`group glass p-8 rounded-2xl border ${f.border} bg-gradient-to-br ${f.color} hover:scale-105 transition-all duration-300 cursor-pointer relative overflow-hidden`}
-              style={{ animationDelay: `${i * 100}ms` }}
+              className={`glass p-8 rounded-2xl border ${f.border} bg-gradient-to-br ${f.color} hover:border-opacity-50 transition-all duration-300 cursor-pointer`}
             >
-              {/* Glow effect on hover */}
-              <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl ${f.glow}`}></div>
-              
-              <div className="relative z-10">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-white/10 to-white/5 flex items-center justify-center mb-5 text-indigo-300 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
-                  {f.icon}
-                </div>
-                <h3 className="text-xl font-bold text-white mb-3 group-hover:text-indigo-300 transition-colors">{f.title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed group-hover:text-gray-300 transition-colors">{f.description}</p>
+              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-white/10 to-white/5 flex items-center justify-center mb-5 text-indigo-300">
+                {f.icon}
               </div>
-
-              {/* Corner decoration */}
-              <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-white/5 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <h3 className="text-xl font-bold text-white mb-3">{f.title}</h3>
+              <p className="text-gray-400 text-sm leading-relaxed">{f.description}</p>
             </div>
           ))}
         </div>
@@ -204,24 +190,15 @@ export default function Home() {
 
       {/* ── CTA Banner ── */}
       <section className="px-6 pb-24 max-w-5xl mx-auto w-full">
-        <div className="relative glass p-12 md:p-16 rounded-3xl text-center border border-indigo-500/20 bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-pink-500/10 overflow-hidden group">
-          {/* Animated background */}
-          <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-          
-          {/* Floating orbs */}
-          <div className="absolute top-0 left-0 w-40 h-40 bg-indigo-500/20 rounded-full filter blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-0 right-0 w-40 h-40 bg-purple-500/20 rounded-full filter blur-3xl animate-pulse animation-delay-2000"></div>
-          
-          <div className="relative z-10">
-            <h2 className="text-4xl md:text-5xl font-black text-white mb-4">Ready to level up?</h2>
-            <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">Create your free account and take your first AI interview in under 2 minutes.</p>
-            <Link href="/register" className="inline-flex items-center gap-2 px-10 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white rounded-xl font-bold text-lg transition-all duration-200 shadow-2xl shadow-indigo-500/50 hover:shadow-indigo-500/70 hover:scale-105">
-              Create Free Account
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </Link>
-          </div>
+        <div className="glass p-12 md:p-16 rounded-3xl text-center border border-indigo-500/20 bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-pink-500/10">
+          <h2 className="text-4xl md:text-5xl font-black text-white mb-4">Ready to level up?</h2>
+          <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">Create your free account and take your first AI interview in under 2 minutes.</p>
+          <Link href="/register" className="inline-flex items-center gap-2 px-10 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white rounded-xl font-bold text-lg transition-all duration-200 shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50">
+            Create Free Account
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </Link>
         </div>
       </section>
 
