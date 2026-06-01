@@ -176,9 +176,9 @@ export default function Home() {
             box-shadow: 0 0 8px 2px rgba(16, 185, 129, 0.4);
           }
         }
-        @keyframes stroke-travel {
-          0% { stroke-dashoffset: 0; }
-          100% { stroke-dashoffset: -1400; }
+        @keyframes border-spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
         }
         
         .animate-gradient-text { 
@@ -204,8 +204,30 @@ export default function Home() {
           animation: pulse-green 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
 
-        .border-light-stroke {
-          animation: stroke-travel 4s linear infinite;
+        .border-light-effect::before {
+          content: '';
+          position: absolute;
+          inset: -2px;
+          border-radius: 9999px;
+          padding: 2px;
+          background: conic-gradient(
+            from 0deg,
+            transparent 0deg,
+            transparent 320deg,
+            rgba(255, 255, 255, 0.1) 320deg,
+            rgba(255, 255, 255, 0.3) 330deg,
+            rgba(255, 255, 255, 0.6) 340deg,
+            rgba(255, 255, 255, 1) 350deg,
+            rgba(255, 255, 255, 0.6) 355deg,
+            rgba(255, 255, 255, 0.3) 358deg,
+            transparent 360deg
+          );
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          animation: border-spin 4s linear infinite;
+          pointer-events: none;
+          filter: blur(1px);
         }
 
         @media (max-width: 768px) {
@@ -217,7 +239,7 @@ export default function Home() {
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .border-light-stroke {
+          .border-light-effect::before {
             animation: none !important;
           }
           .pulse-indicator {
@@ -281,39 +303,8 @@ export default function Home() {
       {/* ── Hero Section ── */}
       <section className="relative z-10 pt-40 pb-20 lg:pt-48 lg:pb-32 px-6 flex flex-col items-center justify-center text-center min-h-[90vh]">
         <div className="max-w-5xl mx-auto">
-          {/* Badge with traveling light on the green border track */}
-          <div className="fade-up inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full relative mb-8 border border-emerald-500/30 bg-gradient-to-r from-slate-900/90 to-emerald-950/50 backdrop-blur-md">
-            {/* SVG overlay for animated light traveling on the border */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ overflow: 'visible' }}>
-              <defs>
-                <linearGradient id="comet-light" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="rgba(255, 255, 255, 0)" />
-                  <stop offset="50%" stopColor="rgba(255, 255, 255, 0.3)" />
-                  <stop offset="75%" stopColor="rgba(255, 255, 255, 0.6)" />
-                  <stop offset="90%" stopColor="rgba(255, 255, 255, 0.9)" />
-                  <stop offset="100%" stopColor="rgba(255, 255, 255, 1)" />
-                </linearGradient>
-              </defs>
-              {/* Traveling white light on green border - matches the pill shape exactly */}
-              <rect 
-                x="0" 
-                y="0" 
-                width="100%" 
-                height="100%" 
-                rx="9999"
-                ry="9999"
-                fill="none" 
-                stroke="url(#comet-light)" 
-                strokeWidth="2"
-                strokeDasharray="200 1400"
-                strokeLinecap="round"
-                className="border-light-stroke"
-                style={{ 
-                  filter: 'blur(1px) drop-shadow(0 0 8px rgba(255, 255, 255, 0.8))',
-                }}
-              />
-            </svg>
-            
+          {/* Badge with traveling light using CSS mask */}
+          <div className="fade-up inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full relative mb-8 border border-emerald-500/30 bg-gradient-to-r from-slate-900/90 to-emerald-950/50 backdrop-blur-md border-light-effect">
             {/* Inner content */}
             <div className="relative z-10 flex items-center gap-2.5">
               <span className="relative flex h-2.5 w-2.5">
