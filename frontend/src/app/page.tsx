@@ -207,27 +207,30 @@ export default function Home() {
         .border-light-effect::before {
           content: '';
           position: absolute;
-          inset: -2px;
+          inset: -1.2px;
           border-radius: 9999px;
-          padding: 2px;
+          padding: 1.2px;
           background: conic-gradient(
             from 0deg,
             transparent 0deg,
-            transparent 320deg,
-            rgba(255, 255, 255, 0.1) 320deg,
-            rgba(255, 255, 255, 0.3) 330deg,
-            rgba(255, 255, 255, 0.6) 340deg,
-            rgba(255, 255, 255, 1) 350deg,
-            rgba(255, 255, 255, 0.6) 355deg,
-            rgba(255, 255, 255, 0.3) 358deg,
-            transparent 360deg
+            transparent 220deg,
+            rgba(239, 68, 68, 0) 220deg,
+            rgba(239, 68, 68, 1) 235deg,
+            rgba(249, 115, 22, 1) 250deg,
+            rgba(234, 179, 8, 1) 265deg,
+            rgba(34, 197, 94, 1) 280deg,
+            rgba(6, 182, 212, 1) 295deg,
+            rgba(59, 130, 246, 1) 310deg,
+            rgba(168, 85, 247, 1) 330deg,
+            rgba(236, 72, 153, 1) 350deg,
+            rgba(236, 72, 153, 0) 360deg
           );
           -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
           -webkit-mask-composite: xor;
           mask-composite: exclude;
           animation: border-spin 4s linear infinite;
           pointer-events: none;
-          filter: blur(1px);
+          filter: blur(0.5px);
         }
 
         @media (max-width: 768px) {
