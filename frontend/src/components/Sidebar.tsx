@@ -172,38 +172,12 @@ export default function Sidebar() {
       <div className="px-5 pt-8 pb-6">
         <div className="flex items-center gap-3">
           {/* Logo */}
-          <div className="relative flex-shrink-0 group cursor-pointer">
-            <div
-              className="w-10 h-10 rounded-xl flex items-center justify-center relative z-10 overflow-hidden"
-              style={{
-                background: "linear-gradient(135deg, #4f46e5, #7c3aed, #9333ea)",
-                boxShadow: "0 4px 20px rgba(79,70,229,0.4)",
-              }}
-            >
-              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out" />
-              <span className="text-white font-black text-lg tracking-tighter relative z-10">G</span>
-            </div>
-          </div>
-
-          <div className="flex flex-col">
-            <div className="flex items-center gap-2">
-              <span className="text-white font-bold text-base tracking-tight">
-                GalaxiHire
-              </span>
-              {/* PRO Badge */}
-              <span
-                className="text-[9px] font-bold uppercase tracking-widest px-1.5 py-0.5 rounded text-indigo-300"
-                style={{
-                  background: "rgba(99,102,241,0.15)",
-                  border: "1px solid rgba(99,102,241,0.3)",
-                }}
-              >
-                PRO
-              </span>
-            </div>
-            <span className="text-slate-400 text-[11px] font-medium tracking-wide mt-0.5">
-              AI Interviewer
-            </span>
+          <div className="relative flex-shrink-0">
+            <img 
+              src="/logo/galaxihire-logo.png" 
+              alt="GalaxiHire Logo" 
+              className="h-10 w-auto object-contain"
+            />
           </div>
         </div>
       </div>
