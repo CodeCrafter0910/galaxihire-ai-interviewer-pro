@@ -281,42 +281,37 @@ export default function Home() {
       {/* ── Hero Section ── */}
       <section className="relative z-10 pt-40 pb-20 lg:pt-48 lg:pb-32 px-6 flex flex-col items-center justify-center text-center min-h-[90vh]">
         <div className="max-w-5xl mx-auto">
-          {/* Badge with traveling light on pill-shaped border */}
-          <div className="fade-up inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full relative mb-8">
-            {/* SVG overlay for animated light on border */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ overflow: 'visible' }}>
+          {/* Badge with traveling light on the green border track */}
+          <div className="fade-up inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full relative mb-8 border border-emerald-500/30 bg-gradient-to-r from-slate-900/90 to-emerald-950/50 backdrop-blur-md">
+            {/* SVG overlay for animated light traveling on the border */}
+            <svg className="absolute inset-[-1px] w-[calc(100%+2px)] h-[calc(100%+2px)] pointer-events-none" style={{ overflow: 'visible' }}>
               <defs>
-                <linearGradient id="light-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <linearGradient id="comet-light" x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stopColor="rgba(255, 255, 255, 0)" />
-                  <stop offset="20%" stopColor="rgba(255, 255, 255, 0.1)" />
-                  <stop offset="40%" stopColor="rgba(255, 255, 255, 0.3)" />
-                  <stop offset="60%" stopColor="rgba(255, 255, 255, 0.5)" />
-                  <stop offset="80%" stopColor="rgba(255, 255, 255, 0.8)" />
+                  <stop offset="40%" stopColor="rgba(255, 255, 255, 0.2)" />
+                  <stop offset="70%" stopColor="rgba(255, 255, 255, 0.5)" />
+                  <stop offset="90%" stopColor="rgba(255, 255, 255, 0.9)" />
                   <stop offset="100%" stopColor="rgba(255, 255, 255, 1)" />
                 </linearGradient>
               </defs>
-              {/* Traveling light stroke on pill border */}
+              {/* Traveling white light on green border */}
               <rect 
-                x="0.5" 
-                y="0.5" 
-                width="calc(100% - 1px)" 
-                height="calc(100% - 1px)" 
+                x="1" 
+                y="1" 
+                width="calc(100% - 2px)" 
+                height="calc(100% - 2px)" 
                 rx="9999" 
                 fill="none" 
-                stroke="url(#light-gradient)" 
-                strokeWidth="2"
-                strokeDasharray="150 9999"
+                stroke="url(#comet-light)" 
+                strokeWidth="2.5"
+                strokeDasharray="180 9999"
                 strokeLinecap="round"
                 className="border-light-stroke"
                 style={{ 
-                  filter: 'blur(2px) drop-shadow(0 0 10px rgba(255, 255, 255, 0.8))',
-                  strokeDashoffset: 0
+                  filter: 'blur(1.5px) drop-shadow(0 0 12px rgba(255, 255, 255, 0.9))',
                 }}
               />
             </svg>
-            
-            {/* Static border and background */}
-            <div className="absolute inset-0 rounded-full border border-emerald-500/20 bg-gradient-to-r from-slate-900/90 to-emerald-950/50 backdrop-blur-md"></div>
             
             {/* Inner content */}
             <div className="relative z-10 flex items-center gap-2.5">
