@@ -177,8 +177,8 @@ export default function Home() {
           }
         }
         @keyframes stroke-travel {
-          0% { stroke-dashoffset: 1120; }
-          100% { stroke-dashoffset: 0; }
+          0% { stroke-dashoffset: 0; }
+          100% { stroke-dashoffset: -9999; }
         }
         
         .animate-gradient-text { 
@@ -281,50 +281,42 @@ export default function Home() {
       {/* ── Hero Section ── */}
       <section className="relative z-10 pt-40 pb-20 lg:pt-48 lg:pb-32 px-6 flex flex-col items-center justify-center text-center min-h-[90vh]">
         <div className="max-w-5xl mx-auto">
-          {/* Badge with traveling light on border */}
+          {/* Badge with traveling light on pill-shaped border */}
           <div className="fade-up inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full relative mb-8">
-            {/* Static dark border with SVG overlay for light animation */}
-            <svg className="absolute inset-0 w-full h-full" style={{ overflow: 'visible' }}>
+            {/* SVG overlay for animated light on border */}
+            <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ overflow: 'visible' }}>
               <defs>
                 <linearGradient id="light-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stopColor="rgba(255, 255, 255, 0)" />
-                  <stop offset="30%" stopColor="rgba(255, 255, 255, 0.1)" />
-                  <stop offset="50%" stopColor="rgba(255, 255, 255, 0.3)" />
-                  <stop offset="70%" stopColor="rgba(255, 255, 255, 0.6)" />
-                  <stop offset="85%" stopColor="rgba(255, 255, 255, 0.9)" />
+                  <stop offset="20%" stopColor="rgba(255, 255, 255, 0.1)" />
+                  <stop offset="40%" stopColor="rgba(255, 255, 255, 0.3)" />
+                  <stop offset="60%" stopColor="rgba(255, 255, 255, 0.5)" />
+                  <stop offset="80%" stopColor="rgba(255, 255, 255, 0.8)" />
                   <stop offset="100%" stopColor="rgba(255, 255, 255, 1)" />
                 </linearGradient>
               </defs>
-              {/* Static border */}
+              {/* Traveling light stroke on pill border */}
               <rect 
-                x="1" 
-                y="1" 
-                width="calc(100% - 2px)" 
-                height="calc(100% - 2px)" 
-                rx="9999" 
-                fill="url(#badge-bg)" 
-                stroke="rgba(16, 185, 129, 0.2)" 
-                strokeWidth="1"
-              />
-              {/* Traveling light on border */}
-              <rect 
-                x="1" 
-                y="1" 
-                width="calc(100% - 2px)" 
-                height="calc(100% - 2px)" 
+                x="0.5" 
+                y="0.5" 
+                width="calc(100% - 1px)" 
+                height="calc(100% - 1px)" 
                 rx="9999" 
                 fill="none" 
                 stroke="url(#light-gradient)" 
-                strokeWidth="2.5"
-                strokeDasharray="120 1000"
+                strokeWidth="2"
+                strokeDasharray="150 9999"
                 strokeLinecap="round"
                 className="border-light-stroke"
-                style={{ filter: 'blur(1.5px) drop-shadow(0 0 8px rgba(255, 255, 255, 0.6))' }}
+                style={{ 
+                  filter: 'blur(2px) drop-shadow(0 0 10px rgba(255, 255, 255, 0.8))',
+                  strokeDashoffset: 0
+                }}
               />
             </svg>
             
-            {/* Background */}
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-slate-900/90 to-emerald-950/50 backdrop-blur-md"></div>
+            {/* Static border and background */}
+            <div className="absolute inset-0 rounded-full border border-emerald-500/20 bg-gradient-to-r from-slate-900/90 to-emerald-950/50 backdrop-blur-md"></div>
             
             {/* Inner content */}
             <div className="relative z-10 flex items-center gap-2.5">
