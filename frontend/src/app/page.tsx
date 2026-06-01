@@ -176,25 +176,9 @@ export default function Home() {
             box-shadow: 0 0 8px 2px rgba(16, 185, 129, 0.4);
           }
         }
-        @keyframes border-glow {
-          0% {
-            background: conic-gradient(
-              from 0deg at 50% 50%,
-              rgba(16, 185, 129, 0) 0deg,
-              rgba(16, 185, 129, 0.8) 60deg,
-              rgba(16, 185, 129, 0) 120deg,
-              rgba(16, 185, 129, 0) 360deg
-            );
-          }
-          100% {
-            background: conic-gradient(
-              from 360deg at 50% 50%,
-              rgba(16, 185, 129, 0) 0deg,
-              rgba(16, 185, 129, 0.8) 60deg,
-              rgba(16, 185, 129, 0) 120deg,
-              rgba(16, 185, 129, 0) 360deg
-            );
-          }
+        @keyframes spin-border {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
         }
         
         .animate-gradient-text { 
@@ -220,30 +204,17 @@ export default function Home() {
           animation: pulse-green 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
 
-        .border-glow-animation {
+        .border-light-spinner {
           background: conic-gradient(
-            from 0deg at 50% 50%,
-            rgba(16, 185, 129, 0) 0deg,
-            rgba(16, 185, 129, 0.8) 60deg,
-            rgba(16, 185, 129, 0) 120deg,
-            rgba(16, 185, 129, 0) 360deg
+            from 0deg,
+            transparent 0deg 270deg,
+            rgba(16, 185, 129, 0.4) 270deg 300deg,
+            rgba(16, 185, 129, 0.8) 300deg 330deg,
+            rgba(16, 185, 129, 0.4) 330deg 360deg,
+            transparent 360deg
           );
-          animation: border-glow 3s linear infinite;
-          padding: 1px;
-          -webkit-mask: 
-            linear-gradient(#fff 0 0) content-box, 
-            linear-gradient(#fff 0 0);
-          -webkit-mask-composite: xor;
-          mask-composite: exclude;
-        }
-
-        .border-glow-animation::before {
-          content: '';
-          position: absolute;
-          inset: 1px;
+          animation: spin-border 3s linear infinite;
           border-radius: 9999px;
-          background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(6, 78, 59, 0.4) 100%);
-          z-index: -1;
         }
 
         @media (max-width: 768px) {
@@ -255,9 +226,11 @@ export default function Home() {
         }
 
         @media (prefers-reduced-motion: reduce) {
-          *, *::before, *::after {
+          .border-light-spinner {
             animation: none !important;
-            transition: none !important;
+          }
+          .pulse-indicator {
+            animation: none !important;
           }
         }
       `}</style>
@@ -318,9 +291,14 @@ export default function Home() {
       <section className="relative z-10 pt-40 pb-20 lg:pt-48 lg:pb-32 px-6 flex flex-col items-center justify-center text-center min-h-[90vh]">
         <div className="max-w-5xl mx-auto">
           {/* Badge */}
-          <div className="fade-up inline-flex items-center gap-2.5 px-4 py-2 rounded-full relative backdrop-blur-md shadow-lg shadow-emerald-500/10 overflow-hidden mb-8">
-            {/* Animated border light */}
-            <div className="absolute inset-0 rounded-full border-glow-animation"></div>
+          <div className="fade-up inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full relative backdrop-blur-md shadow-lg shadow-emerald-500/10 mb-8">
+            {/* Animated rotating border light */}
+            <div className="absolute inset-0 rounded-full overflow-hidden">
+              <div className="absolute inset-[-2px] rounded-full border-light-spinner"></div>
+            </div>
+            
+            {/* Static border base */}
+            <div className="absolute inset-0 rounded-full border border-emerald-500/20 bg-gradient-to-r from-slate-900/90 to-emerald-950/50"></div>
             
             {/* Inner content */}
             <div className="relative z-10 flex items-center gap-2.5">
