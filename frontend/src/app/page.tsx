@@ -176,6 +176,26 @@ export default function Home() {
             box-shadow: 0 0 8px 2px rgba(16, 185, 129, 0.4);
           }
         }
+        @keyframes border-glow {
+          0% {
+            background: conic-gradient(
+              from 0deg at 50% 50%,
+              rgba(16, 185, 129, 0) 0deg,
+              rgba(16, 185, 129, 0.8) 60deg,
+              rgba(16, 185, 129, 0) 120deg,
+              rgba(16, 185, 129, 0) 360deg
+            );
+          }
+          100% {
+            background: conic-gradient(
+              from 360deg at 50% 50%,
+              rgba(16, 185, 129, 0) 0deg,
+              rgba(16, 185, 129, 0.8) 60deg,
+              rgba(16, 185, 129, 0) 120deg,
+              rgba(16, 185, 129, 0) 360deg
+            );
+          }
+        }
         
         .animate-gradient-text { 
           background-size: 200% auto;
@@ -198,6 +218,32 @@ export default function Home() {
 
         .pulse-indicator {
           animation: pulse-green 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        .border-glow-animation {
+          background: conic-gradient(
+            from 0deg at 50% 50%,
+            rgba(16, 185, 129, 0) 0deg,
+            rgba(16, 185, 129, 0.8) 60deg,
+            rgba(16, 185, 129, 0) 120deg,
+            rgba(16, 185, 129, 0) 360deg
+          );
+          animation: border-glow 3s linear infinite;
+          padding: 1px;
+          -webkit-mask: 
+            linear-gradient(#fff 0 0) content-box, 
+            linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+        }
+
+        .border-glow-animation::before {
+          content: '';
+          position: absolute;
+          inset: 1px;
+          border-radius: 9999px;
+          background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(6, 78, 59, 0.4) 100%);
+          z-index: -1;
         }
 
         @media (max-width: 768px) {
@@ -272,11 +318,19 @@ export default function Home() {
       <section className="relative z-10 pt-40 pb-20 lg:pt-48 lg:pb-32 px-6 flex flex-col items-center justify-center text-center min-h-[90vh]">
         <div className="max-w-5xl mx-auto">
           {/* Badge */}
-          <div className="fade-up inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-emerald-500/30 bg-gradient-to-r from-slate-900/80 to-emerald-950/40 text-emerald-300 text-xs font-semibold mb-8 uppercase tracking-widest backdrop-blur-md shadow-lg shadow-emerald-500/10">
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="absolute inline-flex h-full w-full rounded-full pulse-indicator"></span>
-            </span>
-            Premium AI Interview Platform
+          <div className="fade-up inline-flex items-center gap-2.5 px-4 py-2 rounded-full relative backdrop-blur-md shadow-lg shadow-emerald-500/10 overflow-hidden mb-8">
+            {/* Animated border light */}
+            <div className="absolute inset-0 rounded-full border-glow-animation"></div>
+            
+            {/* Inner content */}
+            <div className="relative z-10 flex items-center gap-2.5">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="absolute inline-flex h-full w-full rounded-full pulse-indicator"></span>
+              </span>
+              <span className="text-emerald-300 text-xs font-semibold uppercase tracking-widest">
+                Premium AI Interview Platform
+              </span>
+            </div>
           </div>
 
           {/* Heading */}
