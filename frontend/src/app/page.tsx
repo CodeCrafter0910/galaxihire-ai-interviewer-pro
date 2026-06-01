@@ -178,7 +178,7 @@ export default function Home() {
         }
         @keyframes stroke-travel {
           0% { stroke-dashoffset: 0; }
-          100% { stroke-dashoffset: -9999; }
+          100% { stroke-dashoffset: -1400; }
         }
         
         .animate-gradient-text { 
@@ -205,7 +205,7 @@ export default function Home() {
         }
 
         .border-light-stroke {
-          animation: stroke-travel 3s linear infinite;
+          animation: stroke-travel 4s linear infinite;
         }
 
         @media (max-width: 768px) {
@@ -284,31 +284,32 @@ export default function Home() {
           {/* Badge with traveling light on the green border track */}
           <div className="fade-up inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full relative mb-8 border border-emerald-500/30 bg-gradient-to-r from-slate-900/90 to-emerald-950/50 backdrop-blur-md">
             {/* SVG overlay for animated light traveling on the border */}
-            <svg className="absolute inset-[-1px] w-[calc(100%+2px)] h-[calc(100%+2px)] pointer-events-none" style={{ overflow: 'visible' }}>
+            <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ overflow: 'visible' }}>
               <defs>
                 <linearGradient id="comet-light" x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stopColor="rgba(255, 255, 255, 0)" />
-                  <stop offset="40%" stopColor="rgba(255, 255, 255, 0.2)" />
-                  <stop offset="70%" stopColor="rgba(255, 255, 255, 0.5)" />
+                  <stop offset="50%" stopColor="rgba(255, 255, 255, 0.3)" />
+                  <stop offset="75%" stopColor="rgba(255, 255, 255, 0.6)" />
                   <stop offset="90%" stopColor="rgba(255, 255, 255, 0.9)" />
                   <stop offset="100%" stopColor="rgba(255, 255, 255, 1)" />
                 </linearGradient>
               </defs>
-              {/* Traveling white light on green border */}
+              {/* Traveling white light on green border - matches the pill shape exactly */}
               <rect 
-                x="1" 
-                y="1" 
-                width="calc(100% - 2px)" 
-                height="calc(100% - 2px)" 
-                rx="9999" 
+                x="0" 
+                y="0" 
+                width="100%" 
+                height="100%" 
+                rx="9999"
+                ry="9999"
                 fill="none" 
                 stroke="url(#comet-light)" 
-                strokeWidth="2.5"
-                strokeDasharray="180 9999"
+                strokeWidth="2"
+                strokeDasharray="200 1400"
                 strokeLinecap="round"
                 className="border-light-stroke"
                 style={{ 
-                  filter: 'blur(1.5px) drop-shadow(0 0 12px rgba(255, 255, 255, 0.9))',
+                  filter: 'blur(1px) drop-shadow(0 0 8px rgba(255, 255, 255, 0.8))',
                 }}
               />
             </svg>
