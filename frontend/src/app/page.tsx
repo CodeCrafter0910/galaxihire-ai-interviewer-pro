@@ -217,10 +217,10 @@ export default function Home() {
             <img 
               src="/logo/galaxihire-logo.png" 
               alt="GalaxiHire Logo" 
-              className="h-[50px] w-auto object-contain relative group-hover:scale-105 transition-all duration-300"
+              className="h-[90px] w-auto object-contain relative group-hover:scale-105 transition-all duration-300"
               loading="eager"
               fetchPriority="high"
-              style={{ maxWidth: '250px' }}
+              style={{ maxWidth: '350px' }}
             />
           </Link>
 
@@ -478,9 +478,9 @@ export default function Home() {
                 <img 
                   src="/logo/galaxihire-logo.png" 
                   alt="GalaxiHire Logo" 
-                  className="h-[50px] w-auto object-contain"
+                  className="h-[90px] w-auto object-contain"
                   loading="lazy"
-                  style={{ maxWidth: '250px' }}
+                  style={{ maxWidth: '350px' }}
                 />
               </div>
               <p className="text-gray-400 text-sm leading-relaxed max-w-sm mb-8">

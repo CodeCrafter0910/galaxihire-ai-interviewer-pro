@@ -176,10 +176,10 @@ export default function Sidebar() {
             <img 
               src="/logo/galaxihire-logo.png" 
               alt="GalaxiHire Logo" 
-              className="h-[60px] w-auto object-contain"
+              className="h-[120px] w-auto object-contain"
               loading="eager"
               fetchPriority="high"
-              style={{ maxWidth: '200px' }}
+              style={{ maxWidth: '280px' }}
             />
           </div>
         </div>
