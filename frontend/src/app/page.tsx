@@ -176,9 +176,10 @@ export default function Home() {
             box-shadow: 0 0 8px 2px rgba(16, 185, 129, 0.4);
           }
         }
-        @keyframes border-spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
+        @keyframes border-beam {
+          100% {
+            offset-distance: 100%;
+          }
         }
         
         .animate-gradient-text { 
@@ -204,33 +205,35 @@ export default function Home() {
           animation: pulse-green 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
 
-        .border-light-effect::before {
-          content: '';
+        .border-beam-container {
           position: absolute;
           inset: -1.2px;
           border-radius: 9999px;
           padding: 1.2px;
-          background: conic-gradient(
-            from 0deg,
-            transparent 0deg,
-            transparent 220deg,
-            rgba(239, 68, 68, 0) 220deg,
-            rgba(239, 68, 68, 1) 235deg,
-            rgba(249, 115, 22, 1) 250deg,
-            rgba(234, 179, 8, 1) 265deg,
-            rgba(34, 197, 94, 1) 280deg,
-            rgba(6, 182, 212, 1) 295deg,
-            rgba(59, 130, 246, 1) 310deg,
-            rgba(168, 85, 247, 1) 330deg,
-            rgba(236, 72, 153, 1) 350deg,
-            rgba(236, 72, 153, 0) 360deg
-          );
           -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
           -webkit-mask-composite: xor;
           mask-composite: exclude;
-          animation: border-spin 4s linear infinite;
           pointer-events: none;
-          filter: blur(0.5px);
+        }
+
+        .border-beam-element {
+          position: absolute;
+          aspect-ratio: 1;
+          width: 140px;
+          background: linear-gradient(
+            to left,
+            #ff0055,
+            #ff7f00,
+            #ffff00,
+            #00ff66,
+            #00ffff,
+            #0055ff,
+            #cc00ff,
+            transparent
+          );
+          offset-anchor: 100% 50%;
+          offset-path: rect(0 auto auto 0 round 9999px);
+          animation: border-beam 4s linear infinite;
         }
 
         @media (max-width: 768px) {
@@ -242,7 +245,7 @@ export default function Home() {
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .border-light-effect::before {
+          .border-beam-element {
             animation: none !important;
           }
           .pulse-indicator {
@@ -307,7 +310,11 @@ export default function Home() {
       <section className="relative z-10 pt-40 pb-20 lg:pt-48 lg:pb-32 px-6 flex flex-col items-center justify-center text-center min-h-[90vh]">
         <div className="max-w-5xl mx-auto">
           {/* Badge with traveling light using CSS mask */}
-          <div className="fade-up inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full relative mb-8 border border-emerald-500/30 bg-gradient-to-r from-slate-900/90 to-emerald-950/50 backdrop-blur-md border-light-effect">
+          <div className="fade-up inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full relative mb-8 border border-emerald-500/30 bg-gradient-to-r from-slate-900/90 to-emerald-950/50 backdrop-blur-md">
+            {/* Rainbow Border Beam */}
+            <span className="border-beam-container">
+              <span className="border-beam-element"></span>
+            </span>
             {/* Inner content */}
             <div className="relative z-10 flex items-center gap-2.5">
               <span className="relative flex h-2.5 w-2.5">
