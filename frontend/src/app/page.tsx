@@ -211,26 +211,23 @@ export default function Home() {
           background: conic-gradient(
             from 0deg,
             transparent 0deg,
-            transparent 280deg,
-            rgba(239, 68, 68, 0.1) 280deg,
-            rgba(249, 115, 22, 0.2) 285deg,
-            rgba(234, 179, 8, 0.3) 290deg,
-            rgba(34, 197, 94, 0.5) 295deg,
-            rgba(6, 182, 212, 0.7) 300deg,
-            rgba(59, 130, 246, 0.9) 305deg,
-            #8b5cf6 310deg,
-            #ec4899 315deg,
-            rgba(236, 72, 153, 0.9) 320deg,
-            rgba(139, 92, 246, 0.7) 325deg,
-            rgba(59, 130, 246, 0.5) 330deg,
-            rgba(6, 182, 212, 0.3) 335deg,
-            rgba(34, 197, 94, 0.2) 340deg,
-            rgba(234, 179, 8, 0.1) 345deg,
-            transparent 350deg,
+            transparent 300deg,
+            rgba(255, 255, 255, 0.05) 300deg,
+            rgba(255, 255, 255, 0.1) 310deg,
+            rgba(255, 255, 255, 0.2) 320deg,
+            rgba(255, 255, 255, 0.4) 330deg,
+            rgba(255, 255, 255, 0.6) 335deg,
+            rgba(255, 255, 255, 0.8) 340deg,
+            rgba(255, 255, 255, 1) 345deg,
+            rgba(255, 255, 255, 0.8) 350deg,
+            rgba(255, 255, 255, 0.6) 355deg,
+            rgba(255, 255, 255, 0.4) 358deg,
+            rgba(255, 255, 255, 0.2) 359deg,
             transparent 360deg
           );
           animation: rotate-light 3s linear infinite;
-          filter: blur(2px);
+          filter: blur(1.5px);
+          box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
 
         @media (max-width: 768px) {
