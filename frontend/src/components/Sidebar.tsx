@@ -177,6 +177,8 @@ export default function Sidebar() {
               src="/logo/galaxihire-logo.png" 
               alt="GalaxiHire Logo" 
               className="h-10 w-auto object-contain"
+              loading="eager"
+              fetchPriority="high"
             />
           </div>
         </div>

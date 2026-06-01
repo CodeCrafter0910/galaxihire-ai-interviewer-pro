@@ -157,11 +157,10 @@ export default function RegisterPage() {
             {/* Logo + Brand */}
             <div style={{ animation: "auth-slide-right 0.8s ease-out both" }}>
               <div className="flex items-center gap-3 mb-8">
-                <img 
-                  src="/logo/galaxihire-logo.png" 
-                  alt="GalaxiHire Logo" 
-                  className="h-12 w-auto object-contain"
-                />
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                  <span className="text-white font-black text-lg">G</span>
+                </div>
+                <span className="text-white font-bold text-2xl tracking-tight">GalaxiHire</span>
               </div>
 
               <h2 className="text-4xl xl:text-5xl font-extrabold text-white leading-tight mb-4">
@@ -240,12 +239,11 @@ export default function RegisterPage() {
           <div className="w-full max-w-md relative z-10">
             {/* Mobile-only brand header */}
             <div className="lg:hidden text-center mb-8 auth-stagger-1">
-              <div className="inline-flex items-center justify-center gap-2.5 mb-4">
-                <img 
-                  src="/logo/galaxihire-logo.png" 
-                  alt="GalaxiHire Logo" 
-                  className="h-10 w-auto object-contain"
-                />
+              <div className="inline-flex items-center gap-2.5 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                  <span className="text-white font-black text-sm">G</span>
+                </div>
+                <span className="text-white font-bold text-xl tracking-tight">GalaxiHire</span>
               </div>
             </div>
 

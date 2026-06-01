@@ -214,10 +214,13 @@ export default function Home() {
         <div className="max-w-7xl mx-auto flex items-center justify-between px-6 lg:px-8 py-4">
           <Link href="/" className="flex items-center gap-3 group relative">
             <div className="absolute inset-0 bg-indigo-500/30 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl"></div>
-            <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/40 transition-all duration-300 group-hover:scale-105 border border-white/10">
-              <span className="text-white font-black text-lg">G</span>
-            </div>
-            <span className="font-bold text-xl tracking-tight text-white group-hover:text-indigo-200 transition-colors duration-300">GalaxiHire</span>
+            <img 
+              src="/logo/galaxihire-logo.png" 
+              alt="GalaxiHire Logo" 
+              className="h-10 w-auto object-contain relative group-hover:scale-105 transition-all duration-300"
+              loading="eager"
+              fetchPriority="high"
+            />
           </Link>
 
           <nav className="hidden md:flex items-center gap-10">
@@ -471,10 +474,12 @@ export default function Home() {
             {/* Brand Column */}
             <div className="col-span-2">
               <div className="flex items-center gap-3 mb-6">
-                <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-                  <span className="text-white font-black text-lg">G</span>
-                </div>
-                <span className="font-bold text-xl tracking-tight text-white">GalaxiHire</span>
+                <img 
+                  src="/logo/galaxihire-logo.png" 
+                  alt="GalaxiHire Logo" 
+                  className="h-10 w-auto object-contain"
+                  loading="lazy"
+                />
               </div>
               <p className="text-gray-400 text-sm leading-relaxed max-w-sm mb-8">
                 The ultimate AI-powered interview platform. Practice, improve, and confidently land your dream job.
