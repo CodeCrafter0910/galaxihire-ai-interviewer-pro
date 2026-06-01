@@ -211,16 +211,26 @@ export default function Home() {
           background: conic-gradient(
             from 0deg,
             transparent 0deg,
-            transparent 300deg,
-            #ef4444 300deg,
-            #f97316 315deg,
-            #eab308 330deg,
-            #22c55e 345deg,
-            #06b6d4 360deg,
+            transparent 280deg,
+            rgba(239, 68, 68, 0.1) 280deg,
+            rgba(249, 115, 22, 0.2) 285deg,
+            rgba(234, 179, 8, 0.3) 290deg,
+            rgba(34, 197, 94, 0.5) 295deg,
+            rgba(6, 182, 212, 0.7) 300deg,
+            rgba(59, 130, 246, 0.9) 305deg,
+            #8b5cf6 310deg,
+            #ec4899 315deg,
+            rgba(236, 72, 153, 0.9) 320deg,
+            rgba(139, 92, 246, 0.7) 325deg,
+            rgba(59, 130, 246, 0.5) 330deg,
+            rgba(6, 182, 212, 0.3) 335deg,
+            rgba(34, 197, 94, 0.2) 340deg,
+            rgba(234, 179, 8, 0.1) 345deg,
+            transparent 350deg,
             transparent 360deg
           );
           animation: rotate-light 3s linear infinite;
-          filter: blur(1px);
+          filter: blur(2px);
         }
 
         @media (max-width: 768px) {
