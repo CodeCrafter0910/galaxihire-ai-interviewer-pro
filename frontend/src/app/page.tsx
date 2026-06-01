@@ -176,7 +176,7 @@ export default function Home() {
             box-shadow: 0 0 8px 2px rgba(16, 185, 129, 0.4);
           }
         }
-        @keyframes rotate-gradient {
+        @keyframes rotate-light {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
         }
@@ -204,32 +204,23 @@ export default function Home() {
           animation: pulse-green 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
 
-        .rotating-border-gradient {
+        .traveling-rainbow-light {
           position: absolute;
           inset: -2px;
           border-radius: 9999px;
           background: conic-gradient(
             from 0deg,
-            #ef4444,
-            #f97316,
-            #eab308,
-            #22c55e,
-            #06b6d4,
-            #3b82f6,
-            #8b5cf6,
-            #ec4899,
-            #ef4444
+            transparent 0deg,
+            transparent 300deg,
+            #ef4444 300deg,
+            #f97316 315deg,
+            #eab308 330deg,
+            #22c55e 345deg,
+            #06b6d4 360deg,
+            transparent 360deg
           );
-          animation: rotate-gradient 4s linear infinite;
-          opacity: 0.8;
-        }
-
-        .rotating-border-gradient::before {
-          content: '';
-          position: absolute;
-          inset: 2px;
-          border-radius: 9999px;
-          background: linear-gradient(135deg, rgba(15, 23, 42, 0.98) 0%, rgba(6, 78, 59, 0.95) 100%);
+          animation: rotate-light 3s linear infinite;
+          filter: blur(1px);
         }
 
         @media (max-width: 768px) {
@@ -241,7 +232,7 @@ export default function Home() {
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .rotating-border-gradient {
+          .traveling-rainbow-light {
             animation: none !important;
           }
           .pulse-indicator {
@@ -305,10 +296,15 @@ export default function Home() {
       {/* ── Hero Section ── */}
       <section className="relative z-10 pt-40 pb-20 lg:pt-48 lg:pb-32 px-6 flex flex-col items-center justify-center text-center min-h-[90vh]">
         <div className="max-w-5xl mx-auto">
-          {/* Badge with rotating rainbow border */}
+          {/* Badge with traveling rainbow light */}
           <div className="fade-up inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full relative mb-8">
-            {/* Rotating rainbow gradient border */}
-            <div className="rotating-border-gradient"></div>
+            {/* Static dark border */}
+            <div className="absolute inset-0 rounded-full border border-emerald-500/20 bg-gradient-to-r from-slate-900/90 to-emerald-950/50 backdrop-blur-md"></div>
+            
+            {/* Rotating rainbow light segment */}
+            <div className="absolute inset-0 rounded-full overflow-hidden">
+              <div className="traveling-rainbow-light"></div>
+            </div>
             
             {/* Inner content */}
             <div className="relative z-10 flex items-center gap-2.5">
