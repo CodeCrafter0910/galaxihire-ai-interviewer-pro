@@ -217,9 +217,10 @@ export default function Home() {
             <img 
               src="/logo/galaxihire-logo.png" 
               alt="GalaxiHire Logo" 
-              className="h-10 w-auto object-contain relative group-hover:scale-105 transition-all duration-300"
+              className="h-[50px] w-auto object-contain relative group-hover:scale-105 transition-all duration-300"
               loading="eager"
               fetchPriority="high"
+              style={{ maxWidth: '250px' }}
             />
           </Link>
 
@@ -259,8 +260,8 @@ export default function Home() {
           {/* Badge */}
           <div className="fade-up inline-flex items-center gap-2 px-4 py-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-xs font-semibold mb-8 uppercase tracking-widest backdrop-blur-md">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-400"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
             </span>
             Premium AI Interview Platform
           </div>
@@ -477,8 +478,9 @@ export default function Home() {
                 <img 
                   src="/logo/galaxihire-logo.png" 
                   alt="GalaxiHire Logo" 
-                  className="h-10 w-auto object-contain"
+                  className="h-[50px] w-auto object-contain"
                   loading="lazy"
+                  style={{ maxWidth: '250px' }}
                 />
               </div>
               <p className="text-gray-400 text-sm leading-relaxed max-w-sm mb-8">
