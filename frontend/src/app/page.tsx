@@ -176,9 +176,9 @@ export default function Home() {
             box-shadow: 0 0 8px 2px rgba(16, 185, 129, 0.4);
           }
         }
-        @keyframes rotate-light {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
+        @keyframes travel-around {
+          0% { offset-distance: 0%; }
+          100% { offset-distance: 100%; }
         }
         
         .animate-gradient-text { 
@@ -204,30 +204,28 @@ export default function Home() {
           animation: pulse-green 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
 
-        .traveling-rainbow-light {
+        .traveling-light-dot {
           position: absolute;
-          inset: -2px;
-          border-radius: 9999px;
-          background: conic-gradient(
-            from 0deg,
-            transparent 0deg,
-            transparent 300deg,
-            rgba(255, 255, 255, 0.05) 300deg,
-            rgba(255, 255, 255, 0.1) 310deg,
-            rgba(255, 255, 255, 0.2) 320deg,
-            rgba(255, 255, 255, 0.4) 330deg,
-            rgba(255, 255, 255, 0.6) 335deg,
-            rgba(255, 255, 255, 0.8) 340deg,
-            rgba(255, 255, 255, 1) 345deg,
-            rgba(255, 255, 255, 0.8) 350deg,
-            rgba(255, 255, 255, 0.6) 355deg,
-            rgba(255, 255, 255, 0.4) 358deg,
-            rgba(255, 255, 255, 0.2) 359deg,
-            transparent 360deg
+          width: 60px;
+          height: 3px;
+          background: linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.1) 10%,
+            rgba(255, 255, 255, 0.3) 30%,
+            rgba(255, 255, 255, 0.6) 50%,
+            rgba(255, 255, 255, 1) 70%,
+            rgba(255, 255, 255, 0.6) 85%,
+            rgba(255, 255, 255, 0.3) 95%,
+            transparent 100%
           );
-          animation: rotate-light 3s linear infinite;
-          filter: blur(1.5px);
-          box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+          border-radius: 2px;
+          filter: blur(2px);
+          box-shadow: 0 0 15px rgba(255, 255, 255, 0.6), 0 0 30px rgba(255, 255, 255, 0.3);
+          offset-path: path('M 0,0 A 150,25 0 1,1 0,0.1');
+          offset-rotate: 0deg;
+          animation: travel-around 3s linear infinite;
+          transform-origin: center;
         }
 
         @media (max-width: 768px) {
@@ -239,7 +237,7 @@ export default function Home() {
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .traveling-rainbow-light {
+          .traveling-light-dot {
             animation: none !important;
           }
           .pulse-indicator {
@@ -303,14 +301,15 @@ export default function Home() {
       {/* ── Hero Section ── */}
       <section className="relative z-10 pt-40 pb-20 lg:pt-48 lg:pb-32 px-6 flex flex-col items-center justify-center text-center min-h-[90vh]">
         <div className="max-w-5xl mx-auto">
-          {/* Badge with traveling rainbow light */}
+          {/* Badge with traveling light on static border */}
           <div className="fade-up inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full relative mb-8">
-            {/* Static dark border */}
+            {/* Static dark border - never moves */}
             <div className="absolute inset-0 rounded-full border border-emerald-500/20 bg-gradient-to-r from-slate-900/90 to-emerald-950/50 backdrop-blur-md"></div>
             
-            {/* Rotating rainbow light segment */}
-            <div className="absolute inset-0 rounded-full overflow-hidden">
-              <div className="traveling-rainbow-light"></div>
+            {/* Container for traveling light */}
+            <div className="absolute inset-0 rounded-full overflow-visible">
+              {/* Small traveling light element */}
+              <div className="traveling-light-dot"></div>
             </div>
             
             {/* Inner content */}
