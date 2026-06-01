@@ -176,9 +176,9 @@ export default function Home() {
             box-shadow: 0 0 8px 2px rgba(16, 185, 129, 0.4);
           }
         }
-        @keyframes travel-around {
-          0% { offset-distance: 0%; }
-          100% { offset-distance: 100%; }
+        @keyframes stroke-travel {
+          0% { stroke-dashoffset: 1120; }
+          100% { stroke-dashoffset: 0; }
         }
         
         .animate-gradient-text { 
@@ -204,28 +204,8 @@ export default function Home() {
           animation: pulse-green 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
 
-        .traveling-light-dot {
-          position: absolute;
-          width: 60px;
-          height: 3px;
-          background: linear-gradient(
-            90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 0.1) 10%,
-            rgba(255, 255, 255, 0.3) 30%,
-            rgba(255, 255, 255, 0.6) 50%,
-            rgba(255, 255, 255, 1) 70%,
-            rgba(255, 255, 255, 0.6) 85%,
-            rgba(255, 255, 255, 0.3) 95%,
-            transparent 100%
-          );
-          border-radius: 2px;
-          filter: blur(2px);
-          box-shadow: 0 0 15px rgba(255, 255, 255, 0.6), 0 0 30px rgba(255, 255, 255, 0.3);
-          offset-path: path('M 0,0 A 150,25 0 1,1 0,0.1');
-          offset-rotate: 0deg;
-          animation: travel-around 3s linear infinite;
-          transform-origin: center;
+        .border-light-stroke {
+          animation: stroke-travel 3s linear infinite;
         }
 
         @media (max-width: 768px) {
@@ -237,7 +217,7 @@ export default function Home() {
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .traveling-light-dot {
+          .border-light-stroke {
             animation: none !important;
           }
           .pulse-indicator {
@@ -301,16 +281,50 @@ export default function Home() {
       {/* ── Hero Section ── */}
       <section className="relative z-10 pt-40 pb-20 lg:pt-48 lg:pb-32 px-6 flex flex-col items-center justify-center text-center min-h-[90vh]">
         <div className="max-w-5xl mx-auto">
-          {/* Badge with traveling light on static border */}
+          {/* Badge with traveling light on border */}
           <div className="fade-up inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full relative mb-8">
-            {/* Static dark border - never moves */}
-            <div className="absolute inset-0 rounded-full border border-emerald-500/20 bg-gradient-to-r from-slate-900/90 to-emerald-950/50 backdrop-blur-md"></div>
+            {/* Static dark border with SVG overlay for light animation */}
+            <svg className="absolute inset-0 w-full h-full" style={{ overflow: 'visible' }}>
+              <defs>
+                <linearGradient id="light-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="rgba(255, 255, 255, 0)" />
+                  <stop offset="30%" stopColor="rgba(255, 255, 255, 0.1)" />
+                  <stop offset="50%" stopColor="rgba(255, 255, 255, 0.3)" />
+                  <stop offset="70%" stopColor="rgba(255, 255, 255, 0.6)" />
+                  <stop offset="85%" stopColor="rgba(255, 255, 255, 0.9)" />
+                  <stop offset="100%" stopColor="rgba(255, 255, 255, 1)" />
+                </linearGradient>
+              </defs>
+              {/* Static border */}
+              <rect 
+                x="1" 
+                y="1" 
+                width="calc(100% - 2px)" 
+                height="calc(100% - 2px)" 
+                rx="9999" 
+                fill="url(#badge-bg)" 
+                stroke="rgba(16, 185, 129, 0.2)" 
+                strokeWidth="1"
+              />
+              {/* Traveling light on border */}
+              <rect 
+                x="1" 
+                y="1" 
+                width="calc(100% - 2px)" 
+                height="calc(100% - 2px)" 
+                rx="9999" 
+                fill="none" 
+                stroke="url(#light-gradient)" 
+                strokeWidth="2.5"
+                strokeDasharray="120 1000"
+                strokeLinecap="round"
+                className="border-light-stroke"
+                style={{ filter: 'blur(1.5px) drop-shadow(0 0 8px rgba(255, 255, 255, 0.6))' }}
+              />
+            </svg>
             
-            {/* Container for traveling light */}
-            <div className="absolute inset-0 rounded-full overflow-visible">
-              {/* Small traveling light element */}
-              <div className="traveling-light-dot"></div>
-            </div>
+            {/* Background */}
+            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-slate-900/90 to-emerald-950/50 backdrop-blur-md"></div>
             
             {/* Inner content */}
             <div className="relative z-10 flex items-center gap-2.5">
