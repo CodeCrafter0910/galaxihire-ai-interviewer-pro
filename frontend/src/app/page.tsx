@@ -166,6 +166,16 @@ export default function Home() {
           0%, 100% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
         }
+        @keyframes pulse-green {
+          0%, 100% { 
+            background-color: rgba(16, 24, 39, 0.8);
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+          }
+          50% { 
+            background-color: rgb(16, 185, 129);
+            box-shadow: 0 0 8px 2px rgba(16, 185, 129, 0.4);
+          }
+        }
         
         .animate-gradient-text { 
           background-size: 200% auto;
@@ -184,6 +194,10 @@ export default function Home() {
           backdrop-filter: blur(8px);
           -webkit-backdrop-filter: blur(8px);
           border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .pulse-indicator {
+          animation: pulse-green 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
 
         @media (max-width: 768px) {
@@ -217,10 +231,10 @@ export default function Home() {
             <img 
               src="/logo/galaxihire-logo.png" 
               alt="GalaxiHire Logo" 
-              className="h-[90px] w-auto object-contain relative group-hover:scale-105 transition-all duration-300"
+              className="h-[55px] w-auto object-contain relative group-hover:scale-105 transition-all duration-300"
               loading="eager"
               fetchPriority="high"
-              style={{ maxWidth: '350px' }}
+              style={{ maxWidth: '280px' }}
             />
           </Link>
 
@@ -258,10 +272,9 @@ export default function Home() {
       <section className="relative z-10 pt-40 pb-20 lg:pt-48 lg:pb-32 px-6 flex flex-col items-center justify-center text-center min-h-[90vh]">
         <div className="max-w-5xl mx-auto">
           {/* Badge */}
-          <div className="fade-up inline-flex items-center gap-2 px-4 py-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-xs font-semibold mb-8 uppercase tracking-widest backdrop-blur-md">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+          <div className="fade-up inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-emerald-500/30 bg-gradient-to-r from-slate-900/80 to-emerald-950/40 text-emerald-300 text-xs font-semibold mb-8 uppercase tracking-widest backdrop-blur-md shadow-lg shadow-emerald-500/10">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="absolute inline-flex h-full w-full rounded-full pulse-indicator"></span>
             </span>
             Premium AI Interview Platform
           </div>
@@ -478,9 +491,9 @@ export default function Home() {
                 <img 
                   src="/logo/galaxihire-logo.png" 
                   alt="GalaxiHire Logo" 
-                  className="h-[90px] w-auto object-contain"
+                  className="h-[55px] w-auto object-contain"
                   loading="lazy"
-                  style={{ maxWidth: '350px' }}
+                  style={{ maxWidth: '280px' }}
                 />
               </div>
               <p className="text-gray-400 text-sm leading-relaxed max-w-sm mb-8">
