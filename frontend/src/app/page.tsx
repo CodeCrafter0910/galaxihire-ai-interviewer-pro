@@ -342,7 +342,7 @@ export default function Home() {
           </p>
 
           {/* CTA Buttons */}
-          <div className="fade-up delay-300 flex flex-wrap items-center justify-center gap-5 mb-20">
+          <div className="fade-up delay-300 flex flex-wrap items-center justify-center gap-5 mb-16">
             <Link
               href="/register"
               className="relative px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 rounded-2xl font-bold text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-3"
@@ -360,8 +360,30 @@ export default function Home() {
             </Link>
           </div>
 
+          {/* Hero Mockup Image */}
+          <div className="fade-up delay-400 mb-20 max-w-5xl mx-auto">
+            <div className="relative group">
+              {/* Glow effect behind image */}
+              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 via-purple-500/20 to-indigo-500/20 blur-[60px] opacity-50 group-hover:opacity-70 transition-opacity duration-500"></div>
+              
+              {/* Image container with border */}
+              <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-gradient-to-br from-slate-900/50 to-slate-800/50 p-2 backdrop-blur-sm">
+                <img 
+                  src="/hero-mockup.png" 
+                  alt="GalaxiHire AI Interview Dashboard" 
+                  className="w-full h-auto rounded-2xl shadow-2xl transform group-hover:scale-[1.02] transition-transform duration-500"
+                  loading="eager"
+                />
+              </div>
+
+              {/* Decorative elements */}
+              <div className="absolute -top-4 -left-4 w-24 h-24 bg-indigo-500/10 rounded-full blur-2xl"></div>
+              <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-purple-500/10 rounded-full blur-2xl"></div>
+            </div>
+          </div>
+
           {/* Stats Row */}
-          <div className="fade-up delay-400 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+          <div className="fade-up delay-500 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
             {stats.map((s, i) => (
               <div
                 key={s.label}
