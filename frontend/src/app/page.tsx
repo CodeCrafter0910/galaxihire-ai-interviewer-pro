@@ -176,6 +176,11 @@ export default function Home() {
             box-shadow: 0 0 8px 2px rgba(16, 185, 129, 0.4);
           }
         }
+        @keyframes border-beam {
+          100% {
+            offset-distance: 100%;
+          }
+        }
 
         
         .animate-gradient-text { 
@@ -201,35 +206,35 @@ export default function Home() {
           animation: pulse-green 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
 
-        .badge-glow::before {
-          content: '';
+        .border-beam-container {
           position: absolute;
-          inset: -1px;
+          inset: -1.2px;
           border-radius: 9999px;
-          padding: 1.5px;
-          background: conic-gradient(
-            from 0deg,
-            transparent 0deg,
-            transparent 320deg,
-            #ff0080 320deg,
-            #ff0080 330deg,
-            #7928ca 330deg,
-            #7928ca 340deg,
-            #4c1d95 340deg,
-            #4c1d95 350deg,
-            transparent 350deg,
-            transparent 360deg
-          );
+          padding: 1.2px;
           -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
           -webkit-mask-composite: xor;
           mask-composite: exclude;
-          animation: rotate-glow 6s linear infinite;
           pointer-events: none;
         }
-        
-        @keyframes rotate-glow {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
+
+        .border-beam-element {
+          position: absolute;
+          aspect-ratio: 1;
+          width: 140px;
+          background: linear-gradient(
+            to left,
+            #ff0055,
+            #ff7f00,
+            #ffff00,
+            #00ff66,
+            #00ffff,
+            #0055ff,
+            #cc00ff,
+            transparent
+          );
+          offset-anchor: 100% 50%;
+          offset-path: rect(0 auto auto 0 round 9999px);
+          animation: border-beam 4s linear infinite;
         }
 
         @media (max-width: 768px) {
@@ -241,7 +246,7 @@ export default function Home() {
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .badge-glow::before {
+          .border-beam-element {
             animation: none !important;
           }
           .pulse-indicator {
@@ -306,7 +311,11 @@ export default function Home() {
       <section className="relative z-10 pt-40 pb-20 lg:pt-48 lg:pb-32 px-6 flex flex-col items-center justify-center text-center min-h-[90vh]">
         <div className="max-w-5xl mx-auto">
           {/* Badge with rainbow glow animation */}
-          <div className="fade-up inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full relative mb-8 border border-emerald-500/30 bg-gradient-to-r from-slate-900/90 to-emerald-950/50 backdrop-blur-md badge-glow">
+          <div className="fade-up inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full relative mb-8 border border-emerald-500/30 bg-gradient-to-r from-slate-900/90 to-emerald-950/50 backdrop-blur-md">
+            {/* Rainbow Border Beam */}
+            <span className="border-beam-container">
+              <span className="border-beam-element"></span>
+            </span>
             <div className="relative z-10 flex items-center gap-2.5">
               <span className="relative flex h-2.5 w-2.5">
                 <span className="absolute inline-flex h-full w-full rounded-full pulse-indicator"></span>
