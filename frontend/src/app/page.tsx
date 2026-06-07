@@ -176,14 +176,7 @@ export default function Home() {
             box-shadow: 0 0 8px 2px rgba(16, 185, 129, 0.4);
           }
         }
-        @keyframes travel-light {
-          0% {
-            stroke-dashoffset: 400;
-          }
-          100% {
-            stroke-dashoffset: 0;
-          }
-        }
+
         
         .animate-gradient-text { 
           background-size: 200% auto;
@@ -208,20 +201,35 @@ export default function Home() {
           animation: pulse-green 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
 
-        .border-light-svg {
+        .badge-glow::before {
+          content: '';
           position: absolute;
-          inset: -1.2px;
-          width: calc(100% + 2.4px);
-          height: calc(100% + 2.4px);
+          inset: -1px;
+          border-radius: 9999px;
+          padding: 1.5px;
+          background: conic-gradient(
+            from 0deg,
+            transparent 0deg,
+            transparent 320deg,
+            #ff0080 320deg,
+            #ff0080 330deg,
+            #7928ca 330deg,
+            #7928ca 340deg,
+            #4c1d95 340deg,
+            #4c1d95 350deg,
+            transparent 350deg,
+            transparent 360deg
+          );
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          animation: rotate-glow 6s linear infinite;
           pointer-events: none;
         }
         
-        .border-light-svg rect {
-          fill: none;
-          stroke-width: 1.5;
-          stroke-linecap: round;
-          stroke-dasharray: 60 340;
-          animation: travel-light 4s linear infinite;
+        @keyframes rotate-glow {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
         }
 
         @media (max-width: 768px) {
@@ -233,7 +241,7 @@ export default function Home() {
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .border-light-svg rect {
+          .badge-glow::before {
             animation: none !important;
           }
           .pulse-indicator {
@@ -297,38 +305,8 @@ export default function Home() {
       {/* ── Hero Section ── */}
       <section className="relative z-10 pt-40 pb-20 lg:pt-48 lg:pb-32 px-6 flex flex-col items-center justify-center text-center min-h-[90vh]">
         <div className="max-w-5xl mx-auto">
-          {/* Badge with traveling light SVG animation */}
-          <div className="fade-up inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full relative mb-8 border border-emerald-500/30 bg-gradient-to-r from-slate-900/90 to-emerald-950/50 backdrop-blur-md">
-            {/* SVG Border Light */}
-            <svg 
-              className="border-light-svg" 
-              xmlns="http://www.w3.org/2000/svg"
-              style={{ 
-                position: 'absolute',
-                left: '-1.2px',
-                top: '-1.2px',
-                overflow: 'visible'
-              }}
-            >
-              <defs>
-                <linearGradient id="lightGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" style={{ stopColor: 'transparent', stopOpacity: 0 }} />
-                  <stop offset="30%" style={{ stopColor: 'rgba(255, 255, 255, 0.3)', stopOpacity: 0.3 }} />
-                  <stop offset="50%" style={{ stopColor: 'rgba(255, 255, 255, 0.9)', stopOpacity: 0.9 }} />
-                  <stop offset="70%" style={{ stopColor: 'rgba(255, 255, 255, 0.6)', stopOpacity: 0.6 }} />
-                  <stop offset="100%" style={{ stopColor: 'rgba(255, 255, 255, 0.1)', stopOpacity: 0.1 }} />
-                </linearGradient>
-              </defs>
-              <rect 
-                x="1.2" 
-                y="1.2" 
-                width="calc(100% - 2.4px)" 
-                height="calc(100% - 2.4px)" 
-                rx="9999" 
-                stroke="url(#lightGradient)"
-              />
-            </svg>
-            {/* Inner content */}
+          {/* Badge with rainbow glow animation */}
+          <div className="fade-up inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full relative mb-8 border border-emerald-500/30 bg-gradient-to-r from-slate-900/90 to-emerald-950/50 backdrop-blur-md badge-glow">
             <div className="relative z-10 flex items-center gap-2.5">
               <span className="relative flex h-2.5 w-2.5">
                 <span className="absolute inline-flex h-full w-full rounded-full pulse-indicator"></span>
