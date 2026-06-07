@@ -176,9 +176,12 @@ export default function Home() {
             box-shadow: 0 0 8px 2px rgba(16, 185, 129, 0.4);
           }
         }
-        @keyframes border-beam {
+        @keyframes travel-light {
+          0% {
+            stroke-dashoffset: 400;
+          }
           100% {
-            offset-distance: 100%;
+            stroke-dashoffset: 0;
           }
         }
         
@@ -205,35 +208,20 @@ export default function Home() {
           animation: pulse-green 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
 
-        .border-beam-container {
+        .border-light-svg {
           position: absolute;
           inset: -1.2px;
-          border-radius: 9999px;
-          padding: 1.2px;
-          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-          -webkit-mask-composite: xor;
-          mask-composite: exclude;
+          width: calc(100% + 2.4px);
+          height: calc(100% + 2.4px);
           pointer-events: none;
         }
-
-        .border-beam-element {
-          position: absolute;
-          aspect-ratio: 1;
-          width: 140px;
-          background: linear-gradient(
-            to left,
-            #ff0055,
-            #ff7f00,
-            #ffff00,
-            #00ff66,
-            #00ffff,
-            #0055ff,
-            #cc00ff,
-            transparent
-          );
-          offset-anchor: 100% 50%;
-          offset-path: rect(0 auto auto 0 round 9999px);
-          animation: border-beam 4s linear infinite;
+        
+        .border-light-svg rect {
+          fill: none;
+          stroke-width: 1.5;
+          stroke-linecap: round;
+          stroke-dasharray: 60 340;
+          animation: travel-light 4s linear infinite;
         }
 
         @media (max-width: 768px) {
@@ -245,7 +233,7 @@ export default function Home() {
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .border-beam-element {
+          .border-light-svg rect {
             animation: none !important;
           }
           .pulse-indicator {
@@ -309,12 +297,37 @@ export default function Home() {
       {/* ── Hero Section ── */}
       <section className="relative z-10 pt-40 pb-20 lg:pt-48 lg:pb-32 px-6 flex flex-col items-center justify-center text-center min-h-[90vh]">
         <div className="max-w-5xl mx-auto">
-          {/* Badge with traveling light using CSS mask */}
+          {/* Badge with traveling light SVG animation */}
           <div className="fade-up inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full relative mb-8 border border-emerald-500/30 bg-gradient-to-r from-slate-900/90 to-emerald-950/50 backdrop-blur-md">
-            {/* Rainbow Border Beam */}
-            <span className="border-beam-container">
-              <span className="border-beam-element"></span>
-            </span>
+            {/* SVG Border Light */}
+            <svg 
+              className="border-light-svg" 
+              xmlns="http://www.w3.org/2000/svg"
+              style={{ 
+                position: 'absolute',
+                left: '-1.2px',
+                top: '-1.2px',
+                overflow: 'visible'
+              }}
+            >
+              <defs>
+                <linearGradient id="lightGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" style={{ stopColor: 'transparent', stopOpacity: 0 }} />
+                  <stop offset="30%" style={{ stopColor: 'rgba(255, 255, 255, 0.3)', stopOpacity: 0.3 }} />
+                  <stop offset="50%" style={{ stopColor: 'rgba(255, 255, 255, 0.9)', stopOpacity: 0.9 }} />
+                  <stop offset="70%" style={{ stopColor: 'rgba(255, 255, 255, 0.6)', stopOpacity: 0.6 }} />
+                  <stop offset="100%" style={{ stopColor: 'rgba(255, 255, 255, 0.1)', stopOpacity: 0.1 }} />
+                </linearGradient>
+              </defs>
+              <rect 
+                x="1.2" 
+                y="1.2" 
+                width="calc(100% - 2.4px)" 
+                height="calc(100% - 2.4px)" 
+                rx="9999" 
+                stroke="url(#lightGradient)"
+              />
+            </svg>
             {/* Inner content */}
             <div className="relative z-10 flex items-center gap-2.5">
               <span className="relative flex h-2.5 w-2.5">
@@ -342,7 +355,7 @@ export default function Home() {
           </p>
 
           {/* CTA Buttons */}
-          <div className="fade-up delay-300 flex flex-wrap items-center justify-center gap-5 mb-16">
+          <div className="fade-up delay-300 flex flex-wrap items-center justify-center gap-5 mb-20">
             <Link
               href="/register"
               className="relative px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 rounded-2xl font-bold text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-3"
@@ -360,30 +373,8 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* Hero Mockup Image */}
-          <div className="fade-up delay-400 mb-20 max-w-5xl mx-auto">
-            <div className="relative group">
-              {/* Glow effect behind image */}
-              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 via-purple-500/20 to-indigo-500/20 blur-[60px] opacity-50 group-hover:opacity-70 transition-opacity duration-500"></div>
-              
-              {/* Image container with border */}
-              <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-gradient-to-br from-slate-900/50 to-slate-800/50 p-2 backdrop-blur-sm">
-                <img 
-                  src="/hero-mockup.png" 
-                  alt="GalaxiHire AI Interview Dashboard" 
-                  className="w-full h-auto rounded-2xl shadow-2xl transform group-hover:scale-[1.02] transition-transform duration-500"
-                  loading="eager"
-                />
-              </div>
-
-              {/* Decorative elements */}
-              <div className="absolute -top-4 -left-4 w-24 h-24 bg-indigo-500/10 rounded-full blur-2xl"></div>
-              <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-purple-500/10 rounded-full blur-2xl"></div>
-            </div>
-          </div>
-
           {/* Stats Row */}
-          <div className="fade-up delay-500 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+          <div className="fade-up delay-400 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
             {stats.map((s, i) => (
               <div
                 key={s.label}
