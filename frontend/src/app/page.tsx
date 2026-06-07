@@ -219,8 +219,8 @@ export default function Home() {
 
         .border-beam-element {
           position: absolute;
-          aspect-ratio: 1;
           width: 140px;
+          height: 140px;
           background: linear-gradient(
             to left,
             #ff0055,
@@ -235,6 +235,8 @@ export default function Home() {
           offset-anchor: 100% 50%;
           offset-path: rect(0 auto auto 0 round 9999px);
           animation: border-beam 4s linear infinite;
+          will-change: offset-distance;
+          transform: translate3d(0, 0, 0);
         }
 
         @media (max-width: 768px) {
